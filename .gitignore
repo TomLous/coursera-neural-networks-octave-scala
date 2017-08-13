@@ -1,0 +1,24 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/**
+.idea
+*.iws
+/out/
+.idea_modules/
+atlassian-ide-plugin.xml
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+.history
+.cache
+.lib/
+*.class
+*.log
+project/target/
+
