@@ -40,17 +40,19 @@ object MatLabConversions {
 
   }
 
-//  def mlArrayToDenseMatrixDouble2[A](mlArray: MLNumericArray[A]):Option[DenseMatrix[A]] = {
-//    Try{
-//      val mlArray2:MLNumericArray[A] = mlArray.asInstanceOf[MLNumericArray[A]]
-//
-//
-//      val l = (0 to mlArray2.getM).map(m => {
-//          val a:immutable.IndexedSeq[A] = (0 to mlArray2.getN).map(n => mlArray2.get(m, n))
-//          a
-//        })
-//      DenseMatrix(l: _*)
-//    }.toOption
-//  }
+  def mlArrayToDenseMatrixDouble2[A <: Number: Manifest](mlArray: MLArray):Option[DenseMatrix[A]] = {
+    Try{
+      val mlArray2:MLNumericArray[A] = mlArray.asInstanceOf[MLNumericArray[A]]
+
+      val l:immutable.IndexedSeq[immutable.IndexedSeq[A]] = (0 until mlArray2.getM).map(
+        m => {
+          val a:immutable.IndexedSeq[A] =
+            (0 until mlArray2.getN)
+              .map(n => mlArray2.get(m, n))
+          a
+        })
+      DenseMatrix(l: _*)
+    }.toOption
+  }
 
 }
