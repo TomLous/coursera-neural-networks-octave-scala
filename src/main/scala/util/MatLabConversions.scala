@@ -13,6 +13,31 @@ import scala.reflect.ClassTag
   */
 object MatLabConversions {
 
+
+  /**
+    * Converts a MLArray of java.lang.Double (or any Number) to a DenseMatrix[Double]
+    * @todo Make the returntype dependant on input type (java.lang.Double => Double, java.lang.Integer => Int)
+    * @param mlArray MLArray
+    * @tparam A (any Java number)
+    * @return Option of a DenseMatrix (now always Double)
+    */
+  implicit def mlArrayToDenseMatrix[A <: Number](mlArray: MLArray): Option[DenseMatrix[Double]] = {
+    Try {
+      val mlNumericArray: MLNumericArray[A] = mlArray.asInstanceOf[MLNumericArray[A]]
+
+      def convert(a: A):Double = a.doubleValue() // @todo make this implicit based on type
+
+      DenseMatrix(
+        (0 until mlNumericArray.getM)
+          .map(m => (0 until mlNumericArray.getN)
+            .map(n => convert(mlNumericArray.get(m, n)))
+          ): _*
+      )
+
+    }.toOption
+  }
+
+
   //  implicit def MLArrayAsDenseMatrix(mLArray: MLArray):DenseMatrix = {
   //    MLArray
   //  }
@@ -34,28 +59,12 @@ object MatLabConversions {
   ////
   //  }
 
-  def mlArrayToDenseMatrixDouble(mlArray: MLArray): Option[DenseMatrix[Double]] = {
-    Try {
-      val m = mlArray.asInstanceOf[MLDouble]
-      DenseMatrix(m.getArray: _*)
-    }.toOption
-
-  }
-
-  def mlArrayToDenseMatrix[A <: Number](mlArray: MLArray): Option[DenseMatrix[Double]] = {
-    Try {
-      val mlNumericArray: MLNumericArray[A] = mlArray.asInstanceOf[MLNumericArray[A]]
-
-      def convert(a: A) = a.doubleValue()
-
-      DenseMatrix(
-        (0 until mlNumericArray.getM)
-          .map(m => (0 until mlNumericArray.getN)
-            .map(n => convert(mlNumericArray.get(m, n)))
-          ): _*
-      )
-
-    }.toOption
-  }
+  //  def mlArrayToDenseMatrixDouble(mlArray: MLArray): Option[DenseMatrix[Double]] = {
+  //    Try {
+  //      val m = mlArray.asInstanceOf[MLDouble]
+  //      DenseMatrix(m.getArray: _*)
+  //    }.toOption
+  //
+  //  }
 
 }

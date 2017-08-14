@@ -2,13 +2,13 @@ package io
 
 import java.io.File
 import java.net.URI
-import java.util
+
+
+import breeze.linalg.DenseMatrix
+
 import scala.collection.JavaConverters._
-
-
 import com.jmatio.io.MatFileReader
 import com.jmatio.types.MLArray
-
 
 import scala.util.Try
 
@@ -30,7 +30,7 @@ case class MatLabFile(filePath: URI) {
     }.toEither
   }
 
-  def mlArray(name: String):Either[Throwable, MLArray] = {
+  def mlArray(name: String): Either[Throwable, MLArray] = {
     contents
       .right
       .flatMap(
@@ -46,6 +46,14 @@ case class MatLabFile(filePath: URI) {
   }
 
 
+  def denseMatrixOption(name: String): Option[DenseMatrix[Double]] = {
+    import util.MatLabConversions._
+
+    for {
+      mlArray <- mlArrayOption(name)
+      denseMatrix <- mlArray
+    } yield denseMatrix
+  }
 }
 
 
