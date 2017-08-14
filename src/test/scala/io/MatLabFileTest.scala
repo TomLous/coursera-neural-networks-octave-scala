@@ -8,11 +8,10 @@ import org.scalatest.FunSuite
 
 /**
   * Created by Tom Lous on 13/08/2017.
-  * Copyright © 2017 Datlinq B.V..
   */
 class MatLabFileTest extends FunSuite {
 
-  test("Read matlab file"){
+  test("Read matlab file (raw)"){
     val inputFileName = "/dataset1_test.mat"
     val inputFile:File = new File(getClass.getResource(inputFileName).toURI)
 
@@ -30,6 +29,23 @@ class MatLabFileTest extends FunSuite {
     assert(matFileContent.get("pos_examples_nobias").getDimensions.toList === List(4,2))
     assert(matFileContent.get("w_init").getDimensions.toList === List(3,1))
     assert(matFileContent.get("w_gen_feas").getDimensions.toList === List(3,1))
+  }
+
+  test("Read matlab file "){
+    val inputFileName = "/dataset1_test.mat"
+    val inputFilePath = getClass.getResource(inputFileName).toURI
+    val mlFile = MatLabFile(inputFilePath)
+
+    assert(mlFile.denseVector("neg_examples_nobias").right.map(_.getDimensions.toList)  === Right(List(4,2)))
+    assert(mlFile.denseVector("nonexisting").left.map(_.getMessage) === Left("Variable `nonexisting` not found"))
+  }
+
+  test("Read non existsing matlab file "){
+    val inputFileName = "file:///nonexisting.mat"
+    val inputFilePath = new java.net.URI(inputFileName)
+    val mlFile = MatLabFile(inputFilePath)
+
+    assert(mlFile.denseVector("neg_examples_nobias").left.map(_.getMessage) === Left("/nonexisting.mat (No such file or directory)"))
   }
 
 }
