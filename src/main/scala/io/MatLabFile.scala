@@ -3,8 +3,7 @@ package io
 import java.io.File
 import java.net.URI
 
-
-import breeze.linalg.DenseMatrix
+import breeze.linalg.{DenseMatrix, DenseVector}
 
 import scala.collection.JavaConverters._
 import com.jmatio.io.MatFileReader
@@ -35,7 +34,8 @@ case class MatLabFile(filePath: URI) {
       .right
       .flatMap(
         _.get(name) match {
-          case Some(mlArray) => Right(mlArray)
+          case Some(mlArray) if !mlArray.isEmpty => Right(mlArray)
+          case Some(_) => Left(new Exception(s"MLArray `$name` empty"))
           case None => Left(new Exception(s"MLArray `$name` not found"))
         })
   }
@@ -53,6 +53,10 @@ case class MatLabFile(filePath: URI) {
       mlArray <- mlArrayOption(name)
       denseMatrix <- mlArray
     } yield denseMatrix
+  }
+
+  def denseVectorOption(name: String): Option[DenseVector[Double]] = {
+     denseMatrixOption(name).map(_.toDenseVector)
   }
 }
 

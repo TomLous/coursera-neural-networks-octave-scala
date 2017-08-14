@@ -57,4 +57,10 @@ class MatLabConversionsTest extends fixture.FunSuite {
   }
   }
 
+
+  test("mlArrayToDenseMatrix to vector") { mlFile => {
+    assert(mlFile.denseMatrixOption("w_init").get.data === mlFile.denseVectorOption("w_init").get.data)
+  }
+  }
+
 }
