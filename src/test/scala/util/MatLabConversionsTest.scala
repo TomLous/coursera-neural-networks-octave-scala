@@ -5,6 +5,7 @@ import java.lang
 import breeze.linalg.DenseMatrix
 import io.MatLabFile
 import org.scalatest.{BeforeAndAfterEach, FunSuite, fixture}
+import collection.JavaConverters._
 
 /**
   * Created by Tom Lous on 14/08/2017.
@@ -23,31 +24,33 @@ class MatLabConversionsTest extends fixture.FunSuite {
   }
 
   test("testMlArrayToDenseMatrix") { mlFile => {
-      val mlArray = mlFile.mlArrayOption("neg_examples_nobias")
-      val double = MatLabConversions.mlArrayToDenseMatrixDouble(mlArray.get)
+    val mlArray = mlFile.mlArrayOption("neg_examples_nobias")
+    val double = MatLabConversions.mlArrayToDenseMatrixDouble(mlArray.get)
 
-//    println(double)
+    //    println(double)
 
 
-    }
+  }
   }
 
-  test("raw converion") { mlFile =>{
-
-    val a: java.lang.Double = 3.4
-    val b: java.lang.Double = 3.4
-
-    val l:IndexedSeq[IndexedSeq[java.lang.Double]] = IndexedSeq(IndexedSeq(a,a,a), IndexedSeq(b,b,b))
-    println(DenseMatrix(l: _*))
-
-
-  }}
+  //  test("raw converion") { mlFile =>{
+  //
+  //    val a: java.lang.Double = 3.4
+  //    val b: java.lang.Double = 3.4
+  //
+  //    val l:IndexedSeq[IndexedSeq[java.lang.Double]] = IndexedSeq(IndexedSeq(a,a,a), IndexedSeq(b,b,b))
+  //    println(DenseMatrix(l: _*))
+  //
+  //
+  //  }}
 
   test("testMlArrayToDenseMatrix2") { mlFile => {
-    val mlArray = mlFile.mlArrayOption("neg_examples_nobias")
-    val double = MatLabConversions.mlArrayToDenseMatrixDouble2[java.lang.Double](mlArray.get)
+    val mlArray = mlFile.mlArrayOption("neg_examples_nobias").get
+    val denseMatrix: DenseMatrix[Double] = MatLabConversions.mlArrayToDenseMatrix(mlArray).get
 
-    println(double)
+
+    assert(mlArray.getM === denseMatrix.rows)
+    assert(mlArray.getN === denseMatrix.cols)
 
 
   }
