@@ -30,16 +30,20 @@ case class MatLabFile(filePath: URI) {
     }.toEither
   }
 
-  def denseVector(name: String):Either[Throwable, MLArray] = {
+  def mlArray(name: String):Either[Throwable, MLArray] = {
     contents
       .right
       .flatMap(
         _.get(name) match {
-          case Some(mLArray) => Right(mLArray)
-          case None => Left(new Exception(s"Variable `$name` not found"))
+          case Some(mlArray) => Right(mlArray)
+          case None => Left(new Exception(s"MLArray `$name` not found"))
         })
   }
 
+  def mlArrayOption(name: String): Option[MLArray] = mlArray(name) match {
+    case Right(mlArray) => Some(mlArray)
+    case Left(_) => None
+  }
 
 
 }

@@ -36,8 +36,8 @@ class MatLabFileTest extends FunSuite {
     val inputFilePath = getClass.getResource(inputFileName).toURI
     val mlFile = MatLabFile(inputFilePath)
 
-    assert(mlFile.denseVector("neg_examples_nobias").right.map(_.getDimensions.toList)  === Right(List(4,2)))
-    assert(mlFile.denseVector("nonexisting").left.map(_.getMessage) === Left("Variable `nonexisting` not found"))
+    assert(mlFile.mlArray("neg_examples_nobias").right.map(_.getDimensions.toList)  === Right(List(4,2)))
+    assert(mlFile.mlArray("nonexisting").left.map(_.getMessage) === Left("MLArray `nonexisting` not found"))
   }
 
   test("Read non existsing matlab file "){
@@ -45,7 +45,7 @@ class MatLabFileTest extends FunSuite {
     val inputFilePath = new java.net.URI(inputFileName)
     val mlFile = MatLabFile(inputFilePath)
 
-    assert(mlFile.denseVector("neg_examples_nobias").left.map(_.getMessage) === Left("/nonexisting.mat (No such file or directory)"))
+    assert(mlFile.mlArray("neg_examples_nobias").left.map(_.getMessage) === Left("/nonexisting.mat (No such file or directory)"))
   }
 
 }
