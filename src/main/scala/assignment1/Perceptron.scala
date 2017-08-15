@@ -14,12 +14,15 @@ import scala.annotation.tailrec
   * full pass through the data. If a generously feasible weight vector
   * is provided then the visualization will also show the distance
   * of the learned weight vectors to the generously feasible weight vector.
+  * @param name Name of the perceptron
   * @param neg_examples_nobias The num_neg_examples x 2 matrix for the examples with target 0.
   * @param pos_examples_nobias  The num_pos_examples x 2 matrix for the examples with target 1.
   * @param w_init A 3-dimensional initial weight vector. The last element is the bias.
-  * @param w_gen_feas he learned weight vector.  *
+  * @param w_gen_feas he learned weight vector.
+  * @param learning_rate learning rate of the perceptron
   */
 case class Perceptron (
+                            name:String,
                             neg_examples_nobias: DenseMatrix[Double],
                             pos_examples_nobias: DenseMatrix[Double],
                             w_init: Option[DenseVector[Double]],
@@ -54,6 +57,8 @@ case class Perceptron (
     */
   def learn():Either[String, DenseVector[Double]] = {
 
+    val figure = Figure(name)
+
     /**
       * Recusivily iterate until no errors are found
       * @param iteration counter
@@ -65,7 +70,10 @@ case class Perceptron (
     @tailrec
     def iterate(iteration: Int, w: DenseVector[Double], num_err_history: List[Int], w_dist_history: List[Double]): Either[String,(DenseVector[Double], List[Int], List[Double])]={
       if(iteration >= maxIter) Left(s"Number of iterations exeeded without converging: $maxIter") // kill the loop if not converging
-      else if(num_err_history.head == 0) Right(w, num_err_history.reverse, w_dist_history.reverse) // no more errors => break
+      else if(num_err_history.head == 0) {
+        evaluate(w, iteration, num_err_history, w_dist_history)
+        Right(w, num_err_history.reverse, w_dist_history.reverse)
+      } // no more errors => break
       else {
         // update weights
         val w_updated = update_weights(w)
@@ -106,17 +114,17 @@ case class Perceptron (
       val num_err_history_updated = num_errs :: num_err_history
 
       // plot the data
-      plot(mistakes0, mistakes1,num_err_history,w, w_dist_history_updated)
+      plot_perceptron(figure, s"$name-$iter", mistakes0, mistakes1,num_err_history,w, w_dist_history_updated)
 
       // return histories
       (num_err_history_updated,w_dist_history_updated)
     }
 
     /**
-      * Non functional method to update some vals. Can be removed, but kept for historic perspective
-      * @param new_w
-      * @param new_num_err_history
-      * @param new_w_dist_history
+      * Non functional method to update some vals. Can be removed, but kept for historic perspective?
+      * @param new_w w := new_w
+      * @param new_num_err_history num_err_history := new_num_err_history
+      * @param new_w_dist_history w_dist_history := new_w_dist_history
       */
     def updateVars(new_w:DenseVector[Double], new_num_err_history: List[Int], new_w_dist_history:List[Double]):Unit = {
       w = new_w
@@ -129,7 +137,10 @@ case class Perceptron (
 
     // iterate until converged or some error
     iterate(1, w0, num_err_history0, w_dist_history0) match {
-      case Right((w_updated, num_err_history_updated, w_dist_history_updated)) =>  updateVars(w_updated, num_err_history_updated, w_dist_history_updated); Right(w_updated)
+      case Right((w_updated, num_err_history_updated, w_dist_history_updated)) =>  {
+        updateVars(w_updated, num_err_history_updated, w_dist_history_updated)
+        Right(w_updated)
+      }
       case Left(x) => Left(x)
     }
   }
@@ -208,17 +219,7 @@ case class Perceptron (
 
 
   /**
-    * @todo implement plot to save images
-    * @param mistakes0
-    * @param mistakes1
-    * @param num_err_history
-    * @param w
-    * @param w_dist_history
-    */
-  def plot(mistakes0:List[Int], mistakes1:List[Int], num_err_history:List[Int], w:DenseVector[Double], w_dist_history:List[Double]): Unit ={
-
-
-//    %% Plots information about a perceptron classifier on a 2-dimensional dataset.
+    * %% Plots information about a perceptron classifier on a 2-dimensional dataset.
 //    function plot_perceptron(neg_examples, pos_examples, mistakes0, mistakes1, num_err_history, w, w_dist_history)
 //    %%
 //    % The top-left plot shows the dataset and the classification boundary given by
@@ -250,49 +251,53 @@ case class Perceptron (
 //      %       feasible weight vector for each iteration of learning so far.
 //    %       Empty if one has not been provided.
 //      %%
-//    f = figure(1);
-//    clf(f);
-//
-//    neg_correct_ind = setdiff(1:size(neg_examples,1),mistakes0);
-//    pos_correct_ind = setdiff(1:size(pos_examples,1),mistakes1);
-//
-//    subplot(2,2,1);
-//    hold on;
-//    if (~isempty(neg_examples))
-//      plot(neg_examples(neg_correct_ind,1),neg_examples(neg_correct_ind,2),'og','markersize',20);
-//    end
-//    if (~isempty(pos_examples))
-//      plot(pos_examples(pos_correct_ind,1),pos_examples(pos_correct_ind,2),'sg','markersize',20);
-//    end
-//    if (size(mistakes0,1) > 0)
-//      plot(neg_examples(mistakes0,1),neg_examples(mistakes0,2),'or','markersize',20);
-//    end
-//    if (size(mistakes1,1) > 0)
-//      plot(pos_examples(mistakes1,1),pos_examples(mistakes1,2),'sr','markersize',20);
-//    end
-//    title('Classifier');
-//
-//    %In order to plot the decision line, we just need to get two points.
-//      plot([-5,5],[(-w(end)+5*w(1))/w(2),(-w(end)-5*w(1))/w(2)],'k')
-//    xlim([-1,1]);
-//    ylim([-1,1]);
-//    hold off;
-//
-//    subplot(2,2,2);
-//    plot(0:length(num_err_history)-1,num_err_history);
-//    xlim([-1,max(15,length(num_err_history))]);
-//    ylim([0,size(neg_examples,1)+size(pos_examples,1)+1]);
-//    title('Number of errors');
-//    xlabel('Iteration');
-//    ylabel('Number of errors');
-//
-//    subplot(2,2,3);
-//    plot(0:length(w_dist_history)-1,w_dist_history);
-//    xlim([-1,max(15,length(num_err_history))]);
-//    ylim([0,15]);
-//    title('Distance')
-//    xlabel('Iteration');
-//    ylabel('Distance');
+    * @todo implement plot to save images
+    * @param mistakes0
+    * @param mistakes1
+    * @param num_err_history
+    * @param w
+    * @param w_dist_history
+    */
+  def plot_perceptron(figure:Figure, name:String, mistakes0:List[Int], mistakes1:List[Int], num_err_history:List[Int], w:DenseVector[Double], w_dist_history:List[Double]): Unit ={
+
+    figure.clear()
+
+    val neg_correct_ind = (0 until num_neg_examples).diff(mistakes0)
+    val pos_correct_ind = (0 until num_pos_examples).diff(mistakes1)
+
+    val p0 = figure.subplot(2,2,0)
+    p0.title = "Classifier"
+
+    p0 += plot(neg_examples(neg_correct_ind, 0).toArray, neg_examples(neg_correct_ind, 1).toArray, '.', colorcode = "[43,146,31]")
+    p0 += plot(pos_examples(pos_correct_ind, 0).toArray, pos_examples(pos_correct_ind, 1).toArray, '+', colorcode = "[43,146,31]")
+    p0 += plot(neg_examples(mistakes0, 0).toArray,       neg_examples(mistakes0, 1).toArray,       '.', colorcode = "[220,0,25]")
+    p0 += plot(pos_examples(mistakes1, 0).toArray,       pos_examples(mistakes1, 1).toArray,       '+', colorcode = "[220,0,25]")
+
+    val bound = 5.0
+    p0 += plot(List(-bound,bound), List((-w(2) + bound * w(0))/w(1), (-w(2) - bound * w(0))/w(1)))
+
+    p0.xlim = (-1.0,1.0)
+    p0.ylim = (-1.0,1.0)
+
+
+    val p1 = figure.subplot(1)
+    p1.title = "Number of errors"
+      //    p1.xlabel = "iteration"
+      //    p1.ylabel = "errors"
+    p1.ylim = (0.0,num_pos_examples + num_neg_examples)
+    p1 += plot(num_err_history.indices, num_err_history.reverse)
+
+    if(w_dist_history.nonEmpty) {
+      val p2 = figure.subplot(2)
+      p2.title = "Distance"
+      //    p2.xlabel = "iteration"
+      //    p2.ylabel = "distance"
+      p2.ylim = (0.0, 15.0)
+      p2 += plot(w_dist_history.indices.map(_.toDouble), w_dist_history.reverse)
+    }
+
+    figure.saveas(s"target/image-$name.png")
+
   }
 
 }
