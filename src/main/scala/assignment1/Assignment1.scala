@@ -9,7 +9,7 @@ import io.MatLabFile
   */
 object Assignment1 extends App with LazyLogging{
 
-  val learningRate = 2.0
+  val learningRate = 1.0
 
   // define matlab files for training Perceptrons
   val resources = List(
