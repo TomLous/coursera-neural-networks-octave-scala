@@ -54,56 +54,84 @@ case class Perceptron (
     */
   def learn():Either[String, DenseVector[Double]] = {
 
+    /**
+      * Recusivily iterate until no errors are found
+      * @param iteration counter
+      * @param w current weights
+      * @param num_err_history history
+      * @param w_dist_history history
+      * @return Either an error message or the calculated wieght + history)
+      */
     @tailrec
     def iterate(iteration: Int, w: DenseVector[Double], num_err_history: List[Int], w_dist_history: List[Double]): Either[String,(DenseVector[Double], List[Int], List[Double])]={
-      if(iteration >= maxIter) Left(s"Number of iterations exeeded without converging: $maxIter")
-      else if(num_err_history.head == 0) Right(w, num_err_history.reverse, w_dist_history.reverse)
+      if(iteration >= maxIter) Left(s"Number of iterations exeeded without converging: $maxIter") // kill the loop if not converging
+      else if(num_err_history.head == 0) Right(w, num_err_history.reverse, w_dist_history.reverse) // no more errors => break
       else {
+        // update weights
         val w_updated = update_weights(w)
 
+        // evaluate new weights
         val (num_err_history_updated, w_dist_history_updated) = evaluate(w_updated, iteration, num_err_history, w_dist_history)
 
+        // tailrec
         iterate(iteration + 1, w_updated, num_err_history_updated, w_dist_history_updated)
       }
-
     }
 
+    /**
+      * Calculate the mistakes when applying new weights to samples
+      * @param w new weights
+      * @param iter loop counter
+      * @param num_err_history current history
+      * @param w_dist_history current history
+      * @return new histories
+      */
     def evaluate(w: DenseVector[Double], iter: Int, num_err_history: List[Int], w_dist_history: List[Double]):(List[Int], List[Double]) = {
+      // positive & negative mistakes
       val (mistakes0, mistakes1) = eval(w)
+
+      // count errors
       val num_errs = mistakes0.length + mistakes1.length
 
       logger.info(s"""Number of errors in iteration $iter: $num_errs""")
       logger.info(s"""\tWeights $w""")
 
+      // calculate weight distance
       val w_dist = w_gen_feas.map(wgf => {
         norm(wgf - w)
       })
 
+      // update histories
       val w_dist_history_updated = w_dist.foldLeft(w_dist_history)((hist, d) => d :: hist)
-
       val num_err_history_updated = num_errs :: num_err_history
 
+      // plot the data
       plot(mistakes0, mistakes1,num_err_history,w, w_dist_history_updated)
 
+      // return histories
       (num_err_history_updated,w_dist_history_updated)
     }
 
+    /**
+      * Non functional method to update some vals. Can be removed, but kept for historic perspective
+      * @param new_w
+      * @param new_num_err_history
+      * @param new_w_dist_history
+      */
     def updateVars(new_w:DenseVector[Double], new_num_err_history: List[Int], new_w_dist_history:List[Double]):Unit = {
       w = new_w
       num_err_history = new_num_err_history
       w_dist_history = new_w_dist_history
     }
 
+    // initial evaluation (iteration 0)
     val (num_err_history0, w_dist_history0) = evaluate(w0, 0, Nil, Nil)
 
+    // iterate until converged or some error
     iterate(1, w0, num_err_history0, w_dist_history0) match {
       case Right((w_updated, num_err_history_updated, w_dist_history_updated)) =>  updateVars(w_updated, num_err_history_updated, w_dist_history_updated); Right(w_updated)
       case Left(x) => Left(x)
     }
-
-
-
-
   }
 
 
@@ -126,6 +154,13 @@ case class Perceptron (
      findMistakes(pos_examples, w, (t: (Double, Int)) => t._1 < 0))
   }
 
+  /**
+    * Foreach tuple in matrix, calculate the activation (tuple' * weight) and mark index as mistake if not filtered away by method
+    * @param samples DenseMatrix of samples
+    * @param w weight
+    * @param filterActivation filter method that takes activationValue & index
+    * @return list of indices in samples that are wrong
+    */
   private def findMistakes(samples: DenseMatrix[Double], w: DenseVector[Double], filterActivation: ((Double, Int))=>Boolean):List[Int] = {
     samples(*, ::)
       .map(x => x.t * w)
@@ -137,50 +172,32 @@ case class Perceptron (
   }
 
 
+  /**
+    * Updates the weights of the perceptron for incorrectly classified points
+    * using the perceptron update algorithm. This function makes one sweep
+    * over the dataset.
+    * Inputs:
+    *   neg_examples - The num_neg_examples x 3 matrix for the examples with target 0.
+    *   pos_examples- The num_pos_examples x 3 matrix for the examples with target 1.
+    * @param w A 3-dimensional weight vector, the last element is the bias.
+    * @return DenseVector The weight vector after one pass through the dataset using the perceptron learning rule.
+    */
   def update_weights(w: DenseVector[Double]):DenseVector[Double] = {
-       val w1 = updateWeights(neg_examples, w,  (t: (DenseVector[Double], Double)) => t._2 > 0, (t: (DenseVector[Double], Double)) => learning_rate * -t._1)
-    val w2 = updateWeights(pos_examples, w1, (t: (DenseVector[Double], Double)) => t._2 < 0, (t: (DenseVector[Double], Double)) => learning_rate * t._1 )
+    val w1 = calculateWeights(neg_examples, w,  (t: (DenseVector[Double], Double)) => t._2 > 0, (t: (DenseVector[Double], Double)) => learning_rate * -t._1)
+    val w2 = calculateWeights(pos_examples, w1, (t: (DenseVector[Double], Double)) => t._2 < 0, (t: (DenseVector[Double], Double)) => learning_rate * t._1 )
     w2
   }
 
   /**
-    * %WRITE THE CODE TO COMPLETE THIS FUNCTION
-function [w] = update_weights(neg_examples, pos_examples, w_current)
-%%
-% Updates the weights of the perceptron for incorrectly classified points
-% using the perceptron update algorithm. This function makes one sweep
-% over the dataset.
-% Inputs:
-%   neg_examples - The num_neg_examples x 3 matrix for the examples with target 0.
-%       num_neg_examples is the number of examples for the negative class.
-%   pos_examples- The num_pos_examples x 3 matrix for the examples with target 1.
-%       num_pos_examples is the number of examples for the positive class.
-%   w_current - A 3-dimensional weight vector, the last element is the bias.
-% Returns:
-%   w - The weight vector after one pass through the dataset using the perceptron
-%       learning rule.
-%%
-w = w_current;
-num_neg_examples = size(neg_examples,1);
-num_pos_examples = size(pos_examples,1);
-for i=1:num_neg_examples
-    this_case = neg_examples(i,:);
-    x = this_case'; %Hint
-    activation = this_case*w;
-    if (activation >= 0)
-        %YOUR CODE HERE
-    end
-end
-for i=1:num_pos_examples
-    this_case = pos_examples(i,:);
-    x = this_case';
-    activation = this_case*w;
-    if (activation < 0)
-        %YOUR CODE HERE
-    end
-end
+    * Foreach tuple in matrix, calculate the activation (tuple' * weight) and us it to calculate a new weightVector
+    * @param samples DenseMatrix of samples
+    * @param w weight
+    * @param filterActivation filter method that takes DenseVector & activationValue
+    * @param mutation amount to add to the current weight vector
+    * @todo check if iterative or all at once...!
+    * @return new WeightVector
     */
-  private def updateWeights(samples: DenseMatrix[Double], w: DenseVector[Double], filterActivation: ((DenseVector[Double], Double))=>Boolean, mutation: ((DenseVector[Double], Double))=>DenseVector[Double]):DenseVector[Double] = {
+  private def calculateWeights(samples: DenseMatrix[Double], w: DenseVector[Double], filterActivation: ((DenseVector[Double], Double))=>Boolean, mutation: ((DenseVector[Double], Double))=>DenseVector[Double]):DenseVector[Double] = {
     samples(*, ::)
       .map(x => (x, x.t * w))
       .toScalaVector()
@@ -190,6 +207,14 @@ end
   }
 
 
+  /**
+    * @todo implement plot to save images
+    * @param mistakes0
+    * @param mistakes1
+    * @param num_err_history
+    * @param w
+    * @param w_dist_history
+    */
   def plot(mistakes0:List[Int], mistakes1:List[Int], num_err_history:List[Int], w:DenseVector[Double], w_dist_history:List[Double]): Unit ={
 
 
