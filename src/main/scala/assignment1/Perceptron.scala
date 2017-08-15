@@ -132,6 +132,8 @@ case class Perceptron (
       w_dist_history = new_w_dist_history
     }
 
+    def savePlot = figure.saveas(s"src/main/resources/assignment1/plots/image-$name.png")
+
     // initial evaluation (iteration 0)
     val (num_err_history0, w_dist_history0) = evaluate(w0, 0, Nil, Nil)
 
@@ -139,9 +141,13 @@ case class Perceptron (
     iterate(1, w0, num_err_history0, w_dist_history0) match {
       case Right((w_updated, num_err_history_updated, w_dist_history_updated)) =>  {
         updateVars(w_updated, num_err_history_updated, w_dist_history_updated)
+        savePlot
         Right(w_updated)
       }
-      case Left(x) => Left(x)
+      case Left(x) => {
+        savePlot
+        Left(x)
+      }
     }
   }
 
