@@ -30,10 +30,11 @@ object Assignment1 extends App with LazyLogging{
       mlFile.denseVectorOption("w_gen_feas")
     ) match {
       case (Some(neg_examples_nobias), Some(pos_examples_nobias), w_init_opt, w_gen_feas_opt) =>
-        Right(LearnPerceptron(neg_examples_nobias, pos_examples_nobias,w_init_opt, w_gen_feas_opt))
+        Perceptron(neg_examples_nobias, pos_examples_nobias,w_init_opt, w_gen_feas_opt).learn()
       case _ =>
         Left("Not all samples found")
     }
+
 
     println(perceptron)
   })
