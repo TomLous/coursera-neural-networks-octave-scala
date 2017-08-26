@@ -25,7 +25,7 @@ case class MatLabFile(filePath: URI) {
       val inputFile: File = new File(filePath)
       val matFileReader = new MatFileReader(inputFile)
       matFileReader.getContent.asScala.flatMap {
-        case (name, structure:MLStructure) => {
+        case (name, structure: MLStructure) => { //@todo perhaps add recursion
           structure.getAllFields.asScala.toList.map(mlarr => {
             s"$name.${mlarr.name}" -> mlarr
           })
@@ -58,13 +58,24 @@ case class MatLabFile(filePath: URI) {
 
     for {
       mlArray <- mlArrayOption(name)
-      denseMatrix <- mlArray
+      denseMatrix <- mlArray: Option[DenseMatrix[Double]]
     } yield denseMatrix
   }
 
   def denseVectorOption(name: String): Option[DenseVector[Double]] = {
-     denseMatrixOption(name).map(_.toDenseVector)
+    denseMatrixOption(name).map(_.toDenseVector)
   }
+
+  def stringListOption(name: String): Option[List[String]] = {
+    import util.MatLabConversions._
+
+    for{
+      mlArray <- mlArrayOption(name)
+      list <- mlArray: Option[List[String]]
+    } yield list
+
+  }
+
 }
 
 

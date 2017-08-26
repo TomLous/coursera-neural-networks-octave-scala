@@ -18,12 +18,12 @@ object Assignment2  extends App with LazyLogging{
   val trainingData = mlFile.denseMatrixOption("data.trainData")
   val validData = mlFile.denseMatrixOption("data.validData")
   val testData = mlFile.denseMatrixOption("data.testData")
-  val vocab = mlFile.denseMatrixOption("data.vocab")
+  val vocab = mlFile.stringListOption("data.vocab")
 
-  println(trainingData)
-  println(validData)
-  println(testData)
-  println(vocab)
+//  println(trainingData)
+//  println(validData)
+//  println(testData)
+//  println(vocab)
 
 
   /**

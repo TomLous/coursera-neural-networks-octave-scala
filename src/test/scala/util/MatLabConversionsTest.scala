@@ -1,11 +1,8 @@
 package util
 
-import java.lang
-
 import breeze.linalg.DenseMatrix
 import io.MatLabFile
-import org.scalatest.{BeforeAndAfterEach, FunSuite, fixture}
-import collection.JavaConverters._
+import org.scalatest.fixture
 
 /**
   * Created by Tom Lous on 14/08/2017.
@@ -41,7 +38,7 @@ class MatLabConversionsTest extends fixture.FunSuite {
 
     val dd:Option[DenseMatrix[Double]] = for{
       mlArray <-  mlFile.mlArrayOption("neg_examples_nobias")
-      denseMatrix <- mlArray
+      denseMatrix <- mlArray:  Option[DenseMatrix[Double]]
     } yield denseMatrix
 
 

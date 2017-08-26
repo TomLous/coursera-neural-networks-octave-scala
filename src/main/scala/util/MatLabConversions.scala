@@ -1,12 +1,9 @@
 package util
 
 import breeze.linalg.DenseMatrix
-import com.jmatio.types.{MLArray, MLDouble, MLNumericArray}
+import com.jmatio.types._
 
-import scala.collection.immutable
 import scala.util.Try
-import collection.JavaConverters._
-import scala.reflect.ClassTag
 
 /**
   * Created by Tom Lous on 14/08/2017.
@@ -33,6 +30,26 @@ object MatLabConversions {
             .map(n => convert(mlNumericArray.get(m, n)))
           ): _*
       )
+
+    }.toOption
+  }
+
+  /**
+    * Converts a MLArray as MLCell of char arrays to a List[Strings]
+    * @param mlArray MLArray
+    * @return Option of a List of Strings
+    */
+  implicit def mlArrayToStringList(mlArray: MLArray): Option[List[String]] = {
+    Try {
+      val mlCell: MLCell = mlArray.asInstanceOf[MLCell]
+
+      def convert(a: MLChar):String = a.getString(0)
+
+      (0 until mlCell.getM)
+        .flatMap(m => (0 until mlCell.getN)
+          .map(n => convert(mlCell.get(m, n).asInstanceOf[MLChar]))
+        ).toList
+
 
     }.toOption
   }
