@@ -1,6 +1,7 @@
 package assignment2
 
-import breeze.linalg.{DenseMatrix, hsplit, tile}
+import breeze.linalg._
+import breeze.numerics._
 import com.typesafe.scalalogging.LazyLogging
 import util.DenseMatrixUtils._
 
@@ -153,9 +154,57 @@ case class NeuralNetwork(
     val inputs_to_hidden_units = (embed_to_hid_weights.t * embedding_layer_state) + tile(hid_bias, 1, batchSize)
 
 
+    // Apply logistic activation function.
+    //  % FILL IN CODE. Replace the line below by one of the options.
+    // Options:
+    // (a) hidden_layer_state = 1 ./ (1 + exp(inputs_to_hidden_units));
+    // (b) hidden_layer_state = 1 ./ (1 - exp(-inputs_to_hidden_units));
+    // => (c) hidden_layer_state = 1 ./ (1 + exp(-inputs_to_hidden_units));
+    // (d) hidden_layer_state = -1 ./ (1 + exp(-inputs_to_hidden_units));
+//    val hidden_layer_state = DenseMatrix.zeros[Double](numhid2, batchSize)
+    val hidden_layer_state = 1.0 ./ (exp(-inputs_to_hidden_units) + 1.0)
 
 
-    (input_batch, word_embedding_weights, embed_to_hid_weights)
+    // COMPUTE STATE OF OUTPUT LAYER.
+    //  Compute inputs to softmax.
+    //  % FILL IN CODE. Replace the line below by one of the options.
+    // Options:
+    // => (a) inputs_to_softmax = hid_to_output_weights' * hidden_layer_state +  repmat(output_bias, 1, batchsize);
+    // (b) inputs_to_softmax = hid_to_output_weights' * hidden_layer_state +  repmat(output_bias, batchsize, 1);
+    // (c) inputs_to_softmax = hidden_layer_state * hid_to_output_weights' +  repmat(output_bias, 1, batchsize);
+    // (d) inputs_to_softmax = hid_to_output_weights * hidden_layer_state +  repmat(output_bias, batchsize, 1);
+//    val inputs_to_softmax = DenseMatrix.zeros[Double](vocab_size, batchSize)
+    val inputs_to_softmax = (hid_to_output_weights.t * hidden_layer_state) + tile(output_bias, 1, batchSize)
+
+
+    // Subtract maximum.
+    // Remember that adding or subtracting the same constant from each input to a
+    // softmax unit does not affect the outputs. Here we are subtracting maximum to
+    // make all inputs <= 0. This prevents overflows when computing their
+    // exponents.
+    val inputs_to_softmax_norm = inputs_to_softmax - tile(max(inputs_to_softmax, Axis._0).t.toDenseMatrix, vocab_size, 1)
+
+    // Compute exp.
+    val output_layer_state = exp(inputs_to_softmax_norm)
+
+    // Normalize to get probability distribution.
+    val output_layer_state_norm = output_layer_state /:/ tile(sum(output_layer_state, Axis._0).t.toDenseMatrix, vocab_size, 1)
+
+
+    assertMatrixDimensions("embedding_layer_state", embedding_layer_state, numhid1*numwords, batchSize)
+    assertMatrixDimensions("hidden_layer_state", hidden_layer_state, numhid2, batchSize)
+    assertMatrixDimensions("output_layer_state_norm", output_layer_state_norm,vocab_size, batchSize)
+
+    (embedding_layer_state, hidden_layer_state, output_layer_state_norm)
+  }
+
+
+  def assertMatrixDimensions(name: String, matrix: DenseMatrix[Double], expectedRows:Int, expectedCols:Int):Unit = {
+    val rows = matrix.rows
+    val cols = matrix.cols
+
+    assert(rows == expectedRows && cols == expectedCols, s"Unexpected dimensions for $name [$rows x $cols] = expected [$expectedRows x $expectedCols]")
+
   }
 
   /**
