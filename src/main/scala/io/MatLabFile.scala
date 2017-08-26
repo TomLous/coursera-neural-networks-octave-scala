@@ -4,11 +4,10 @@ import java.io.File
 import java.net.URI
 
 import breeze.linalg.{DenseMatrix, DenseVector}
+import com.jmatio.io.MatFileReader
+import com.jmatio.types.{MLArray, MLStructure}
 
 import scala.collection.JavaConverters._
-import com.jmatio.io.MatFileReader
-import com.jmatio.types.MLArray
-
 import scala.util.Try
 
 /**
@@ -25,7 +24,15 @@ case class MatLabFile(filePath: URI) {
     Try {
       val inputFile: File = new File(filePath)
       val matFileReader = new MatFileReader(inputFile)
-      matFileReader.getContent.asScala.toMap
+      matFileReader.getContent.asScala.flatMap {
+        case (name, structure:MLStructure) => {
+          structure.getAllFields.asScala.toList.map(mlarr => {
+            s"$name.${mlarr.name}" -> mlarr
+          })
+        }
+        case (name, data) => Some(name -> data)
+      }.toMap
+
     }.toEither
   }
 

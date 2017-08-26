@@ -15,10 +15,10 @@ object Assignment2  extends App with LazyLogging{
 
   logger.info(s"Reading file $inputFileName")
 
-  val trainingData = mlFile.denseMatrixOption("trainData")
-  val validData = mlFile.denseMatrixOption("validData")
-  val testData = mlFile.denseMatrixOption("testData")
-  val vocab = mlFile.denseMatrixOption("vocab")
+  val trainingData = mlFile.denseMatrixOption("data.trainData")
+  val validData = mlFile.denseMatrixOption("data.validData")
+  val testData = mlFile.denseMatrixOption("data.testData")
+  val vocab = mlFile.denseMatrixOption("data.vocab")
 
   println(trainingData)
   println(validData)
