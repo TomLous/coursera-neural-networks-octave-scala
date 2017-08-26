@@ -15,10 +15,24 @@ object Assignment2  extends App with LazyLogging{
 
   logger.info(s"Reading file $inputFileName")
 
-  val trainingData = mlFile.denseMatrixOption("data.trainData")
-  val validData = mlFile.denseMatrixOption("data.validData")
-  val testData = mlFile.denseMatrixOption("data.testData")
-  val vocab = mlFile.stringListOption("data.vocab")
+  val neuralNetwork:Either[String, NeuralNetwork]  = (
+    mlFile.denseMatrixOption("data.trainData"),
+    mlFile.denseMatrixOption("data.validData"),
+    mlFile.denseMatrixOption("data.testData"),
+    mlFile.stringListOption("data.vocab")) match {
+    case (Some(trainData), Some(validData), Some(testData), Some(vocab)) =>
+      Right(NeuralNetwork("Model1", trainData,validData,testData,vocab))
+    case _ =>
+      Left("Not all samples found")
+  }
+
+  val model = neuralNetwork.map(_.train(epochs = 1))
+
+
+
+
+//  NeuralNetwork(trainingData)
+
 
 //  println(trainingData)
 //  println(validData)
