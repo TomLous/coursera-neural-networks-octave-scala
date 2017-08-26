@@ -1,9 +1,7 @@
 package assignment1
 
 import breeze.linalg._
-import breeze.numerics._
 import breeze.plot._
-import breeze.util.LazyLogger
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.annotation.tailrec
@@ -37,8 +35,8 @@ case class Perceptron(
   val num_neg_examples: Int = neg_examples_nobias.rows
   val num_pos_examples: Int = pos_examples_nobias.rows
 
-  private var num_err_history: List[Int] = Nil
-  private var w_dist_history: List[Double] = Nil
+  private[this] var num_err_history: List[Int] = Nil
+  private[this] var w_dist_history: List[Double] = Nil
 
   // Here we add a column of ones to the examples in order to allow us to lear bias parameters.
   val neg_examples: DenseMatrix[Double] = DenseMatrix.horzcat(neg_examples_nobias, DenseMatrix.ones[Double](num_neg_examples, 1))
@@ -50,7 +48,7 @@ case class Perceptron(
     case None => DenseVector.rand[Double](3)
   }
 
-  private var w: DenseVector[Double] = w0
+  private[this] var w: DenseVector[Double] = w0
 
   /**
     * Learns the weights of a perceptron for a 2-dimensional dataset
@@ -76,7 +74,7 @@ case class Perceptron(
       else if (num_err_history.head == 0) {
         evaluate(w, iteration, num_err_history, w_dist_history)
         println(s"Converged $name after ${iteration - 1} steps")
-        Right(w, num_err_history.reverse, w_dist_history.reverse)
+        Right((w, num_err_history.reverse, w_dist_history.reverse))
       } // no more errors => break
       else {
         // update weights
@@ -138,7 +136,7 @@ case class Perceptron(
       w_dist_history = new_w_dist_history
     }
 
-    def savePlot = figure.saveas(s"src/main/resources/assignment1/plots/image-$name.png")
+    def savePlot() = figure.saveas(s"src/main/resources/assignment1/plots/image-$name.png")
 
     // initial evaluation (iteration 0)
     val (num_err_history0, w_dist_history0) = evaluate(w0, 0, Nil, Nil)
@@ -299,5 +297,7 @@ case class Perceptron(
     //    figure.saveas(s"target/image-$name.png")
 
   }
+
+
 
 }
