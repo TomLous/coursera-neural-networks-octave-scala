@@ -16,4 +16,13 @@ libraryDependencies ++= Seq(
 )
 
 
-        
+scalacOptions ++= Seq(
+  "-unchecked",
+  "-deprecation",
+  "-Xlint",
+  "-Xlint:missing-interpolator",
+  "-Ywarn-unused",
+  "-Ywarn-dead-code",
+  "-language:_",
+  "-encoding", "UTF-8"
+)
