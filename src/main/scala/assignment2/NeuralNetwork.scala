@@ -6,7 +6,6 @@ import com.typesafe.scalalogging.LazyLogging
 import util.DenseMatrixUtils._
 
 
-
 /**
   * Created by Tom Lous on 26/08/2017.
   * Copyright © 2017 Datlinq B.V..
@@ -34,20 +33,15 @@ case class NeuralNetwork(
   /**
     * This function trains a neural network language model.
     *
-    * @param epochs        Number of epochs to run.
-    * @param learning_rate Learning rate; default = 0.1.
-    * @param momentum      Momentum; default = 0.9.
-    * @param numhid1       Dimensionality of embedding space; default = 50.
-    * @param numhid2       Number of units in hidden layer; default = 200.
-    * @param init_wt       Standard deviation of the normal distribution which is sampled to get the initial weights; default = 0.01
     * @return NeuralNetwork
     */
-  def train(epochs: Int,
-            learning_rate: Double = 0.1,
-            momentum: Double = 0.9,
-            numhid1: Int = 50,
-            numhid2: Int = 200,
-            init_wt: Double = 0.01): NeuralNetworkModel = {
+  def train(trainingCase: TrainingCase): NeuralNetworkModel = {
+    val epochs = trainingCase.epochs
+    val learning_rate = trainingCase.learning_rate
+    val momentum = trainingCase.momentum
+    val numhid1 = trainingCase.numhid1
+    val numhid2 = trainingCase.numhid2
+    val init_wt = trainingCase.init_wt
 
     val start_time = System.currentTimeMillis()
     val show_training_CE_after = 100
@@ -74,34 +68,34 @@ case class NeuralNetwork(
     var trainset_CE = 0.0
 
 
-    def check(title:String, input: DenseMatrix[Double], target: DenseMatrix[Double]) = {
-      logger.info(s"Running $title ...")
+    def check(title: String, input: DenseMatrix[Double], target: DenseMatrix[Double]) = {
+      logger.info(s"$trainingCase: Running $title ...")
       val (_, _, output_layer_state_valid) =
         fprop(input, word_embedding_weights, embed_to_hid_weights, hid_to_output_weights, hid_bias, output_bias)
 
       val expanded_valid_target = expansion_matrix(::, target.toIndexedSequence())
 
-      val CE = - sum(expanded_valid_target.toDenseMatrix *:* log(output_layer_state_valid + tiny)) / input.cols
+      val CE = -sum(expanded_valid_target.toDenseMatrix *:* log(output_layer_state_valid + tiny)) / input.cols
 
-      logger.info(title.capitalize + f" CE $CE%1.3f")
+      logger.info(f"$trainingCase: ${title.capitalize} CE $CE%1.3f")
     }
 
     // TRAIN.
     (1 to epochs).foreach(epoch => {
-      logger.info(s"Epoch $epoch")
+      logger.info(s"$trainingCase: Epoch $epoch")
       var this_chunk_CE = 0.0
 
 
       // LOOP OVER MINI-BATCHES.
       (1 to numbatches).foreach(m => {
-        val input_batch = train_input(m-1)
-        val target_batch = train_target(m-1)
+        val input_batch = train_input(m - 1)
+        val target_batch = train_target(m - 1)
 
         // FORWARD PROPAGATE.
         // Compute the state of each layer in the network given the input batch
         // and all weights and biases
         val (embedding_layer_state, hidden_layer_state, output_layer_state) =
-          fprop(input_batch, word_embedding_weights, embed_to_hid_weights, hid_to_output_weights, hid_bias, output_bias)
+        fprop(input_batch, word_embedding_weights, embed_to_hid_weights, hid_to_output_weights, hid_bias, output_bias)
 
 
         // COMPUTE DERIVATIVE.
@@ -111,25 +105,25 @@ case class NeuralNetwork(
         val error_deriv = (output_layer_state - expanded_target_batch).toDenseMatrix
 
         // MEASURE LOSS FUNCTION.
-        val CE = - sum(expanded_target_batch.toDenseMatrix *:* log(output_layer_state + tiny)) / batchsize
+        val CE = -sum(expanded_target_batch.toDenseMatrix *:* log(output_layer_state + tiny)) / batchsize
 
 
         count = count + 1
         this_chunk_CE = this_chunk_CE + (CE - this_chunk_CE) / count
         trainset_CE = trainset_CE + (CE - trainset_CE) / m
 
-//        logger.info(f"Batch $m Train CE $this_chunk_CE%1.3f")
-        if(m % show_training_CE_after == 0) {
-          logger.info(f"Batch $m Train CE $this_chunk_CE%1.3f")
+        //        logger.info(f"Batch $m Train CE $this_chunk_CE%1.3f")
+        if (m % show_training_CE_after == 0) {
+          logger.info(f"$trainingCase: Batch $m Train CE $this_chunk_CE%1.3f")
           count = 0
           this_chunk_CE = 0.0
         }
 
         // BACK PROPAGATE.
         // OUTPUT LAYER.
-        val hid_to_output_weights_gradient =  hidden_layer_state * error_deriv.t
+        val hid_to_output_weights_gradient = hidden_layer_state * error_deriv.t
         val output_bias_gradient = sum(error_deriv, Axis._1).asDenseMatrix.t
-        val back_propagated_deriv_1 = (hid_to_output_weights * error_deriv) *:* hidden_layer_state  *:* (1.0 - hidden_layer_state)
+        val back_propagated_deriv_1 = (hid_to_output_weights * error_deriv) *:* hidden_layer_state *:* (1.0 - hidden_layer_state)
 
 
         // HIDDEN LAYER.
@@ -139,7 +133,7 @@ case class NeuralNetwork(
         // => (b) embed_to_hid_weights_gradient = embedding_layer_state * back_propagated_deriv_1';
         // (c) embed_to_hid_weights_gradient = back_propagated_deriv_1;
         // (d) embed_to_hid_weights_gradient = embedding_layer_state;
-//        val embed_to_hid_weights_gradient = DenseMatrix.zeros[Double](numhid1 * numwords, numhid2)
+        //        val embed_to_hid_weights_gradient = DenseMatrix.zeros[Double](numhid1 * numwords, numhid2)
         val embed_to_hid_weights_gradient = embedding_layer_state * back_propagated_deriv_1.t
 
 
@@ -149,7 +143,7 @@ case class NeuralNetwork(
         // (b) hid_bias_gradient = sum(back_propagated_deriv_1, 1);
         // (c) hid_bias_gradient = back_propagated_deriv_1;
         // (d) hid_bias_gradient = back_propagated_deriv_1';
-//        val hid_bias_gradient = DenseMatrix.zeros[Double](numhid2, 1)
+        //        val hid_bias_gradient = DenseMatrix.zeros[Double](numhid2, 1)
         val hid_bias_gradient = sum(back_propagated_deriv_1, Axis._1).asDenseMatrix.t
 
         // FILL IN CODE. Replace the line below by one of the options.
@@ -158,7 +152,7 @@ case class NeuralNetwork(
         // (b) back_propagated_deriv_2 = back_propagated_deriv_1 * embed_to_hid_weights;
         // (c) back_propagated_deriv_2 = back_propagated_deriv_1' * embed_to_hid_weights;
         // (d) back_propagated_deriv_2 = back_propagated_deriv_1 * embed_to_hid_weights';
-//        val back_propagated_deriv_2 = DenseMatrix.zeros[Double](numhid2, batchsize)
+        //        val back_propagated_deriv_2 = DenseMatrix.zeros[Double](numhid2, batchsize)
         val back_propagated_deriv_2 = embed_to_hid_weights * back_propagated_deriv_1
 
         // EMBEDDING LAYER.
@@ -166,7 +160,7 @@ case class NeuralNetwork(
           .foldLeft(word_embedding_weights_gradient_init)((wewg, w) => {
             wewg + expansion_matrix(::, input_batch(w, ::).toIndexedSequence()).toDenseMatrix *
               back_propagated_deriv_2(w * numhid1 until (w + 1) * numhid1, ::).t
-        })
+          })
 
         //UPDATE WEIGHTS AND BIASES.
         word_embedding_weights_delta = momentum *:* word_embedding_weights_delta + word_embedding_weights_gradient /:/ batchsize.toDouble
@@ -184,28 +178,15 @@ case class NeuralNetwork(
         output_bias_delta = momentum *:* output_bias_delta + output_bias_gradient /:/ batchsize.toDouble
         output_bias = output_bias - learning_rate * output_bias_delta
 
-
         // VALIDATE.
-        if(m % show_validation_CE_after == 0){
-
+        if (m % show_validation_CE_after == 0)
           check("validation", valid_input, valid_target)
-//          logger.info("Running validation ...")
-//          val (_, _, output_layer_state_valid) =
-//            fprop(valid_input, word_embedding_weights, embed_to_hid_weights, hid_to_output_weights, hid_bias, output_bias)
-//
-//          val expanded_valid_target = expansion_matrix(::, valid_target.toIndexedSequence())
-//
-//
-//          val CEvalid = - sum(expanded_valid_target.toDenseMatrix *:* log(output_layer_state_valid + tiny)) / valid_input.cols
-//
-//          logger.info(f"Validation CE $CEvalid%1.3f")
-        }
       })
 
-      logger.info(f"Average Training CE $trainset_CE%1.3f")
+      logger.info(f"$trainingCase: Average Training CE $trainset_CE%1.3f")
     })
 
-    logger.info(f"Final Training CE $trainset_CE%1.3f")
+    logger.info(f"$trainingCase: Final Training CE $trainset_CE%1.3f")
 
     check("validation", valid_input, valid_target)
 
@@ -214,11 +195,10 @@ case class NeuralNetwork(
     val end_time = System.currentTimeMillis()
     val diff = (end_time - start_time) / 1000.0
 
-    logger.info(f"Training took $diff%.2f seconds")
+    logger.info(f"$trainingCase: Training took $diff%.2f seconds")
 
     NeuralNetworkModel(word_embedding_weights, embed_to_hid_weights, hid_to_output_weights, hid_bias, output_bias, vocabulary)
   }
-
 
 
   /**
@@ -281,8 +261,8 @@ case class NeuralNetwork(
     // (b) hidden_layer_state = 1 ./ (1 - exp(-inputs_to_hidden_units));
     // => (c) hidden_layer_state = 1 ./ (1 + exp(-inputs_to_hidden_units));
     // (d) hidden_layer_state = -1 ./ (1 + exp(-inputs_to_hidden_units));
-//    val hidden_layer_state = DenseMatrix.zeros[Double](numhid2, batchsize)
-    val hidden_layer_state = 1.0 ./ (exp(-inputs_to_hidden_units) + 1.0)
+    //    val hidden_layer_state = DenseMatrix.zeros[Double](numhid2, batchsize)
+    val hidden_layer_state = 1.0./(exp(-inputs_to_hidden_units) + 1.0)
 
 
     // COMPUTE STATE OF OUTPUT LAYER.
@@ -293,7 +273,7 @@ case class NeuralNetwork(
     // (b) inputs_to_softmax = hid_to_output_weights' * hidden_layer_state +  repmat(output_bias, batchsize, 1);
     // (c) inputs_to_softmax = hidden_layer_state * hid_to_output_weights' +  repmat(output_bias, 1, batchsize);
     // (d) inputs_to_softmax = hid_to_output_weights * hidden_layer_state +  repmat(output_bias, batchsize, 1);
-//    val inputs_to_softmax = DenseMatrix.zeros[Double](vocab_size, batchsize)
+    //    val inputs_to_softmax = DenseMatrix.zeros[Double](vocab_size, batchsize)
     val inputs_to_softmax = (hid_to_output_weights.t * hidden_layer_state) + tile(output_bias, 1, batchsize)
 
 
@@ -311,15 +291,15 @@ case class NeuralNetwork(
     val output_layer_state_norm = output_layer_state /:/ tile(sum(output_layer_state, Axis._0).t.toDenseMatrix, vocab_size, 1)
 
 
-    assertMatrixDimensions("embedding_layer_state", embedding_layer_state, numhid1*numwords, batchsize)
+    assertMatrixDimensions("embedding_layer_state", embedding_layer_state, numhid1 * numwords, batchsize)
     assertMatrixDimensions("hidden_layer_state", hidden_layer_state, numhid2, batchsize)
-    assertMatrixDimensions("output_layer_state_norm", output_layer_state_norm,vocab_size, batchsize)
+    assertMatrixDimensions("output_layer_state_norm", output_layer_state_norm, vocab_size, batchsize)
 
     (embedding_layer_state, hidden_layer_state, output_layer_state_norm)
   }
 
 
-  def assertMatrixDimensions(name: String, matrix: DenseMatrix[Double], expectedRows:Int, expectedCols:Int):Unit = {
+  def assertMatrixDimensions(name: String, matrix: DenseMatrix[Double], expectedRows: Int, expectedCols: Int): Unit = {
     val rows = matrix.rows
     val cols = matrix.cols
 
