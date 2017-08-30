@@ -3,11 +3,15 @@ package assignment2
 
 import com.typesafe.scalalogging.LazyLogging
 import io.MatLabFile
+import util.DynamicFileLogging
 
 /**
   * Created by Tom Lous on 26/08/2017.
   */
 object Assignment2 extends App with LazyLogging {
+
+//  val logPath = getClass.getResource("/assignment2/logs/").toString
+  val logPath = s"src/main/resources/assignment2/logs/"
 
   val inputFileName = "/assignment2/data.mat"
   val inputFilePath = getClass.getResource(inputFileName).toURI
@@ -51,7 +55,8 @@ object Assignment2 extends App with LazyLogging {
 
   val models = neuralNetwork.map(nn => {
     experiments.par.map(tc => {
-      val nnModel = nn.train(tc)
+      val logger = DynamicFileLogging(logPath + tc.fileName).logger
+      val nnModel = nn.train(tc)(logger)
       nnModel
     })
   })

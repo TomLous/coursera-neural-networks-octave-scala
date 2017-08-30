@@ -2,7 +2,7 @@ package assignment2
 
 import breeze.linalg._
 import breeze.numerics._
-import com.typesafe.scalalogging.LazyLogging
+import com.typesafe.scalalogging.Logger
 import util.DenseMatrixUtils._
 
 
@@ -17,7 +17,7 @@ case class NeuralNetwork(
                           testData: DenseMatrix[Double],
                           vocabulary: List[String],
                           batchsize: Int = 100
-                        ) extends LazyLogging {
+                        ) {
 
 
   // LOAD DATA
@@ -35,7 +35,7 @@ case class NeuralNetwork(
     *
     * @return NeuralNetwork
     */
-  def train(trainingCase: TrainingCase): NeuralNetworkModel = {
+  def train(trainingCase: TrainingCase)(logger: Logger): NeuralNetworkModel = {
     val epochs = trainingCase.epochs
     val learning_rate = trainingCase.learning_rate
     val momentum = trainingCase.momentum

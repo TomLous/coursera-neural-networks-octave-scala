@@ -22,5 +22,5 @@ case class TrainingCase(
                        ){
   override def toString() = name
 
-  def fileName() = List(name.replaceAll("""\W+""","").toLowerCase,epochs,learning_rate,momentum,numhid1,numhid2,init_wt).mkString("_") + ".log"
+  val fileName = List(name.replaceAll("""\W+""","").toLowerCase,epochs,learning_rate,momentum,numhid1,numhid2,init_wt).mkString("_") + ".log"
 }
