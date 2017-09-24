@@ -68,7 +68,7 @@ case class NeuralNetwork(
     var trainset_CE = 0.0
 
 
-    def check(title: String, input: DenseMatrix[Double], target: DenseMatrix[Double]) = {
+    def check(title: String, input: DenseMatrix[Double], target: DenseMatrix[Double]):Unit = {
       logger.info(s"$trainingCase: Running $title ...")
       val (_, _, output_layer_state_valid) =
         fprop(input, word_embedding_weights, embed_to_hid_weights, hid_to_output_weights, hid_bias, output_bias)
@@ -106,6 +106,7 @@ case class NeuralNetwork(
 
         // MEASURE LOSS FUNCTION.
         val CE = -sum(expanded_target_batch.toDenseMatrix *:* log(output_layer_state + tiny)) / batchsize
+
 
 
         count = count + 1
@@ -163,20 +164,20 @@ case class NeuralNetwork(
           })
 
         //UPDATE WEIGHTS AND BIASES.
-        word_embedding_weights_delta = momentum *:* word_embedding_weights_delta + word_embedding_weights_gradient /:/ batchsize.toDouble
-        word_embedding_weights = word_embedding_weights - learning_rate * word_embedding_weights_delta
+        word_embedding_weights_delta = (momentum *:* word_embedding_weights_delta) + (word_embedding_weights_gradient /:/ batchsize.toDouble)
+        word_embedding_weights = word_embedding_weights - (learning_rate * word_embedding_weights_delta)
 
-        embed_to_hid_weights_delta = momentum *:* embed_to_hid_weights_delta + embed_to_hid_weights_gradient /:/ batchsize.toDouble
-        embed_to_hid_weights = embed_to_hid_weights - learning_rate * embed_to_hid_weights_delta
+        embed_to_hid_weights_delta = (momentum *:* embed_to_hid_weights_delta) + (embed_to_hid_weights_gradient /:/ batchsize.toDouble)
+        embed_to_hid_weights = embed_to_hid_weights - (learning_rate * embed_to_hid_weights_delta)
 
-        hid_to_output_weights_delta = momentum *:* hid_to_output_weights_delta + hid_to_output_weights_gradient /:/ batchsize.toDouble
-        hid_to_output_weights = hid_to_output_weights - learning_rate * hid_to_output_weights_delta
+        hid_to_output_weights_delta = (momentum *:* hid_to_output_weights_delta) + (hid_to_output_weights_gradient /:/ batchsize.toDouble)
+        hid_to_output_weights = hid_to_output_weights - (learning_rate * hid_to_output_weights_delta)
 
-        hid_bias_delta = momentum *:* hid_bias_delta + hid_bias_gradient /:/ batchsize.toDouble
-        hid_bias = hid_bias - learning_rate * hid_bias_delta
+        hid_bias_delta = (momentum *:* hid_bias_delta) + (hid_bias_gradient /:/ batchsize.toDouble)
+        hid_bias = hid_bias - (learning_rate * hid_bias_delta)
 
-        output_bias_delta = momentum *:* output_bias_delta + output_bias_gradient /:/ batchsize.toDouble
-        output_bias = output_bias - learning_rate * output_bias_delta
+        output_bias_delta = (momentum *:* output_bias_delta) + (output_bias_gradient /:/ batchsize.toDouble)
+        output_bias = output_bias - (learning_rate * output_bias_delta)
 
         // VALIDATE.
         if (m % show_validation_CE_after == 0)
@@ -244,7 +245,7 @@ case class NeuralNetwork(
     val embedding_layer_state = word_embedding_weights(
       input_batch
         .reshape(1)
-        .toIndexedSequence
+        .toIndexedSequence()
       , ::)
       .toDenseMatrix
       .reshape(numhid1 * numwords)

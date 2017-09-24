@@ -13,7 +13,7 @@ function [train_input, train_target, valid_input, valid_target, test_input, test
 %   test: An array of size D X number of points in the test set.
 %   vocab: Vocabulary containing index to word mapping.
 
-load data.mat;
+load ../data.mat;
 numdims = size(data.trainData, 1);
 D = numdims - 1;
 M = floor(size(data.trainData, 2) / N);

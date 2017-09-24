@@ -35,10 +35,10 @@ object Assignment2 extends App with LazyLogging {
 
 
   val experiments = List(
-    TrainingCase("Question 2", epochs = 10),
-    TrainingCase("Question 3", epochs = 10, learning_rate = 100.0),
-    TrainingCase("Question 5 A", epochs = 1, learning_rate = 0.001),
-    TrainingCase("Question 5 B", epochs = 1, learning_rate = 0.1)
+    TrainingCase("Question 2", epochs = 10)
+//    TrainingCase("Question 3", epochs = 10, learning_rate = 100.0),
+//    TrainingCase("Question 5 A", epochs = 1, learning_rate = 0.001),
+//    TrainingCase("Question 5 B", epochs = 1, learning_rate = 0.1)
 //    TrainingCase(epochs = 1, learning_rate = 10.0), // Question 5 C
 //    TrainingCase(epochs = 10, learning_rate = 0.001), // Question 6 A
 //    TrainingCase(epochs = 10, learning_rate = 0.1), // Question 6 B
