@@ -51,7 +51,7 @@ object Assignment2 extends App with LazyLogging {
     TrainingCase("Question 7 D", epochs = 10, numhid1 = 100, numhid2 = 5),
     TrainingCase("Question 9 A", epochs = 5, momentum = 0.0),
     TrainingCase("Question 9 B", epochs = 5, momentum = 0.5),
-    TrainingCase("Question 9 C", epochs = 5),
+    TrainingCase("Question 9 C", epochs = 5)
   )
 
 
