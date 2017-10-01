@@ -1,9 +1,5 @@
 package quiz7
 
-//import breeze.linalg._
-//import breeze.numerics._
-//import com.typesafe.scalalogging.Logger
-//import util.DenseMatrixUtils._
 import com.typesafe.scalalogging.LazyLogging
 
 /**
@@ -20,23 +16,13 @@ object Question3 extends App with LazyLogging{
    w_xh = 0.5,
    w_hh = -1.0,
    w_hy = -0.7,
-   h_bias = -0.7,
+   h_bias = -1.0,
    y_bias = 0.0,
    x_inputs = List(9.0, 4.0, -2.0)
  )
 
-  val case2 = RNN(
-    w_xh = -0.1,
-    w_hh = 0.5,
-    w_hy = 0.25,
-    h_bias = 0.4,
-    y_bias = 0.0,
-    x_inputs = List(18.0,9.0, -8.0)
-  )
-
 
   println(case1)
-  println(case2)
 
 
 
