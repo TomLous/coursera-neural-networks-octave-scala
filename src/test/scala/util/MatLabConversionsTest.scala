@@ -6,7 +6,6 @@ import org.scalatest.fixture
 
 /**
   * Created by Tom Lous on 14/08/2017.
-  * Copyright © 2017 Datlinq B.V..
   */
 class MatLabConversionsTest extends fixture.FunSuite {
 

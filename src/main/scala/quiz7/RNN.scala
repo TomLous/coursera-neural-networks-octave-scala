@@ -7,7 +7,6 @@ import scala.math._
 
 /**
   * Created by Tom Lous on 01/10/2017.
-  * Copyright © 2017 Datlinq B.V..
   */
 case class RNN(
                 w_xh: Double,

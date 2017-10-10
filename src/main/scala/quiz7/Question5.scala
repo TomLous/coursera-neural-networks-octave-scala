@@ -4,7 +4,6 @@ import com.typesafe.scalalogging.LazyLogging
 
 /**
   * Created by Tom Lous on 01/10/2017.
-  * Copyright © 2017 Datlinq B.V..
   */
 object Question5 extends App with LazyLogging{
 

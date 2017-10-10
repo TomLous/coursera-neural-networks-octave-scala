@@ -8,7 +8,6 @@ import util.DenseMatrixUtils._
 
 /**
   * Created by Tom Lous on 26/08/2017.
-  * Copyright © 2017 Datlinq B.V..
   */
 case class NeuralNetwork(
                           name: String,
