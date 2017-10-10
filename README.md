@@ -7,4 +7,6 @@ I've tried to stay as close to the matlab code, but I also wanted a more functio
 
 # State
 Assignment 1: ok
-Assignment 2: WIP
+Assignment 2: ok-ish
+Quiz 7: ok
+Assignment 3: WIP
