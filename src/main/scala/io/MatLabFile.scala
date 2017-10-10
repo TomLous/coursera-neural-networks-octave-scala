@@ -20,15 +20,24 @@ case class MatLabFile(filePath: URI) {
 
   lazy val contents: Either[Throwable, MatLabFileContents] = readFile
 
+
+  private def recursiveReadStruct(name: String, structure: MLStructure, prefix:List[String]=Nil):Map[String, MLArray] = {
+    structure.getAllFields.asScala.toList.flatMap{
+      case mlarr:MLStructure => recursiveReadStruct(mlarr.name, mlarr, name :: prefix)
+      case mlarr => {
+        val key:String = (mlarr.name :: name :: prefix).reverse.mkString(".")
+        List(key -> mlarr)
+      }
+    }.toMap
+  }
+
   private def readFile = {
     Try {
       val inputFile: File = new File(filePath)
       val matFileReader = new MatFileReader(inputFile)
       matFileReader.getContent.asScala.flatMap {
         case (name, structure: MLStructure) => { //@todo perhaps add recursion
-          structure.getAllFields.asScala.toList.map(mlarr => {
-            s"$name.${mlarr.name}" -> mlarr
-          })
+          recursiveReadStruct(name, structure)
         }
         case (name, data) => Some(name -> data)
       }.toMap
@@ -75,6 +84,8 @@ case class MatLabFile(filePath: URI) {
     } yield list
 
   }
+
+  def listNames:Option[List[String]] = contents.map(_.keys.toList).toOption
 
 }
 
