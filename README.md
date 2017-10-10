@@ -6,7 +6,8 @@ I wanted an excuse to practice more Scala & use Breeze, so transforming the matl
 I've tried to stay as close to the matlab code, but I also wanted a more functional approach.
 
 # State
-Assignment 1: ok
-Assignment 2: ok-ish
-Quiz 7: ok
-Assignment 3: WIP
+
+- Assignment 1: ok
+- Assignment 2: ok-ish
+- Quiz 7: ok
+- Assignment 3: WIP
