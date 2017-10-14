@@ -6,6 +6,7 @@ model = initial_model(n_hid);
 from_data_file = load('../data.mat');
 datas = from_data_file.data;
 n_training_cases = size(datas.training.inputs, 2);
+fprintf('n_training_cases %d\n', n_training_cases);
 if n_iters ~= 0, test_gradient(model, datas.training, wd_coefficient); end
 
 % optimization
@@ -176,5 +177,9 @@ function ret = classification_performance(model, data)
 
 [dump, choices] = max(class_input); % choices is integer: the chosen class, plus 1.
 [dump, targets] = max(data.targets); % targets is integer: the target class, plus 1.
+fprintf('choices %f\n', choices);
+fprintf('targets %f\n', targets);
+fprintf('d =~ t %f\n', double(choices ~= targets));
+
 ret = mean(double(choices ~= targets));
 end

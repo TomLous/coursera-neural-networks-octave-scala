@@ -12,11 +12,28 @@ object Assignment3 extends App with LazyLogging {
 
   logger.info(s"Reading file $inputFileName")
 
-  println(mlFile.listNames)
-  val x = mlFile.denseMatrixOption("data.training.inputs")
-  val y = mlFile.denseMatrixOption("data.training")
-  val z = mlFile.denseMatrixOption("data.validation")
-  val w = mlFile.denseMatrixOption("data.test")
 
-  println(x)
+  val trainingData = DataBundle(
+    mlFile.denseMatrixOption("data.training.inputs"),
+    mlFile.denseMatrixOption("data.training.targets")
+  )
+
+  val validationData = DataBundle(
+    mlFile.denseMatrixOption("data.validation.inputs"),
+    mlFile.denseMatrixOption("data.validation.targets")
+  )
+
+  val testData = DataBundle(
+    mlFile.denseMatrixOption("data.test.inputs"),
+    mlFile.denseMatrixOption("data.test.targets")
+  )
+
+
+  val nn = NeuralNetwork(trainingData, validationData, testData)
+
+  nn.a3(0, 0, 0, 0, 0, false, 0)
+
+
+
+//  println(x.map(_.cols))
 }
