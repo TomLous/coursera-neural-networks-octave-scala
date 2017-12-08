@@ -62,10 +62,10 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
     * - data.inputs is a matrix of size <number of inputs i.e. 256> by <number of data cases>. Each column describes a different data case.
     * - data.targets is a matrix of size <number of classes i.e. 10> by <number of data cases>. Each column describes a different data case. It contains a one-of-N encoding of the class, i.e. one element in every column is 1 and the others are 0.
     * @param data DataBundle of cases
-    * @param wdCoefficient Coeff
+    * @param weightDecayCoefficient Coeff
     * @return Model (new Model based on current)
     */
-  def dLossBydModel(data: DataBundle, wdCoefficient: Double):Model = {
+  def dLossBydModel(data: DataBundle, weightDecayCoefficient: Double):Model = {
     // % This is the only function that you're expected to change. Right now, it just returns a lot of zeros, which is obviously not the correct output. Your job is to replace that by a correct computation.
     val newInputToHidden: DenseMatrix[Double] = inputToHidden * 0.0
     val newHiddenToClassification:DenseMatrix[Double] = hiddenToClassification * 0.0
