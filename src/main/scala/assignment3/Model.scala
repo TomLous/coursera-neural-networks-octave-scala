@@ -4,6 +4,8 @@ import breeze.linalg._
 import breeze.numerics._
 import breeze.stats._
 
+import scala.math._
+
 
 /**
   * Created by Tom Lous on 10/10/2017.
@@ -66,9 +68,23 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
   def dLossBydModel(data: DataBundle, wdCoefficient: Double):Model = {
     // % This is the only function that you're expected to change. Right now, it just returns a lot of zeros, which is obviously not the correct output. Your job is to replace that by a correct computation.
     val newInputToHidden: DenseMatrix[Double] = inputToHidden * 0.0
-    val newHiddenToClassification:DenseMatrix[Double] = newHiddenToClassification * 0.0
+    val newHiddenToClassification:DenseMatrix[Double] = hiddenToClassification * 0.0
 
     Model(numberHiddenUnits, newInputToHidden, newHiddenToClassification)
+  }
+
+
+  /**
+    * This computes log(sum(exp(a), 1)) in a numerically stable way
+    * @param a DenseMatrix
+    * @return ret DenseVector[Double]
+    */
+  def logSumExpOverRows(a: DenseMatrix[Double]): DenseVector[Double] ={
+      val maxs_small = max(a, Axis._0) // maxs_small = max(a, [], 1);
+      val maxs_big = tile(maxs_small, 1, a.rows)    // maxs_big = repmat(maxs_small, [size(a, 1), 1]);
+      val ret = log(sum(exp(a - maxs_big), Axis._0)) + maxs_small
+
+      ret.t
   }
 
   /**
@@ -79,10 +95,10 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
     * - data.targets is a matrix of size <number of classes i.e. 10> by <number of data cases>. Each column describes a different data case. It contains a one-of-N encoding of the class, i.e. one element in every column is 1 and the others are 0.
     *  org: function ret = loss(model, data, wd_coefficient)
     * @param data DataBundle
-    * @param wdCoefficient Double
-    * @return Double
+    * @param weightDecayCoefficient Double
+    * @return Double loss
     */
-  def loss(data: DataBundle, wdCoefficient: Double):Double = {
+  def loss(data: DataBundle, weightDecayCoefficient: Double):Double = {
     // Before we can calculate the loss, we need to calculate a variety of intermediate values, like the state of the hidden units.
 
     // input to the hidden units, i.e. before the logistic. size: <number of hidden units> by <number of data cases>
@@ -102,27 +118,25 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
     //  The exponential in the lectures can lead to really big numbers, which are fine in mathematical equations, but can lead to all sorts of problems in Octave.
     //  Octave isn't well prepared to deal with really large numbers, like the number 10 to the power 1000. Computations with such numbers get unstable, so we avoid them.
 
-// @todo continue here
-    0.0
+    // log(sum(exp of class_input)) is what we subtract to get properly normalized log class probabilities. size: <1> by <number of data cases>
+    val classificationNormalizer:DenseVector[Double] = logSumExpOverRows(classificationInput)  // class_normalizer = log_sum_exp_over_rows(class_input);
+
+    // log of probability of each class. size: <number of classes, i.e. 10> by <number of data cases>
+    val logClassificationProbability:DenseMatrix[Double] = classificationInput - tile(classificationNormalizer.t, classificationInput.rows) //class_input - repmat(class_normalizer, [size(class_input, 1), 1]);
+
+    // probability of each class. Each column (i.e. each case) sums to 1. size: <number of classes, i.e. 10> by <number of data cases>
+    val classificationProbability:DenseMatrix[Double] = exp(logClassificationProbability) // class_prob = exp(log_class_prob);
+
+
+    //select the right log class probability using that sum; then take the mean over all data cases.
+    val classificationLoss:Double = -mean(sum(logClassificationProbability *:* data.targets, Axis._0)) // -mean(sum(log_class_prob .* data.targets, 1));
+
+    // weight decay loss. very straightforward: E = 1/2 * wd_coeffecient * theta^2
+    val weightDecayLoss:Double = sum(pow(this.theta.thetaVector,2))  / (2 * weightDecayCoefficient)  // wd_loss = sum(model_to_theta(model).^2)/2*wd_coefficient; %
+
+
+    classificationLoss + weightDecayLoss
   }
-
-
-
-//  % The following three lines of code implement the softmax.
-//  % However, it's written differently from what the lectures say.
-//    % In the lectures, a softmax is described using an exponential divided by a sum of exponentials.
-//    % What we do here is exactly equivalent (you can check the math or just check it in practice), but this is more numerically stable.
-//  % "Numerically stable" means that this way, there will never be really big numbers involved.
-//  % The exponential in the lectures can lead to really big numbers, which are fine in mathematical equations, but can lead to all sorts of problems in Octave.
-//  % Octave isn't well prepared to deal with really large numbers, like the number 10 to the power 1000. Computations with such numbers get unstable, so we avoid them.
-//  class_normalizer = log_sum_exp_over_rows(class_input); % log(sum(exp of class_input)) is what we subtract to get properly normalized log class probabilities. size: <1> by <number of data cases>
-//  log_class_prob = class_input - repmat(class_normalizer, [size(class_input, 1), 1]); % log of probability of each class. size: <number of classes, i.e. 10> by <number of data cases>
-//  class_prob = exp(log_class_prob); % probability of each class. Each column (i.e. each case) sums to 1. size: <number of classes, i.e. 10> by <number of data cases>
-//
-//  classification_loss = -mean(sum(log_class_prob .* data.targets, 1)); % select the right log class probability using that sum; then take the mean over all data cases.
-//  wd_loss = sum(model_to_theta(model).^2)/2*wd_coefficient; % weight decay loss. very straightforward: E = 1/2 * wd_coeffecient * theta^2
-//  ret = classification_loss + wd_loss;
-//  end
 
 
 }
