@@ -33,6 +33,8 @@ object Assignment3 extends App with LazyLogging {
 
   nn.a3(0, 0, 0, 0, 0, false, 0)
 
+//  nn.a3()
+
 
 
 //  println(x.map(_.cols))

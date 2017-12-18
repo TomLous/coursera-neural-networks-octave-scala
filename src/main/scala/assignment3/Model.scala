@@ -4,7 +4,7 @@ import breeze.linalg._
 import breeze.numerics._
 import breeze.stats._
 
-import scala.math._
+
 
 
 /**
@@ -34,7 +34,7 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
     */
   def classificationPerformance(data: DataBundle):Double = {
     // % input to the hidden units, i.e. before the logistic. size: <number of hidden units> by <number of data cases>
-    val hiddenInput:DenseMatrix[Double] = inputToHidden * data.inputs //  hid_input = model.input_to_hid * data.inputs;
+    val hiddenInput:DenseMatrix[Double] = inputToHidden.t * data.inputs //  hid_input = model.input_to_hid * data.inputs;
 
     // % output of the hidden units, i.e. after the logistic. size: <number of hidden units> by <number of data cases>
     val hiddenOutput:DenseMatrix[Double] = Model.logistic(hiddenInput) // hid_output = logistic(hid_input);
@@ -49,7 +49,7 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
     val targets:DenseVector[Int] = data.targets(::,*).map(dv => argmax(dv)).t // [dump, targets] = max(data.targets);
 
     // Matlab has a nice method ~= to determine inequality. I just subtract the two vectors and any non-zero gets mapped to 1
-    val ret = mean((choices-targets).map(x => (abs(x) min 1).toDouble)) // ret = mean(double(choices ~= targets));
+    val ret = mean((choices-targets).map(x => (math.abs(x) min 1).toDouble)) // ret = mean(double(choices ~= targets));
 
     ret
   }
@@ -102,7 +102,7 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
     // Before we can calculate the loss, we need to calculate a variety of intermediate values, like the state of the hidden units.
 
     // input to the hidden units, i.e. before the logistic. size: <number of hidden units> by <number of data cases>
-    val hiddenInput:DenseMatrix[Double] = inputToHidden * data.inputs  // hid_input = model.input_to_hid * data.inputs;
+    val hiddenInput:DenseMatrix[Double] = inputToHidden.t * data.inputs  // hid_input = model.input_to_hid * data.inputs;
 
     // output of the hidden units, i.e. after the logistic. size: <number of hidden units> by <number of data cases>
     val hiddenOutput:DenseMatrix[Double] = Model.logistic(hiddenInput)  // logistic(hid_input);
@@ -121,8 +121,10 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
     // log(sum(exp of class_input)) is what we subtract to get properly normalized log class probabilities. size: <1> by <number of data cases>
     val classificationNormalizer:DenseVector[Double] = logSumExpOverRows(classificationInput)  // class_normalizer = log_sum_exp_over_rows(class_input);
 
+
+    val tiledNormalizer = tile(classificationNormalizer, 1, classificationInput.rows).t
     // log of probability of each class. size: <number of classes, i.e. 10> by <number of data cases>
-    val logClassificationProbability:DenseMatrix[Double] = classificationInput - tile(classificationNormalizer.t, classificationInput.rows) //class_input - repmat(class_normalizer, [size(class_input, 1), 1]);
+    val logClassificationProbability:DenseMatrix[Double] = classificationInput - tiledNormalizer //class_input - repmat(class_normalizer, [size(class_input, 1), 1]);
 
     // probability of each class. Each column (i.e. each case) sums to 1. size: <number of classes, i.e. 10> by <number of data cases>
     val classificationProbability:DenseMatrix[Double] = exp(logClassificationProbability) // class_prob = exp(log_class_prob);
@@ -132,7 +134,7 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
     val classificationLoss:Double = -mean(sum(logClassificationProbability *:* data.targets, Axis._0)) // -mean(sum(log_class_prob .* data.targets, 1));
 
     // weight decay loss. very straightforward: E = 1/2 * wd_coeffecient * theta^2
-    val weightDecayLoss:Double = sum(pow(this.theta.thetaVector,2))  / (2 * weightDecayCoefficient)  // wd_loss = sum(model_to_theta(model).^2)/2*wd_coefficient; %
+    val weightDecayLoss:Double = (sum(pow(this.theta.thetaVector,2))  / 2) * weightDecayCoefficient  // wd_loss = sum(model_to_theta(model).^2)/2*wd_coefficient; %
 
 
     classificationLoss + weightDecayLoss

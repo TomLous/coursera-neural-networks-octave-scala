@@ -1,6 +1,7 @@
 package assignment3
 
-import breeze.linalg.DenseVector
+import breeze.linalg._
+import breeze.plot._
 import com.typesafe.scalalogging.LazyLogging
 
 /**
@@ -34,30 +35,29 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
     }
 
     // optimization
-    val theta:DenseVector[Double] = model.theta.thetaVector  // theta = model_to_theta(model);
-//    val momentumSpeed:DenseVector[Double] = DenseVector.zeros[Double](theta.length) // momentum_speed = theta * 0;
+//    val theta:DenseVector[Double] = model.theta.thetaVector  // theta = model_to_theta(model);
 
-//    val trainingDataLosses = Array.emptyDoubleArray
-//    val validationDataLosses = Array.emptyDoubleArray
 
-    val bestSoFar = if(doEarlyStopping) Some(BestSoFar()) else None
+    val filename = s"src/main/resources/assignment3/plots/image-loss-$weightDecayCoefficient-$numberHiddenUnits-$numberIterations-$learningRate-$momentumMultiplier-$doEarlyStopping-$miniBatchSize.png"
+    val name = s"Loss wd: $weightDecayCoefficient #h: $numberHiddenUnits #n: $numberIterations a: $learningRate x: $momentumMultiplier s: $doEarlyStopping b: $miniBatchSize"
 
-    (1 to numberIterations).foldLeft(
+    val (theta ,_, trainingDataLosses, validationDataLosses, bestSoFar) =  (0 until numberIterations).foldLeft(
       (
         model.theta,
-        DenseVector.zeros[Double](theta.length),
+        DenseVector.zeros[Double](model.theta.thetaVector.length),
         List.empty[Double],
-        List.empty[Double]
+        List.empty[Double],
+        BestSoFar(model.theta)
       )
     ){
-      case ((currentTheta,currentMomentumSpeed, currentTrainingDataLosses, currentValidationDataLosses), optimizationIterationI) => {
+      case ((currentTheta,currentMomentumSpeed, currentTrainingDataLosses, currentValidationDataLosses,bestSoFar), optimizationIterationI) => {
         val currentModel = currentTheta.model //model = theta_to_model(theta);
 
 
         val trainingBatchStart = (optimizationIterationI-1) * miniBatchSize %  numberTrainingCases // training_batch_start = mod((optimization_iteration_i-1) * mini_batch_size, n_training_cases)+1;
         val trainingBatch = trainingData.batch(trainingBatchStart, miniBatchSize)
 
-        val gradient = model.dLossBydModel(trainingBatch, weightDecayCoefficient).theta.thetaVector //gradient = model_to_theta(d_loss_by_d_model(model, training_batch, wd_coefficient));
+        val gradient = currentModel.dLossBydModel(trainingBatch, weightDecayCoefficient).theta.thetaVector //gradient = model_to_theta(d_loss_by_d_model(model, training_batch, wd_coefficient));
 
         val newMomentumSpeed = currentMomentumSpeed * momentumMultiplier - gradient // momentum_speed = momentum_speed * momentum_multiplier - gradient;
         val newThetaVector = currentTheta.thetaVector + currentMomentumSpeed * learningRate//theta = theta + momentum_speed * learning_rate;
@@ -65,22 +65,74 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
         val newTheta = currentTheta.copy(thetaVector = newThetaVector) //model = theta_to_model(theta);
         val newModel = newTheta.model //model = theta_to_model(theta);
 
-        val newTrainingDataLosses = currentTrainingDataLosses :+ model.loss(trainingData, weightDecayCoefficient)
-        val newValidationDataLosses = currentValidationDataLosses :+ model.loss(validationData, weightDecayCoefficient)
+        val newTrainingDataLosses = currentTrainingDataLosses :+ newModel.loss(trainingData, weightDecayCoefficient)
+        val newValidationDataLosses = currentValidationDataLosses :+ newModel.loss(validationData, weightDecayCoefficient)
 
-        if(doEarlyStopping){
-          // @todo continue here
+        val newBestSoFar = if(doEarlyStopping && newValidationDataLosses.last < bestSoFar.validationLoss ){ //if do_early_stopping && validation_data_losses(end) < best_so_far.validation_loss,
+          BestSoFar(
+            newTheta, // this will be overwritten soon
+            newValidationDataLosses.last, //  validation_data_losses(end);
+            optimizationIterationI // optimization_iteration_i
+          )
+        }
+        else{
+          bestSoFar
         }
 
-//        training_data_losses = [training_data_losses, loss(model, datas.training, wd_coefficient)];
-//        validation_data_losses = [validation_data_losses, loss(model, datas.validation, wd_coefficient)];
+        if(optimizationIterationI % (numberIterations / 10) == 0) { //if mod(optimization_iteration_i, round(n_iters/10)) == 0,
+          logger.info(s"After $optimizationIterationI optimization iterations, training data loss is ${newTrainingDataLosses.last}, and validation data loss is ${newValidationDataLosses.last}")
+        }
 
-        // momentum_speed = momentum_speed * momentum_multiplier - gradient;
 
-        (newTheta.,newMomentumSpeed, newTrainingDataLosses, newValidationDataLosses)
+        (newTheta ,newMomentumSpeed, newTrainingDataLosses, newValidationDataLosses, newBestSoFar)
 
       }
     }
+
+    // Check again, this time with more typical parameters
+    if(numberIterations != 0){
+      testGradient(theta.model, trainingData, weightDecayCoefficient) // if n_iters ~= 0, test_gradient(model, datas.training, wd_coefficient); end
+    }
+
+    val newTheta = if(doEarlyStopping){ //  if do_early_stopping,
+      logger.info(s"Early stopping: validation loss was lowest after ${bestSoFar.afterNIteratons} iterations. We chose the model that we had then.\\n'")
+      bestSoFar.theta // theta = best_so_far.theta;
+    }else{
+      theta
+    }
+
+    // the optimization is finished. Now do some reporting.
+    val newModel = newTheta.model
+
+
+    if(numberIterations != 0){
+      val figure = Figure(name)
+      val p = figure.subplot(0)
+      val x = (0 to trainingDataLosses.length).toArray
+      p.title = "Loss"
+      p.legend = true
+//      p += plot(x, trainingDataLosses.toArray, colorcode = "[43,146,31]", name = "training")
+//      p += plot(x, validationDataLosses.toArray, colorcode = "[220,0,25]", name = "validation")
+      p.ylabel ="loss"
+      p.xlabel = "iteration number"
+      p.legend = true
+
+      figure.saveas(filename)
+    }
+
+    Map("training" -> trainingData, "validation" -> validationData, "test" -> testData).foreach{
+      case (dataName, data) =>
+        logger.info(s"The loss on the $dataName data is "  + newModel.loss(data, weightDecayCoefficient))
+
+        if(weightDecayCoefficient != 0.0){
+          logger.info(s"The classification loss (i.e. without weight decay) on the $dataName data is " + newModel.loss(data, 0.0))
+        }
+
+        logger.info(s"The classification error rate on the $dataName data is " + newModel.classificationPerformance(data))
+    }
+
+
+
   }
 
 
