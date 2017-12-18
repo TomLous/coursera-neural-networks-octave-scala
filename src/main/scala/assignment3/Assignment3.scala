@@ -1,5 +1,7 @@
 package assignment3
 
+import java.util.Calendar
+
 import com.typesafe.scalalogging.LazyLogging
 import io.MatLabFile
 
@@ -31,11 +33,23 @@ object Assignment3 extends App with LazyLogging {
 
   val nn = NeuralNetwork(trainingData, validationData, testData)
 
-  nn.a3(0, 0, 0, 0, 0, false, 0)
-
-//  nn.a3()
 
 
+  // Q2
+  exercise("Q2. What is the loss on the training data for that test run? Write your answer with at least 5 digits after the decimal point.")(
+    () => nn.a3(0, 0, 0, 0, 0, false, 0)
+  )
 
-//  println(x.map(_.cols))
+
+  def exercise(info: String)(f:() => Unit) = {
+    logger.info("_" * 80)
+    logger.info(info)
+    val startTime:Long = Calendar.getInstance().getTimeInMillis
+    f()
+    val elapsed:Long = Calendar.getInstance().getTimeInMillis - startTime
+    logger.info(s"$elapsed ms elapsed")
+    logger.info("_" * 80)
+
+  }
+
 }

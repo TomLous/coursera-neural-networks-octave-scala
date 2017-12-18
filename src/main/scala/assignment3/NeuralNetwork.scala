@@ -108,11 +108,11 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
     if(numberIterations != 0){
       val figure = Figure(name)
       val p = figure.subplot(0)
-      val x = (0 to trainingDataLosses.length).toArray
+      val x = (0 to trainingDataLosses.length).map(_.toDouble).toArray
       p.title = "Loss"
       p.legend = true
-//      p += plot(x, trainingDataLosses.toArray, colorcode = "[43,146,31]", name = "training")
-//      p += plot(x, validationDataLosses.toArray, colorcode = "[220,0,25]", name = "validation")
+      p += plot(x, trainingDataLosses.toArray, colorcode = "[43,146,31]", name = "training")
+      p += plot(x, validationDataLosses.toArray, colorcode = "[220,0,25]", name = "validation")
       p.ylabel ="loss"
       p.xlabel = "iteration number"
       p.legend = true
