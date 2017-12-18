@@ -26,7 +26,7 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
     * @param miniBatchSize
     * @return
     */
-  def a3(weightDecayCoefficient: Double, numberHiddenUnits: Int, numberIterations: Int, learningRate: Double, momentumMultiplier: Double, doEarlyStopping: Boolean, miniBatchSize: Int): Unit = {
+  def a3(id: String, weightDecayCoefficient: Double, numberHiddenUnits: Int, numberIterations: Int, learningRate: Double, momentumMultiplier: Double, doEarlyStopping: Boolean, miniBatchSize: Int): Unit = {
 
     val model = Model.apply(numberHiddenUnits) // model = initial_model(n_hid);
 
@@ -38,8 +38,8 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
 //    val theta:DenseVector[Double] = model.theta.thetaVector  // theta = model_to_theta(model);
 
 
-    val filename = s"src/main/resources/assignment3/plots/image-loss-$weightDecayCoefficient-$numberHiddenUnits-$numberIterations-$learningRate-$momentumMultiplier-$doEarlyStopping-$miniBatchSize.png"
-    val name = s"Loss wd: $weightDecayCoefficient #h: $numberHiddenUnits #n: $numberIterations a: $learningRate x: $momentumMultiplier s: $doEarlyStopping b: $miniBatchSize"
+    val filename = s"src/main/resources/assignment3/plots/image-loss-$id-$weightDecayCoefficient-$numberHiddenUnits-$numberIterations-$learningRate-$momentumMultiplier-$doEarlyStopping-$miniBatchSize.png"
+    val name = s"$id: Loss wd: $weightDecayCoefficient #h: $numberHiddenUnits #n: $numberIterations a: $learningRate x: $momentumMultiplier s: $doEarlyStopping b: $miniBatchSize"
 
     val (theta ,_, trainingDataLosses, validationDataLosses, bestSoFar) =  (0 until numberIterations).foldLeft(
       (
@@ -54,7 +54,7 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
         val currentModel = currentTheta.model //model = theta_to_model(theta);
 
 
-        val trainingBatchStart = (optimizationIterationI-1) * miniBatchSize %  numberTrainingCases // training_batch_start = mod((optimization_iteration_i-1) * mini_batch_size, n_training_cases)+1;
+        val trainingBatchStart = optimizationIterationI * miniBatchSize %  numberTrainingCases // training_batch_start = mod((optimization_iteration_i-1) * mini_batch_size, n_training_cases)+1;
         val trainingBatch = trainingData.batch(trainingBatchStart, miniBatchSize)
 
         val gradient = currentModel.dLossBydModel(trainingBatch, weightDecayCoefficient).theta.thetaVector //gradient = model_to_theta(d_loss_by_d_model(model, training_batch, wd_coefficient));
@@ -80,7 +80,7 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
         }
 
         if(optimizationIterationI % (numberIterations / 10) == 0) { //if mod(optimization_iteration_i, round(n_iters/10)) == 0,
-          logger.info(s"After $optimizationIterationI optimization iterations, training data loss is ${newTrainingDataLosses.last}, and validation data loss is ${newValidationDataLosses.last}")
+          logger.info(s"$id: After $optimizationIterationI optimization iterations, training data loss is ${newTrainingDataLosses.last}, and validation data loss is ${newValidationDataLosses.last}")
         }
 
 
@@ -95,7 +95,7 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
     }
 
     val newTheta = if(doEarlyStopping){ //  if do_early_stopping,
-      logger.info(s"Early stopping: validation loss was lowest after ${bestSoFar.afterNIteratons} iterations. We chose the model that we had then.\\n'")
+      logger.info(s"$id: Early stopping: validation loss was lowest after ${bestSoFar.afterNIteratons} iterations. We chose the model that we had then.\\n'")
       bestSoFar.theta // theta = best_so_far.theta;
     }else{
       theta
@@ -108,7 +108,7 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
     if(numberIterations != 0){
       val figure = Figure(name)
       val p = figure.subplot(0)
-      val x = (0 to trainingDataLosses.length).map(_.toDouble).toArray
+      val x = trainingDataLosses.indices.map(_.toDouble).toArray
       p.title = "Loss"
       p.legend = true
       p += plot(x, trainingDataLosses.toArray, colorcode = "[43,146,31]", name = "training")
@@ -122,13 +122,13 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
 
     Map("training" -> trainingData, "validation" -> validationData, "test" -> testData).foreach{
       case (dataName, data) =>
-        logger.info(s"The loss on the $dataName data is "  + newModel.loss(data, weightDecayCoefficient))
+        logger.info(s"$id: The loss on the $dataName data is "  + newModel.loss(data, weightDecayCoefficient), id)
 
         if(weightDecayCoefficient != 0.0){
-          logger.info(s"The classification loss (i.e. without weight decay) on the $dataName data is " + newModel.loss(data, 0.0))
+          logger.info(s"$id: The classification loss (i.e. without weight decay) on the $dataName data is " + newModel.loss(data, 0.0))
         }
 
-        logger.info(s"The classification error rate on the $dataName data is " + newModel.classificationPerformance(data))
+        logger.info(s"$id: The classification error rate on the $dataName data is " + newModel.classificationPerformance(data))
     }
 
 
@@ -160,7 +160,7 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
       val fdHere = temp / h
       val diff = math.abs(analyticHere - fdHere)
 
-      logger.info(s"testIndex: $testIndex, baseTheta: ${baseTheta(testIndex)}, diff: $diff, fdHere: $fdHere, analyticHere: $analyticHere")
+      logger.debug(s"\ttestIndex: $testIndex, baseTheta: ${baseTheta(testIndex)}, diff: $diff, fdHere: $fdHere, analyticHere: $analyticHere")
 
       if(diff < correctnessThreshold || (diff / (math.abs(analyticHere) +  math.abs(fdHere))) < correctnessThreshold) {
         Left(s"Theta element #$testIndex, with value ${baseTheta(testIndex)}, has finite difference gradient $fdHere but analytic gradient $analyticHere. That looks like an error.")
@@ -169,7 +169,7 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
       }
     }).dropWhile(_.isRight).headOption match {
       case Some(Left(error)) => logger.error(error)
-      case _ => logger.info("'Gradient test passed. That means that the gradient that your code computed is within 0.001%% of the gradient that the finite difference approximation computed, so the gradient calculation procedure is probably correct (not certainly, but probably).\\n'")
+      case _ => logger.info("Gradient test passed. That means that the gradient that your code computed is within 0.001% of the gradient that the finite difference approximation computed, so the gradient calculation procedure is probably correct (not certainly, but probably).")
     }
   }
 

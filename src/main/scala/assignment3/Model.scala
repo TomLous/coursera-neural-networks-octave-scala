@@ -70,6 +70,37 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
     val newInputToHidden: DenseMatrix[Double] = inputToHidden * 0.0
     val newHiddenToClassification:DenseMatrix[Double] = hiddenToClassification * 0.0
 
+    // <solution>
+
+    // For
+//    val newInputToHidden: DenseMatrix[Double] = inputToHidden.t * data.inputs
+
+
+//    val newHiddenToClassification:DenseMatrix[Double]
+
+
+    /*
+    % forward pass
+  hid_input = model.input_to_hid * data.inputs;
+  hid_output = logistic(hid_input);
+  class_input = model.hid_to_class * hid_output;
+  % softmax
+  class_normalizer = log_sum_exp_over_rows(class_input);
+  log_class_prob = class_input - repmat(class_normalizer, [size(class_input, 1), 1]);
+  class_prob = exp(log_class_prob);
+
+  m = size(data.inputs, 2);
+
+  % backward pass
+  hid_to_class_grad = class_prob - data.targets;
+  ret.hid_to_class = 1/m * (hid_to_class_grad * hid_output')  + wd_coefficient * model.hid_to_class;
+
+  input_to_hid_grad = (model.hid_to_class' * hid_to_class_grad) .* (hid_output .* (1 - hid_output));
+  ret.input_to_hid = 1/m * (input_to_hid_grad * data.inputs') + wd_coefficient * model.input_to_hid;
+     */
+
+    // </solution>
+
     Model(numberHiddenUnits, newInputToHidden, newHiddenToClassification)
   }
 
