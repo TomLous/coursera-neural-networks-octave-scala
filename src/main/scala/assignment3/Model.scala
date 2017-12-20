@@ -61,27 +61,92 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
     */
   def dLossBydModel(data: DataBundle, weightDecayCoefficient: Double):Model = {
     // % This is the only function that you're expected to change. Right now, it just returns a lot of zeros, which is obviously not the correct output. Your job is to replace that by a correct computation.
-    val newInputToHidden: DenseMatrix[Double] = inputToHidden * 0.0
-    val newHiddenToClassification:DenseMatrix[Double] = hiddenToClassification * 0.0
+//    val newInputToHidden: DenseMatrix[Double] = inputToHidden * 0.0
+//    val newHiddenToClassification:DenseMatrix[Double] = hiddenToClassification * 0.0
+
 
     // <solution>
 
-    // For
-//    val newInputToHidden: DenseMatrix[Double] = inputToHidden.t * data.inputs
+    // Forward pass
+    val (_, hiddenOutput,classificationInput) = forwardPass(data)
+
+    // Softmax
+    val (_,classificationProbability) = softmax(classificationInput)
 
 
-//    val newHiddenToClassification:DenseMatrix[Double]
+    val m = data.inputs.cols.toDouble
 
+
+
+
+
+
+    // Backward Pass
+
+    // New newHiddenToClassification
+    val hiddenToClassificationGradient = classificationProbability - data.targets //class_prob-data.targets
+
+    val hiddenOutputTimesHiddenToClassificationGradient = hiddenToClassificationGradient * hiddenOutput.t
+
+    val perCaseHiddenOutputTimesHiddenToClassificationGradient = hiddenOutputTimesHiddenToClassificationGradient / m
+
+    val hiddenToClassificationWeightDecayed = weightDecayCoefficient * hiddenToClassification
+
+    val newHiddenToClassification = perCaseHiddenOutputTimesHiddenToClassificationGradient + hiddenToClassificationWeightDecayed
+
+    // newInputToHidden
+
+    val hiddenToClassificationTimesHiddenToClassificationGradient = hiddenToClassification.t * hiddenToClassificationGradient
+
+    val perCaseHiddenToClassificationTimesHiddenToClassificationGradient = hiddenToClassificationTimesHiddenToClassificationGradient / m
+
+    val errorDiff =  hiddenOutput-pow(hiddenOutput,2)
+
+    val perCaseTimesError = perCaseHiddenToClassificationTimesHiddenToClassificationGradient *:* errorDiff
+
+    val inputToHiddenWeightDecayed = weightDecayCoefficient * inputToHidden
+
+
+    val newInputToHidden = (data.inputs * perCaseTimesError.t) + inputToHiddenWeightDecayed
+
+    //    ret.input_to_hid =
+    // 1/(numcases)*(model.hid_to_class'*(class_prob-data.targets)).*(hid_output-hid_output.^2)*data.inputs'+wd_coefficient*model.input_to_hid;
+//    1/(numcases)*(model.hid_to_class'*(class_prob-data.targets)).*(hid_output-hid_output.^2)*data.inputs'+wd_coefficient*model.input_to_hid;
+//    ret.hid_to_class = 1/(numcases)*(class_prob-data.targets)*hid_output'+wd_coefficient*model.hid_to_class;
+
+    //    ret.input_to_hid =
+    // perCaseHiddenToClassificationTimesHiddenToClassificationGradient
+    // .*(hid_output-hid_output.^2)
+    // *data.inputs'
+    // +inputToHiddenWeightDecayed
+
+
+
+
+
+
+
+
+
+
+
+
+//    val newHiddenToClassification = (weightDecayCoefficient * hiddenToClassification) + ((hiddenToClassificationGradient * hiddenOutput.t)/m)
+//
+//    val a = (hiddenToClassification.t * hiddenToClassificationGradient)
+//    val b = (hiddenOutput *:* (1.0 - hiddenOutput))
+//    val inputToHiddenGradient:DenseMatrix[Double] = (hiddenToClassification.t * hiddenToClassificationGradient) *:* (hiddenOutput *:* (1.0 - hiddenOutput))
+//
+//    val y = (weightDecayCoefficient * inputToHidden)
+//    val x = ((inputToHiddenGradient * data.inputs.t)/m)
+//    val newInputToHidden = (inputToHiddenWeightDecayed) + ((inputToHiddenGradient * data.inputs.t)/m)
+
+
+//    ret.input_to_hid = 1/(numcases)*(model.hid_to_class'*(class_prob-data.targets)).*(hid_output-hid_output.^2)*data.inputs'+wd_coefficient*model.input_to_hid;
+//    ret.hid_to_class = 1/(numcases)*(class_prob-data.targets)*hid_output'+wd_coefficient*model.hid_to_class;
 
     /*
-    % forward pass
-  hid_input = model.input_to_hid * data.inputs;
-  hid_output = logistic(hid_input);
-  class_input = model.hid_to_class * hid_output;
-  % softmax
-  class_normalizer = log_sum_exp_over_rows(class_input);
-  log_class_prob = class_input - repmat(class_normalizer, [size(class_input, 1), 1]);
-  class_prob = exp(log_class_prob);
+
 
   m = size(data.inputs, 2);
 
@@ -94,6 +159,8 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
      */
 
     // </solution>
+
+
 
     Model(numberHiddenUnits, newInputToHidden, newHiddenToClassification)
   }

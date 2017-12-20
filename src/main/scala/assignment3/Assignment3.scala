@@ -34,13 +34,13 @@ object Assignment3 extends App with LazyLogging {
   val nn = NeuralNetwork(trainingData, validationData, testData)
 
   logger.info("_" * 80)
-
+/*
   // Q2
   exercise("Q2. What is the loss on the training data for that test run? Write your answer with at least 5 digits after the decimal point.")(
     () => nn.a3("Q2", 0, 0, 0, 0, 0, false, 0)
   )
 
- // Q3
+  // Q3
   exercise("Q3a.  run with huge weight decay, so that the weight decay loss overshadows the classification loss. ")(
     () => nn.a3("Q3a", 1e7, 7, 10, 0, 0, false, 4)
   )
@@ -48,6 +48,33 @@ object Assignment3 extends App with LazyLogging {
 
   exercise("Q3b.  turn off weight decay, and you'll see the gradient error message coming back ")(
     () => nn.a3("Q3b", 0, 7, 10, 0, 0, false, 4)
+  )
+
+  exercise("Q3c.  best see the effect of the optimization")(
+    () => nn.a3("Q3c", 0, 10, 70, 0.005, 0, false, 4)
+  )
+
+  exercise("Q4a.  Let's try a bigger learning rate: LR=0.5, and still no momentum.")(
+    () => nn.a3("Q4a", 0, 10, 70, 0.5, 0, false, 4)
+  )
+  */
+  exercise("Q4b.  0.002, 0.01, 0.05, 0.2, 1.0, 5.0, and 20.0")(
+    () => {
+      nn.a3("Q4b-1", 0, 10, 70, 0.002, 0, false, 4)
+      nn.a3("Q4b-2", 0, 10, 70, 0.01, 0, false, 4)
+      nn.a3("Q4b-3", 0, 10, 70, 0.05, 0, false, 4)
+      nn.a3("Q4b-4", 0, 10, 70, 0.2, 0, false, 4)
+      nn.a3("Q4b-5", 0, 10, 70, 1.0, 0, false, 4)
+      nn.a3("Q4b-6", 0, 10, 70, 5.0, 0, false, 4)
+      nn.a3("Q4b-7", 0, 10, 70, 20.0, 0, false, 4)
+      nn.a3("Q4b-8", 0, 10, 70, 0.002, 0.9, false, 4)
+      nn.a3("Q4b-9", 0, 10, 70, 0.01, 0.9, false, 4)
+      nn.a3("Q4b-10", 0, 10, 70, 0.05, 0.9, false, 4)
+      nn.a3("Q4b-11", 0, 10, 70, 0.2, 0.9, false, 4)
+      nn.a3("Q4b-12", 0, 10, 70, 1.0, 0.9, false, 4)
+      nn.a3("Q4b-13", 0, 10, 70, 5.0, 0.9, false, 4)
+      nn.a3("Q4b-14", 0, 10, 70, 20.0, 0.9, false, 4)
+    }
   )
 
 
@@ -61,4 +88,6 @@ object Assignment3 extends App with LazyLogging {
     logger.info(s"$elapsed ms elapsed")
     logger.info("_" * 80)
   }
+
+  System.exit(0)
 }

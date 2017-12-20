@@ -4,6 +4,8 @@ import breeze.linalg._
 import breeze.plot._
 import com.typesafe.scalalogging.LazyLogging
 
+import scala.util.{Failure, Success, Try}
+
 /**
   * Created by Tom Lous on 13/10/2017.
   *
@@ -107,6 +109,7 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
 
     if(numberIterations != 0){
       val figure = Figure(name)
+      figure.clear()
       val p = figure.subplot(0)
       val x = trainingDataLosses.indices.map(_.toDouble).toArray
       p.title = "Loss"
@@ -117,7 +120,13 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
       p.xlabel = "iteration number"
       p.legend = true
 
-      figure.saveas(filename)
+      Thread.sleep(500)
+
+      Try(figure.saveas(filename)) match {
+        case Success(_) => logger.info(s"$id: Saved $filename")
+        case Failure(t) => logger.error(s"$id: Couldn't save $filename: ${t.getMessage}")
+      }
+
     }
 
     Map("training" -> trainingData, "validation" -> validationData, "test" -> testData).foreach{
@@ -160,7 +169,7 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
       val fdHere = temp / h
       val diff = math.abs(analyticHere - fdHere)
 
-      logger.debug(s"\ttestIndex: $testIndex, baseTheta: ${baseTheta(testIndex)}, diff: $diff, fdHere: $fdHere, analyticHere: $analyticHere")
+      logger.trace(s"\ttestIndex: $testIndex, baseTheta: ${baseTheta(testIndex)}, diff: $diff, fdHere: $fdHere, analyticHere: $analyticHere")
 
       if(diff < correctnessThreshold || (diff / (math.abs(analyticHere) +  math.abs(fdHere))) < correctnessThreshold) {
         Left(s"Theta element #$testIndex, with value ${baseTheta(testIndex)}, has finite difference gradient $fdHere but analytic gradient $analyticHere. That looks like an error.")
