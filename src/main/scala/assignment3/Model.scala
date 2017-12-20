@@ -33,14 +33,8 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
     * @return Double fraction of incorrectly classifications
     */
   def classificationPerformance(data: DataBundle):Double = {
-    // % input to the hidden units, i.e. before the logistic. size: <number of hidden units> by <number of data cases>
-    val hiddenInput:DenseMatrix[Double] = inputToHidden.t * data.inputs //  hid_input = model.input_to_hid * data.inputs;
 
-    // % output of the hidden units, i.e. after the logistic. size: <number of hidden units> by <number of data cases>
-    val hiddenOutput:DenseMatrix[Double] = Model.logistic(hiddenInput) // hid_output = logistic(hid_input);
-
-    // % input to the components of the softmax. size: <number of classes, i.e. 10> by <number of data cases>
-    val classificationInput:DenseMatrix[Double] = hiddenToClassification * hiddenOutput //    class_input = model.hid_to_class * hid_output;
+    val (_,_, classificationInput) = forwardPass(data)
 
     // % choices is integer: the chosen class
     val choices:DenseVector[Int] = classificationInput(::,*).map(dv => argmax(dv)).t   // [dump, choices] = max(class_input);
@@ -132,6 +126,23 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
   def loss(data: DataBundle, weightDecayCoefficient: Double):Double = {
     // Before we can calculate the loss, we need to calculate a variety of intermediate values, like the state of the hidden units.
 
+
+    val (_, _, classificationInput) = forwardPass(data)
+
+
+    val(logClassificationProbability,_) = softmax(classificationInput)
+
+    //select the right log class probability using that sum; then take the mean over all data cases.
+    val classificationLoss:Double = -mean(sum(logClassificationProbability *:* data.targets, Axis._0)) // -mean(sum(log_class_prob .* data.targets, 1));
+
+    // weight decay loss. very straightforward: E = 1/2 * wd_coeffecient * theta^2
+    val weightDecayLoss:Double = (sum(pow(this.theta.thetaVector,2))  / 2) * weightDecayCoefficient  // wd_loss = sum(model_to_theta(model).^2)/2*wd_coefficient; %
+
+
+    classificationLoss + weightDecayLoss
+  }
+
+  private def forwardPass(data: DataBundle):(DenseMatrix[Double],DenseMatrix[Double],DenseMatrix[Double]) = {
     // input to the hidden units, i.e. before the logistic. size: <number of hidden units> by <number of data cases>
     val hiddenInput:DenseMatrix[Double] = inputToHidden.t * data.inputs  // hid_input = model.input_to_hid * data.inputs;
 
@@ -141,7 +152,11 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
     // input to the components of the softmax. size: <number of classes, i.e. 10> by <number of data cases>
     val classificationInput:DenseMatrix[Double] = hiddenToClassification * hiddenOutput  // class_input = model.hid_to_class * hid_output;
 
-    // The following three lines of code implement the softmax.
+    (hiddenInput, hiddenOutput,classificationInput)
+  }
+
+  private def softmax(classificationInput:DenseMatrix[Double]):(DenseMatrix[Double],DenseMatrix[Double]) = {
+    // The following four lines of code implement the softmax.
     // However, it's written differently from what the lectures say.
     //  In the lectures, a softmax is described using an exponential divided by a sum of exponentials.
     //  What we do here is exactly equivalent (you can check the math or just check it in practice), but this is more numerically stable.
@@ -160,15 +175,7 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
     // probability of each class. Each column (i.e. each case) sums to 1. size: <number of classes, i.e. 10> by <number of data cases>
     val classificationProbability:DenseMatrix[Double] = exp(logClassificationProbability) // class_prob = exp(log_class_prob);
 
-
-    //select the right log class probability using that sum; then take the mean over all data cases.
-    val classificationLoss:Double = -mean(sum(logClassificationProbability *:* data.targets, Axis._0)) // -mean(sum(log_class_prob .* data.targets, 1));
-
-    // weight decay loss. very straightforward: E = 1/2 * wd_coeffecient * theta^2
-    val weightDecayLoss:Double = (sum(pow(this.theta.thetaVector,2))  / 2) * weightDecayCoefficient  // wd_loss = sum(model_to_theta(model).^2)/2*wd_coefficient; %
-
-
-    classificationLoss + weightDecayLoss
+    (logClassificationProbability, classificationProbability)
   }
 
 
