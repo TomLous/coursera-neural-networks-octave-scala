@@ -59,9 +59,15 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
         val trainingBatchStart = optimizationIterationI * miniBatchSize %  numberTrainingCases // training_batch_start = mod((optimization_iteration_i-1) * mini_batch_size, n_training_cases)+1;
         val trainingBatch = trainingData.batch(trainingBatchStart, miniBatchSize)
 
+        val show = trainingData.inputs(::, 0 until miniBatchSize)
+        val pos38 = trainingBatch.inputs(7, 2)
         val gradient = currentModel.dLossBydModel(trainingBatch, weightDecayCoefficient).theta.thetaVector //gradient = model_to_theta(d_loss_by_d_model(model, training_batch, wd_coefficient));
 
+        val x = sum(gradient)
+
         val newMomentumSpeed = currentMomentumSpeed * momentumMultiplier - gradient // momentum_speed = momentum_speed * momentum_multiplier - gradient;
+
+        val y = sum(newMomentumSpeed)
         val newThetaVector = currentTheta.thetaVector + currentMomentumSpeed * learningRate//theta = theta + momentum_speed * learning_rate;
 
         val newTheta = currentTheta.copy(thetaVector = newThetaVector) //model = theta_to_model(theta);
@@ -81,8 +87,8 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
           bestSoFar
         }
 
-        if(optimizationIterationI % (numberIterations / 10) == 0) { //if mod(optimization_iteration_i, round(n_iters/10)) == 0,
-          logger.info(s"$id: After $optimizationIterationI optimization iterations, training data loss is ${newTrainingDataLosses.last}, and validation data loss is ${newValidationDataLosses.last}")
+        if((optimizationIterationI+1) % (numberIterations / 10) == 1) { //if mod(optimization_iteration_i, round(n_iters/10)) == 0,
+          logger.info(s"$id: After ${optimizationIterationI + 1} optimization iterations, training data loss is ${newTrainingDataLosses.last}, and validation data loss is ${newValidationDataLosses.last}")
         }
 
 
@@ -90,6 +96,8 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
 
       }
     }
+
+
 
     // Check again, this time with more typical parameters
     if(numberIterations != 0){
