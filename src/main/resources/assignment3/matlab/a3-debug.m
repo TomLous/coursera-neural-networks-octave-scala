@@ -36,8 +36,8 @@ theta = theta + momentum_speed * learning_rate;
 
 model = theta_to_model(theta);
 
-training_data_losses = [training_data_losses, loss(model, datas.training, wd_coefficient)];
-validation_data_losses = [validation_data_losses, loss(model, datas.validation, wd_coefficient)];
+training_data_losses = [training_data_losses, loss(model, datas.training, wd_coefficient,true)];
+validation_data_losses = [validation_data_losses, loss(model, datas.validation, wd_coefficient,true)];
 fprintf('training_data_losses %f\n', training_data_losses);
 fprintf('validation_data_losses %f\n', validation_data_losses);
 
@@ -75,9 +75,9 @@ data_names = {'training', 'validation', 'test'};
 for data_i = 1:3,
 data = datas2{data_i};
 data_name = data_names{data_i};
-fprintf('\nThe loss on the %s data is %f\n', data_name, loss(model, data, wd_coefficient));
+fprintf('\nThe loss on the %s data is %f\n', data_name, loss(model, data, wd_coefficient,false));
 if wd_coefficient~=0,
-fprintf('The classification loss (i.e. without weight decay) on the %s data is %f\n', data_name, loss(model, data, 0));
+fprintf('The classification loss (i.e. without weight decay) on the %s data is %f\n', data_name, loss(model, data, 0,false));
 end
 fprintf('The classification error rate on the %s data is %f\n', data_name, classification_performance(model, data));
 end
@@ -98,7 +98,7 @@ contribution_distances = [-4:-1, 1:4];
 contribution_weights = [1/280, -4/105, 1/5, -4/5, 4/5, -1/5, 4/105, -1/280];
 temp = 0;
 for contribution_index = 1:8,
-temp = temp + loss(theta_to_model(base_theta + theta_step * contribution_distances(contribution_index)), data, wd_coefficient) * contribution_weights(contribution_index);
+temp = temp + loss(theta_to_model(base_theta + theta_step * contribution_distances(contribution_index)), data, wd_coefficient, false) * contribution_weights(contribution_index);
 end
 fd_here = temp / h;
 diff = abs(analytic_here - fd_here);
@@ -121,7 +121,7 @@ maxs_big = repmat(maxs_small, [size(a, 1), 1]);
 ret = log(sum(exp(a - maxs_big), 1)) + maxs_small;
 end
 
-function ret = loss(model, data, wd_coefficient)
+function ret = loss(model, data, wd_coefficient,dbg)
 % model.input_to_hid is a matrix of size <number of hidden units> by <number of inputs i.e. 256>. It contains the weights from the input units to the hidden units.
 % model.hid_to_class is a matrix of size <number of classes i.e. 10> by <number of hidden units>. It contains the weights from the hidden units to the softmax units.
 % data.inputs is a matrix of size <number of inputs i.e. 256> by <number of data cases>. Each column describes a different data case.
@@ -132,9 +132,19 @@ function ret = loss(model, data, wd_coefficient)
     hid_output = logistic(hid_input); % output of the hidden units, i.e. after the logistic. size: <number of hidden units> by <number of data cases>
     class_input = model.hid_to_class * hid_output; % input to the components of the softmax. size: <number of classes, i.e. 10> by <number of data cases>
 
+    if dbg == true,
+      fprintf('loss model.input_to_hid %f\n', sum(sum(model.input_to_hid)));
+    fprintf('loss model.hid_to_class %f\n', sum(sum(model.hid_to_class)));
+
+fprintf('loss input %f\n', sum(sum(data.inputs)));
+fprintf('loss targets %f\n', sum(sum(data.targets)));
+
+size(model.input_to_hid)
+size(data.inputs)
     fprintf('loss hid_input %f\n', sum(sum(hid_input)));
     fprintf('loss hid_output %f\n', sum(sum(hid_output)));
     fprintf('loss class_input %f\n', sum(sum(class_input)));
+    end
 
 % The following three lines of code implement the softmax.
 % However, it's written differently from what the lectures say.
@@ -147,17 +157,25 @@ function ret = loss(model, data, wd_coefficient)
     log_class_prob = class_input - repmat(class_normalizer, [size(class_input, 1), 1]); % log of probability of each class. size: <number of classes, i.e. 10> by <number of data cases>
     class_prob = exp(log_class_prob); % probability of each class. Each column (i.e. each case) sums to 1. size: <number of classes, i.e. 10> by <number of data cases>
 
+if dbg== true,
     fprintf('loss log_class_prob %f\n', sum(sum(log_class_prob)));
     fprintf('loss class_prob %f\n', sum(sum(class_prob)));
+  end
 
     classification_loss = -mean(sum(log_class_prob .* data.targets, 1)); % select the right log class probability using that sum; then take the mean over all data cases.
+    if dbg== true,
     fprintf('loss classification_loss %f\n', classification_loss);
+end
 
     wd_loss = sum(model_to_theta(model).^2)/2*wd_coefficient; % weight decay loss. very straightforward: E = 1/2 * wd_coeffecient * theta^2
 
+if dbg== true,
     fprintf('loss classification_loss %f\n', wd_loss);
+  end
 ret = classification_loss + wd_loss;
+if dbg== true,
     fprintf('loss ret %f\n', ret);
+  end
 end
 
 function ret = d_loss_by_d_model(model, data, wd_coefficient)
