@@ -55,6 +55,7 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
       case ((currentTheta,currentMomentumSpeed, currentTrainingDataLosses, currentValidationDataLosses,bestSoFar), optimizationIterationI) => {
         val currentModel = currentTheta.model //model = theta_to_model(theta);
 
+        println(currentModel.inputToHidden)
 
         val trainingBatchStart = optimizationIterationI * miniBatchSize %  numberTrainingCases // training_batch_start = mod((optimization_iteration_i-1) * mini_batch_size, n_training_cases)+1;
         val trainingBatch = trainingData.batch(trainingBatchStart, miniBatchSize)
