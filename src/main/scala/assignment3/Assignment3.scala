@@ -34,7 +34,7 @@ object Assignment3 extends App with LazyLogging {
   val nn = NeuralNetwork(trainingData, validationData, testData)
 
   logger.info("_" * 80)
-/*
+
   // Q2
   exercise("Q2. What is the loss on the training data for that test run? Write your answer with at least 5 digits after the decimal point.")(
     () => nn.a3("Q2", 0, 0, 0, 0, 0, false, 0)
@@ -51,7 +51,7 @@ object Assignment3 extends App with LazyLogging {
   )
 
   exercise("Q3c.  best see the effect of the optimization")(
-    () => nn.a3("Q3c", 0, 10, 1, 0.005, 0, false, 4)
+    () => nn.a3("Q3c", 0, 10, 70, 0.005, 0, false, 4)
   )
 
     exercise("Q4a.  Let's try a bigger learning rate: LR=0.5, and still no momentum.")(
@@ -118,7 +118,7 @@ object Assignment3 extends App with LazyLogging {
         nn.a3("Q10-5", 0, 113, 1000, 0.35, 0.9, true, 100)
       }
     )
-*/
+
 
   exercise("Q11. Best of all")(
     () => {
@@ -126,7 +126,6 @@ object Assignment3 extends App with LazyLogging {
       nn.a3("Q11b", 0.001, 37, 1000, 0.35, 0.9, true, 100)
     }
   )
-
 
 
 

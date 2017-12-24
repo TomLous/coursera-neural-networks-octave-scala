@@ -68,13 +68,14 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
         val newMomentumSpeed = currentMomentumSpeed * momentumMultiplier - gradient // momentum_speed = momentum_speed * momentum_multiplier - gradient;
 
         val y = sum(newMomentumSpeed)
-        val newThetaVector = currentTheta.thetaVector + currentMomentumSpeed * learningRate//theta = theta + momentum_speed * learning_rate;
+        val newThetaVector = currentTheta.thetaVector + newMomentumSpeed * learningRate//theta = theta + momentum_speed * learning_rate;
 
         val newTheta = currentTheta.copy(thetaVector = newThetaVector) //model = theta_to_model(theta);
         val newModel = newTheta.model //model = theta_to_model(theta);
 
         val newTrainingDataLosses = currentTrainingDataLosses :+ newModel.loss(trainingData, weightDecayCoefficient)
         val newValidationDataLosses = currentValidationDataLosses :+ newModel.loss(validationData, weightDecayCoefficient)
+
 
         val newBestSoFar = if(doEarlyStopping && newValidationDataLosses.last < bestSoFar.validationLoss ){ //if do_early_stopping && validation_data_losses(end) < best_so_far.validation_loss,
           BestSoFar(

@@ -166,11 +166,23 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
   def loss(data: DataBundle, weightDecayCoefficient: Double):Double = {
     // Before we can calculate the loss, we need to calculate a variety of intermediate values, like the state of the hidden units.
 
+    val m1 = numberHiddenUnits
+    val m2 = sum(this.inputToHidden)
+    val m3 = sum(this.hiddenToClassification)
+    val a0 = sum(data.inputs)
+    val a1 = sum(data.targets)
 
-    val (_, _, classificationInput) = forwardPass(data)
+    val (hi, ho, classificationInput) = forwardPass(data)
+
+    val shi = sum(hi)
+    val sho = sum(ho)
+    val scli = sum(classificationInput)
 
 
-    val(logClassificationProbability,_) = softmax(classificationInput)
+    val(logClassificationProbability,cp) = softmax(classificationInput)
+
+    val slcp = sum(logClassificationProbability)
+    val scp = sum(cp)
 
     //select the right log class probability using that sum; then take the mean over all data cases.
     val classificationLoss:Double = -mean(sum(logClassificationProbability *:* data.targets, Axis._0)) // -mean(sum(log_class_prob .* data.targets, 1));
