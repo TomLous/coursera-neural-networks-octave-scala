@@ -5,7 +5,6 @@ import java.util.Calendar
 import com.typesafe.scalalogging.LazyLogging
 import io.MatLabFile
 
-
 object Assignment3 extends App with LazyLogging {
 
   System.setProperty("log.assignment", "assignment3")
