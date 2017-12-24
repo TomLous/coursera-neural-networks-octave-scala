@@ -1,4 +1,4 @@
-function a3(wd_coefficient, n_hid, n_iters, learning_rate, momentum_multiplier, do_early_stopping, mini_batch_size)
+function a3debug(wd_coefficient, n_hid, n_iters, learning_rate, momentum_multiplier, do_early_stopping, mini_batch_size)
 warning('error', 'Octave:broadcast');
 if exist('page_output_immediately'), page_output_immediately(1); end
 more off;

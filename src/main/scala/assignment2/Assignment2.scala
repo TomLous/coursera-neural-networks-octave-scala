@@ -12,6 +12,8 @@ import util.DynamicFileLogging
   */
 object Assignment2 extends App with LazyLogging {
 
+  System.setProperty("log.assignment", "assignment2")
+
 //  val logPath = getClass.getResource("/assignment2/logs/").toString
   val logPath = s"src/main/resources/assignment2/logs/"
 

@@ -1,0 +1,87 @@
+Question 2: Epoch 1
+Question 2: Batch 100 Train CE 4.604
+Question 2: Batch 200 Train CE 4.420
+Question 2: Batch 300 Train CE 4.387
+Question 2: Batch 400 Train CE 4.400
+Question 2: Batch 500 Train CE 4.372
+Question 2: Batch 600 Train CE 4.417
+Question 2: Batch 700 Train CE 4.373
+Question 2: Batch 800 Train CE 4.360
+Question 2: Batch 900 Train CE 4.419
+Question 2: Batch 1000 Train CE 4.391
+Question 2: Running validation ...
+Question 2: Validation CE 4.396
+Question 2: Batch 1100 Train CE 4.385
+Question 2: Batch 1200 Train CE 4.408
+Question 2: Batch 1300 Train CE 4.405
+Question 2: Batch 1400 Train CE 4.416
+Question 2: Batch 1500 Train CE 4.386
+Question 2: Batch 1600 Train CE 4.402
+Question 2: Batch 1700 Train CE 4.392
+Question 2: Batch 1800 Train CE 4.392
+Question 2: Batch 1900 Train CE 4.399
+Question 2: Batch 2000 Train CE 4.374
+Question 2: Running validation ...
+Question 2: Validation CE 4.411
+Question 2: Batch 2100 Train CE 4.402
+Question 2: Batch 2200 Train CE 4.390
+Question 2: Batch 2300 Train CE 4.399
+Question 2: Batch 2400 Train CE 4.384
+Question 2: Batch 2500 Train CE 4.395
+Question 2: Batch 2600 Train CE 4.417
+Question 2: Batch 2700 Train CE 4.422
+Question 2: Batch 2800 Train CE 4.392
+Question 2: Batch 2900 Train CE 4.388
+Question 2: Batch 3000 Train CE 4.371
+Question 2: Running validation ...
+Question 2: Validation CE 4.390
+Question 2: Batch 3100 Train CE 4.383
+Question 2: Batch 3200 Train CE 4.384
+Question 2: Batch 3300 Train CE 4.364
+Question 2: Batch 3400 Train CE 4.390
+Question 2: Batch 3500 Train CE 4.379
+Question 2: Batch 3600 Train CE 4.391
+Question 2: Batch 3700 Train CE 4.370
+Question 2: Average Training CE 4.398
+Question 2: Epoch 2
+Question 2: Batch 100 Train CE 3.532
+Question 2: Batch 200 Train CE 4.401
+Question 2: Batch 300 Train CE 4.375
+Question 2: Batch 400 Train CE 4.388
+Question 2: Batch 500 Train CE 4.363
+Question 2: Batch 600 Train CE 4.408
+Question 2: Batch 700 Train CE 4.365
+Question 2: Batch 800 Train CE 4.355
+Question 2: Batch 900 Train CE 4.412
+Question 2: Batch 1000 Train CE 4.385
+Question 2: Running validation ...
+Question 2: Validation CE 4.389
+Question 2: Batch 1100 Train CE 4.379
+Question 2: Batch 1200 Train CE 4.401
+Question 2: Batch 1300 Train CE 4.399
+Question 2: Batch 1400 Train CE 4.410
+Question 2: Batch 1500 Train CE 4.380
+Question 2: Batch 1600 Train CE 4.396
+Question 2: Batch 1700 Train CE 4.384
+Question 2: Batch 1800 Train CE 4.386
+Question 2: Batch 1900 Train CE 4.394
+Question 2: Batch 2000 Train CE 4.369
+Question 2: Running validation ...
+Question 2: Validation CE 4.397
+Question 2: Batch 2100 Train CE 4.398
+Question 2: Batch 2200 Train CE 4.385
+Question 2: Batch 2300 Train CE 4.395
+Question 2: Batch 2400 Train CE 4.380
+Question 2: Batch 2500 Train CE 4.391
+Question 2: Batch 2600 Train CE 4.412
+Question 2: Batch 2700 Train CE 4.417
+Question 2: Batch 2800 Train CE 4.388
+Question 2: Batch 2900 Train CE 4.384
+Question 2: Batch 3000 Train CE 4.367
+Question 2: Running validation ...
+Question 2: Validation CE 4.388
+Question 2: Batch 3100 Train CE 4.378
+Question 2: Batch 3200 Train CE 4.380
+Question 2: Batch 3300 Train CE 4.363
+Question 2: Batch 3400 Train CE 4.387
+Question 2: Batch 3500 Train CE 4.375

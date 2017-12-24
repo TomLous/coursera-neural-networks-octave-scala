@@ -19,7 +19,6 @@ project/plugins/project/
 .cache
 .lib/
 *.class
-*.log
 project/target/
 
 /image-dataset*.png

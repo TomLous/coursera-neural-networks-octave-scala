@@ -8,6 +8,8 @@ import io.MatLabFile
 
 object Assignment3 extends App with LazyLogging {
 
+  System.setProperty("log.assignment", "assignment3")
+
   val inputFileName = "/assignment3/data.mat"
   val inputFilePath = getClass.getResource(inputFileName).toURI
   val mlFile = MatLabFile(inputFilePath)

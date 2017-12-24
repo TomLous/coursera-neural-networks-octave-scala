@@ -54,20 +54,14 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
       case ((currentTheta,currentMomentumSpeed, currentTrainingDataLosses, currentValidationDataLosses,bestSoFar), optimizationIterationI) => {
         val currentModel = currentTheta.model //model = theta_to_model(theta);
 
-//        println(currentModel.inputToHidden)
 
         val trainingBatchStart = optimizationIterationI * miniBatchSize %  numberTrainingCases // training_batch_start = mod((optimization_iteration_i-1) * mini_batch_size, n_training_cases)+1;
         val trainingBatch = trainingData.batch(trainingBatchStart, miniBatchSize)
 
-        val show = trainingData.inputs(::, 0 until miniBatchSize)
-        val pos38 = trainingBatch.inputs(7, 2)
         val gradient = currentModel.dLossBydModel(trainingBatch, weightDecayCoefficient).theta.thetaVector //gradient = model_to_theta(d_loss_by_d_model(model, training_batch, wd_coefficient));
-
-        val x = sum(gradient)
 
         val newMomentumSpeed = currentMomentumSpeed * momentumMultiplier - gradient // momentum_speed = momentum_speed * momentum_multiplier - gradient;
 
-        val y = sum(newMomentumSpeed)
         val newThetaVector = currentTheta.thetaVector + newMomentumSpeed * learningRate//theta = theta + momentum_speed * learning_rate;
 
         val newTheta = currentTheta.copy(thetaVector = newThetaVector) //model = theta_to_model(theta);
@@ -95,9 +89,7 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
         }
 
 
-
         (newTheta ,newMomentumSpeed, newTrainingDataLosses, newValidationDataLosses, newBestSoFar)
-
       }
     }
 

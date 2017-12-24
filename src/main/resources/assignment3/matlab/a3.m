@@ -25,34 +25,22 @@ model = theta_to_model(theta);
 training_batch_start = mod((optimization_iteration_i-1) * mini_batch_size, n_training_cases)+1;
 training_batch.inputs = datas.training.inputs(:, training_batch_start : training_batch_start + mini_batch_size - 1);
 training_batch.targets = datas.training.targets(:, training_batch_start : training_batch_start + mini_batch_size - 1);
-
 gradient = model_to_theta(d_loss_by_d_model(model, training_batch, wd_coefficient));
-
-fprintf('gradient %f\n', sum(sum(gradient)));
 momentum_speed = momentum_speed * momentum_multiplier - gradient;
-
-fprintf('momentum_speed %f\n', sum(sum(momentum_speed)));
 theta = theta + momentum_speed * learning_rate;
 
 model = theta_to_model(theta);
-
-training_data_losses = [training_data_losses, loss(model, datas.training, wd_coefficient,true)];
-validation_data_losses = [validation_data_losses, loss(model, datas.validation, wd_coefficient,true)];
-fprintf('training_data_losses %f\n', training_data_losses);
-fprintf('validation_data_losses %f\n', validation_data_losses);
-
+training_data_losses = [training_data_losses, loss(model, datas.training, wd_coefficient)];
+validation_data_losses = [validation_data_losses, loss(model, datas.validation, wd_coefficient)];
 if do_early_stopping && validation_data_losses(end) < best_so_far.validation_loss,
 best_so_far.theta = theta; % this will be overwritten soon
 best_so_far.validation_loss = validation_data_losses(end);
 best_so_far.after_n_iters = optimization_iteration_i;
 end
-
 if mod(optimization_iteration_i, round(n_iters/10)) == 0,
 fprintf('After %d optimization iterations, training data loss is %f, and validation data loss is %f\n', optimization_iteration_i, training_data_losses(end), validation_data_losses(end));
 end
-
 end
-
 if n_iters ~= 0, test_gradient(model, datas.training, wd_coefficient); end % check again, this time with more typical parameters
 if do_early_stopping,
 fprintf('Early stopping: validation loss was lowest after %d iterations. We chose the model that we had then.\n', best_so_far.after_n_iters);
@@ -75,9 +63,9 @@ data_names = {'training', 'validation', 'test'};
 for data_i = 1:3,
 data = datas2{data_i};
 data_name = data_names{data_i};
-fprintf('\nThe loss on the %s data is %f\n', data_name, loss(model, data, wd_coefficient,false));
+fprintf('\nThe loss on the %s data is %f\n', data_name, loss(model, data, wd_coefficient));
 if wd_coefficient~=0,
-fprintf('The classification loss (i.e. without weight decay) on the %s data is %f\n', data_name, loss(model, data, 0,false));
+fprintf('The classification loss (i.e. without weight decay) on the %s data is %f\n', data_name, loss(model, data, 0));
 end
 fprintf('The classification error rate on the %s data is %f\n', data_name, classification_performance(model, data));
 end
@@ -98,7 +86,7 @@ contribution_distances = [-4:-1, 1:4];
 contribution_weights = [1/280, -4/105, 1/5, -4/5, 4/5, -1/5, 4/105, -1/280];
 temp = 0;
 for contribution_index = 1:8,
-temp = temp + loss(theta_to_model(base_theta + theta_step * contribution_distances(contribution_index)), data, wd_coefficient, false) * contribution_weights(contribution_index);
+temp = temp + loss(theta_to_model(base_theta + theta_step * contribution_distances(contribution_index)), data, wd_coefficient) * contribution_weights(contribution_index);
 end
 fd_here = temp / h;
 diff = abs(analytic_here - fd_here);
@@ -121,7 +109,7 @@ maxs_big = repmat(maxs_small, [size(a, 1), 1]);
 ret = log(sum(exp(a - maxs_big), 1)) + maxs_small;
 end
 
-function ret = loss(model, data, wd_coefficient,dbg)
+function ret = loss(model, data, wd_coefficient)
 % model.input_to_hid is a matrix of size <number of hidden units> by <number of inputs i.e. 256>. It contains the weights from the input units to the hidden units.
 % model.hid_to_class is a matrix of size <number of classes i.e. 10> by <number of hidden units>. It contains the weights from the hidden units to the softmax units.
 % data.inputs is a matrix of size <number of inputs i.e. 256> by <number of data cases>. Each column describes a different data case.
@@ -131,20 +119,6 @@ function ret = loss(model, data, wd_coefficient,dbg)
     hid_input = model.input_to_hid * data.inputs; % input to the hidden units, i.e. before the logistic. size: <number of hidden units> by <number of data cases>
     hid_output = logistic(hid_input); % output of the hidden units, i.e. after the logistic. size: <number of hidden units> by <number of data cases>
     class_input = model.hid_to_class * hid_output; % input to the components of the softmax. size: <number of classes, i.e. 10> by <number of data cases>
-
-    if dbg == true,
-      fprintf('loss model.input_to_hid %f\n', sum(sum(model.input_to_hid)));
-    fprintf('loss model.hid_to_class %f\n', sum(sum(model.hid_to_class)));
-
-fprintf('loss input %f\n', sum(sum(data.inputs)));
-fprintf('loss targets %f\n', sum(sum(data.targets)));
-
-size(model.input_to_hid)
-size(data.inputs)
-    fprintf('loss hid_input %f\n', sum(sum(hid_input)));
-    fprintf('loss hid_output %f\n', sum(sum(hid_output)));
-    fprintf('loss class_input %f\n', sum(sum(class_input)));
-    end
 
 % The following three lines of code implement the softmax.
 % However, it's written differently from what the lectures say.
@@ -157,25 +131,9 @@ size(data.inputs)
     log_class_prob = class_input - repmat(class_normalizer, [size(class_input, 1), 1]); % log of probability of each class. size: <number of classes, i.e. 10> by <number of data cases>
     class_prob = exp(log_class_prob); % probability of each class. Each column (i.e. each case) sums to 1. size: <number of classes, i.e. 10> by <number of data cases>
 
-if dbg== true,
-    fprintf('loss log_class_prob %f\n', sum(sum(log_class_prob)));
-    fprintf('loss class_prob %f\n', sum(sum(class_prob)));
-  end
-
     classification_loss = -mean(sum(log_class_prob .* data.targets, 1)); % select the right log class probability using that sum; then take the mean over all data cases.
-    if dbg== true,
-    fprintf('loss classification_loss %f\n', classification_loss);
-end
-
     wd_loss = sum(model_to_theta(model).^2)/2*wd_coefficient; % weight decay loss. very straightforward: E = 1/2 * wd_coeffecient * theta^2
-
-if dbg== true,
-    fprintf('loss classification_loss %f\n', wd_loss);
-  end
 ret = classification_loss + wd_loss;
-if dbg== true,
-    fprintf('loss ret %f\n', ret);
-  end
 end
 
 function ret = d_loss_by_d_model(model, data, wd_coefficient)
@@ -187,74 +145,8 @@ function ret = d_loss_by_d_model(model, data, wd_coefficient)
 % The returned object is supposed to be exactly like parameter <model>, i.e. it has fields ret.input_to_hid and ret.hid_to_class. However, the contents of those matrices are gradients (d loss by d model parameter), instead of model parameters.
 
 % This is the only function that you're expected to change. Right now, it just returns a lot of zeros, which is obviously not the correct output. Your job is to replace that by a correct computation.
- % ret.input_to_hid = model.input_to_hid * 0;
-% ret.hid_to_class = model.hid_to_class * 0;
-fprintf('--------------------\n');
-
-
-fprintf('model.input_to_hid %f\n', sum(sum(model.input_to_hid)));
-    fprintf('model.hid_to_class %f\n', sum(sum(model.hid_to_class)));
-
-fprintf('input %f\n', sum(sum(data.inputs)));
-fprintf('targets %f\n', sum(sum(data.targets)));
-
-size(model.input_to_hid)
-size(data.inputs)
-
-
-  % forward pass
-  hid_input = model.input_to_hid * data.inputs; % input to the hidden units, i.e. before the logistic. size: <number of hidden units> by <number of data cases>
-
-fprintf('model.input_to_hid')
-  model.input_to_hid(1:3, 1:4)
-  fprintf('data.inputs')
-  data.inputs(1:10, 1:4)
-  data.inputs(8,3)
-  fprintf('hid_input')
-  hid_input(1:3, 1:3)
-
-  hid_output = logistic(hid_input); % output of the hidden units, i.e. after the logistic. size: <number of hidden units> by <number of data cases>
-  class_input = model.hid_to_class * hid_output; % input to the components of the softmax. size: <number of classes, i.e. 10> by <number of data cases>
-  
-  fprintf('hid_input %f\n', sum(sum(hid_input)));
-  fprintf('hid_output %f\n', sum(sum(hid_output)));
-  fprintf('class_input %f\n', sum(sum(class_input)));
-
-
-
-  class_normalizer = log_sum_exp_over_rows(class_input); % log(sum(exp of class_input)) is what we subtract to get properly normalized log class probabilities. size: <1> by <number of data cases>
-  log_class_prob = class_input - repmat(class_normalizer, [size(class_input, 1), 1]); % log of probability of each class. size: <number of classes, i.e. 10> by <number of data cases>
-  class_prob = exp(log_class_prob); % probability of each class. Each column (i.e. each case) sums to 1. size: <number of classes, i.e. 10> by <number of data cases>
-   
-   fprintf('log_class_prob %f\n', sum(sum(log_class_prob)));
-   fprintf('class_prob %f\n', sum(sum(class_prob)));
-
-
-  num_cases = size(data.inputs, 2);
-
-
-  fprintf('num_cases %f\n', num_cases);
-   
-  % hidden to output
-  output_delta = (class_prob - data.targets); % <number of classes i.e. 10> by <number of data cases>
-
-  fprintf('output_delta %f\n', sum(sum(output_delta)));
-
-  ret.hid_to_class = output_delta * hid_output'; % <number of classes i.e. 10> by <number of hidden units>
-  ret.hid_to_class = ret.hid_to_class ./ num_cases + wd_coefficient * model.hid_to_class;
-
-fprintf('hid_to_class %f\n', sum(sum(ret.hid_to_class)));
-
-   
-  % <number of hidden units> by <number of data cases>
-  error_derivated = model.hid_to_class'*output_delta .* hid_output .* (1 - hid_output);
-
-  fprintf('error_derivated %f\n', sum(sum(error_derivated)));
-  ret.input_to_hid = error_derivated * data.inputs'; % <number of hidden units> by <number of inputs i.e. 256>
-  ret.input_to_hid = ret.input_to_hid ./ num_cases + wd_coefficient * model.input_to_hid;
-
-  fprintf('input_to_hid %f\n', sum(sum(ret.input_to_hid)));
-  fprintf('--------------------\n');
+    ret.input_to_hid = model.input_to_hid * 0;
+ret.hid_to_class = model.hid_to_class * 0;
 end
 
 function ret = model_to_theta(model)
@@ -285,9 +177,9 @@ function ret = classification_performance(model, data)
 
 [dump, choices] = max(class_input); % choices is integer: the chosen class, plus 1.
 [dump, targets] = max(data.targets); % targets is integer: the target class, plus 1.
-% fprintf('choices %f\n', choices);
-% fprintf('targets %f\n', targets);
-% fprintf('d =~ t %f\n', double(choices ~= targets));
+fprintf('choices %f\n', choices);
+fprintf('targets %f\n', targets);
+fprintf('d =~ t %f\n', double(choices ~= targets));
 
 ret = mean(double(choices ~= targets));
 end

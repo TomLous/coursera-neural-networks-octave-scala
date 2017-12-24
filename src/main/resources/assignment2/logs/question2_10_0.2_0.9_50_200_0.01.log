@@ -1,0 +1,19 @@
+Question 2: Epoch 1
+Question 2: Batch 100 Train CE 4.686
+Question 2: Batch 200 Train CE 4.568
+Question 2: Batch 300 Train CE 4.505
+Question 2: Batch 400 Train CE 4.481
+Question 2: Batch 500 Train CE 4.431
+Question 2: Batch 600 Train CE 4.463
+Question 2: Batch 700 Train CE 4.406
+Question 2: Batch 800 Train CE 4.383
+Question 2: Batch 900 Train CE 4.435
+Question 2: Batch 1000 Train CE 4.410
+Question 2: Running validation ...
+Question 2: Validation CE 4.419
+Question 2: Batch 1100 Train CE 4.404
+Question 2: Batch 1200 Train CE 4.420
+Question 2: Batch 1300 Train CE 4.419
+Question 2: Batch 1400 Train CE 4.430
+Question 2: Batch 1500 Train CE 4.401
+Question 2: Batch 1600 Train CE 4.416
