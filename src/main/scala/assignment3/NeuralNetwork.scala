@@ -39,7 +39,6 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
     // optimization
 //    val theta:DenseVector[Double] = model.theta.thetaVector  // theta = model_to_theta(model);
 
-
     val filename = s"src/main/resources/assignment3/plots/image-loss-$id-$weightDecayCoefficient-$numberHiddenUnits-$numberIterations-$learningRate-$momentumMultiplier-$doEarlyStopping-$miniBatchSize.png"
     val name = s"$id: Loss wd: $weightDecayCoefficient #h: $numberHiddenUnits #n: $numberIterations a: $learningRate x: $momentumMultiplier s: $doEarlyStopping b: $miniBatchSize"
 
@@ -55,7 +54,7 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
       case ((currentTheta,currentMomentumSpeed, currentTrainingDataLosses, currentValidationDataLosses,bestSoFar), optimizationIterationI) => {
         val currentModel = currentTheta.model //model = theta_to_model(theta);
 
-        println(currentModel.inputToHidden)
+//        println(currentModel.inputToHidden)
 
         val trainingBatchStart = optimizationIterationI * miniBatchSize %  numberTrainingCases // training_batch_start = mod((optimization_iteration_i-1) * mini_batch_size, n_training_cases)+1;
         val trainingBatch = trainingData.batch(trainingBatchStart, miniBatchSize)
@@ -88,9 +87,12 @@ case class NeuralNetwork(trainingData: DataBundle, validationData: DataBundle, t
           bestSoFar
         }
 
-        if((optimizationIterationI+1) % (numberIterations / 10) == 1) { //if mod(optimization_iteration_i, round(n_iters/10)) == 0,
+        val tick = Math.ceil(numberIterations / 10.0).toInt
+
+        if(optimizationIterationI % tick == tick-1) { //if mod(optimization_iteration_i, round(n_iters/10)) == 0,
           logger.info(s"$id: After ${optimizationIterationI + 1} optimization iterations, training data loss is ${newTrainingDataLosses.last}, and validation data loss is ${newValidationDataLosses.last}")
         }
+
 
 
         (newTheta ,newMomentumSpeed, newTrainingDataLosses, newValidationDataLosses, newBestSoFar)

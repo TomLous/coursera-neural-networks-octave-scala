@@ -19,7 +19,7 @@ case class Theta(thetaVector: DenseVector[Double], numberInputUnits:Int = 256, n
     // ret.input_to_hid = transpose(reshape(theta(1: 256*n_hid), 256, n_hid));
     val inputToHidden = thetaVector(0 until numberHiddenUnits * numberInputUnits)
       .toDenseMatrix
-      .reshape(numberInputUnits, numberHiddenUnits)
+      .reshape(numberInputUnits, numberHiddenUnits).t.toDenseMatrix
 
     //  ret.hid_to_class = reshape(theta(256 * n_hid + 1 : size(theta,1)), n_hid, 10).';
     val hiddenToClassification = thetaVector(numberHiddenUnits * numberInputUnits to -1)

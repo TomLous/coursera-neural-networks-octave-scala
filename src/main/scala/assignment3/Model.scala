@@ -121,7 +121,7 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
 
     val a9 = sum(errorDerivative)
 
-    val ithClean =  data.inputs * errorDerivative.t
+    val ithClean =   errorDerivative * data.inputs.t
 
     val L2b = weightDecayCoefficient * inputToHidden
 
@@ -184,20 +184,20 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
 
   private def forwardPass(data: DataBundle):(DenseMatrix[Double],DenseMatrix[Double],DenseMatrix[Double]) = {
 
-    val ith2 = inputToHidden.t.toDenseMatrix
+
     val m1 = numberHiddenUnits
-    val m2 = sum(ith2)
+    val m2 = sum(inputToHidden)
     val m3 = sum(hiddenToClassification)
 
-    val m4 = ith2.rows
-    val m5 = ith2.cols
+    val m4 = inputToHidden.rows
+    val m5 = inputToHidden.cols
 
     val ba = data.inputs.rows
     val bb = data.inputs.cols
 
     val b0 = sum(data.inputs)
     // input to the hidden units, i.e. before the logistic. size: <number of hidden units> by <number of data cases>
-    val hiddenInput:DenseMatrix[Double] = ith2 * data.inputs  // hid_input = model.input_to_hid * data.inputs;
+    val hiddenInput:DenseMatrix[Double] = inputToHidden * data.inputs  // hid_input = model.input_to_hid * data.inputs;
 
 
 
