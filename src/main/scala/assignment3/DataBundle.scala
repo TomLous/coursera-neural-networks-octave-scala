@@ -4,7 +4,6 @@ import breeze.linalg.DenseMatrix
 
 /**
   * Created by Tom Lous on 13/10/2017.
-  * Copyright © 2017 Datlinq B.V..
   */
 case class DataBundle(inputs: DenseMatrix[Double], targets: DenseMatrix[Double]) {
    def batch(offset: Int, size: Int): DataBundle = {

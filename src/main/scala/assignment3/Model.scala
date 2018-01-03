@@ -9,7 +9,6 @@ import breeze.stats._
 
 /**
   * Created by Tom Lous on 10/10/2017.
-  * Copyright © 2017 Datlinq B.V..
   */
 case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hiddenToClassification:DenseMatrix[Double]) {
 

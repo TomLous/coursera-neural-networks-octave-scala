@@ -4,7 +4,6 @@ import org.scalatest.FunSuite
 
 /**
   * Created by Tom Lous on 10/10/2017.
-  * Copyright © 2017 Datlinq B.V..
   */
 class Assignment3Test extends FunSuite {
 
