@@ -112,7 +112,7 @@ case class Model(numberHiddenUnits: Int, inputToHidden: DenseMatrix[Double], hid
   def logSumExpOverRows(a: DenseMatrix[Double]): DenseVector[Double] ={
       val maxsSmall = max(a, Axis._0) // maxs_small = max(a, [], 1);
       val maxsBig = tile(maxsSmall, 1, a.rows)    // maxs_big = repmat(maxs_small, [size(a, 1), 1]);
-      val ret = log(sum(exp(a - maxsBig), Axis._0)) + maxsSmall
+      val ret = breeze.numerics.log(sum(exp(a - maxsBig), Axis._0)) + maxsSmall
 
       ret.t
   }
