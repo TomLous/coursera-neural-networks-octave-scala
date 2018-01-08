@@ -16,10 +16,19 @@ object Assignment4 extends App with LazyLogging {
 
   logger.info(s"Reading file $datasetFileName")
 
-  val randomSourceFileName = "/assignment4/a4_randomness_source.mat"
-  val randomSourceFilePath = getClass.getResource(randomSourceFileName).toURI
-  val randomSourceMLFile = MatLabFile(randomSourceFilePath)
+  val dataset = datasetMLFile.content("data")
 
-  logger.info(s"Reading file $randomSourceFileName")
+  val randomnessSourceFileName = "/assignment4/a4_randomness_source.mat"
+  val randomnessSourceFilePath = getClass.getResource(randomnessSourceFileName).toURI
+  val randomnessSourceMLFile = MatLabFile(randomnessSourceFilePath)
+
+  logger.info(s"Reading file $randomnessSourceFileName")
+
+
+  val randomDataSource = RandomDataSource(randomnessSourceMLFile.denseVectorOption("randomness_source").get)
+
+  println(dataset)
+  println(randomDataSource.randomSource(0 to 20))
+
 
 }

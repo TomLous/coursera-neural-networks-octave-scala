@@ -20,6 +20,17 @@ case class MatLabFile(filePath: URI) {
 
   lazy val contents: Either[Throwable, MatLabFileContents] = readFile
 
+  def content(name:String):MatLabFileContents = {
+    contents
+      .map(
+        _.filter(
+          c => c._1.startsWith(name+".")
+        ).map{
+          case (id,mlArray)  => id.substring(name.length + 1) -> mlArray
+        }
+        ).getOrElse(Map.empty[String, MLArray])
+
+  }
 
   private def recursiveReadStruct(name: String, structure: MLStructure, prefix:List[String]=Nil):Map[String, MLArray] = {
     structure.getAllFields.asScala.toList.flatMap{
