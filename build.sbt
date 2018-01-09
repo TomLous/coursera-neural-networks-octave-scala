@@ -9,6 +9,7 @@ libraryDependencies ++= Seq(
   "com.github.fommil.netlib" % "all" % "1.1.2",
   "org.scalanlp" %% "breeze" % "0.13.2",
   "org.scalanlp" %% "breeze-viz" % "0.13.2",
+  "com.sksamuel.scrimage" %% "scrimage-core" % "2.1.6",
   "com.typesafe" % "config" % "1.3.1",
   "com.typesafe.scala-logging" %% "scala-logging" % "3.7.2",
   "ch.qos.logback" % "logback-classic" % "1.2.3",

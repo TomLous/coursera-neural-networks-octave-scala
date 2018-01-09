@@ -1,5 +1,6 @@
 package assignment4
 
+import assignment3.DataBundle
 import com.typesafe.scalalogging.LazyLogging
 import io.MatLabFile
 
@@ -16,7 +17,21 @@ object Assignment4 extends App with LazyLogging {
 
   logger.info(s"Reading file $datasetFileName")
 
-  val dataset = datasetMLFile.content("data")
+
+  val trainingData = DataBundle(
+    datasetMLFile.denseMatrixOption("data.training.inputs"),
+    datasetMLFile.denseMatrixOption("data.training.targets")
+  )
+
+  val validationData = DataBundle(
+    datasetMLFile.denseMatrixOption("data.validation.inputs"),
+    datasetMLFile.denseMatrixOption("data.validation.targets")
+  )
+
+  val testData = DataBundle(
+    datasetMLFile.denseMatrixOption("data.test.inputs"),
+    datasetMLFile.denseMatrixOption("data.test.targets")
+  )
 
   val randomnessSourceFileName = "/assignment4/a4_randomness_source.mat"
   val randomnessSourceFilePath = getClass.getResource(randomnessSourceFileName).toURI
@@ -27,8 +42,8 @@ object Assignment4 extends App with LazyLogging {
 
   val randomDataSource = RandomDataSource(randomnessSourceMLFile.denseVectorOption("randomness_source").get)
 
-  println(dataset)
-  println(randomDataSource.randomSource(0 to 20))
+
+  val restrictedBoltzmannMachine = RestrictedBoltzmannMachine(trainingData, validationData, testData, randomDataSource)
 
 
 }
