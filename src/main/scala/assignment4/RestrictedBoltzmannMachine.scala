@@ -42,16 +42,16 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
     * @param learningRateClassification lr_classification
     * @param numberOfIterations n_iterations
     */
-  def main(numberHidden:Int, learningRateRBM:Double, learningRateClassification:Double, numberOfIterations:Int) = {
+  def main(id: String, numberHidden:Int, learningRateRBM:Double, learningRateClassification:Double, numberOfIterations:Int) = {
     val rbmWeights = optimize(MatrixSize(numberHidden, 256),CD1, trainingData, learningRateRBM, numberOfIterations) //    rbm_w = optimize([n_hid, 256], @(rbm_w, data) cd1(rbm_w, data.inputs), data_sets.training, lr_rbm,   n_iterations);
 
     // rbm_w is now a weight matrix of <n_hid> by <number of visible units, i.e. 256>
-    show(rbmWeights) //  show_rbm(rbm_w);
+    show(id, rbmWeights) //  show_rbm(rbm_w);
 
     val inputToHidden = rbmWeights //      input_to_hid = rbm_w;
 
     // calculate the hidden layer representation of the labeled data
-    val hiddenRepresentation = logistic(inputToHidden * trainingData.inputs) //      hidden_representation = logistic(input_to_hid * data_sets.training.inputs);
+    val hiddenRepresentation = RestrictedBoltzmannMachine.logistic(inputToHidden * trainingData.inputs) //      hidden_representation = logistic(input_to_hid * data_sets.training.inputs);
 
     // train hid_to_class
     val data2 = DataBundle(hiddenRepresentation, trainingData.targets) //      data_2.inputs = hidden_representation; data_2.targets = data_sets.training.targets;
@@ -65,31 +65,37 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
     )
 
 
-    dataDetails.map{
-      case (data_name, data) => //    data_name = data_details{1}; data = data_details{2};
+    dataDetails.foreach{
+      case (dataName, data) => //    data_name = data_details{1}; data = data_details{2};
 
         // size: <number of hidden units> by <number of data cases>
         val hiddenInput = inputToHidden * data.inputs //    hid_input = input_to_hid * data.inputs;
 
         // size: <number of hidden units> by <number of data cases>
-        val hiddenOutput = logistic(hiddenInput) // size: <number of hidden units> by <number of data cases>
+        val hiddenOutput = RestrictedBoltzmannMachine.logistic(hiddenInput) //      hid_output = logistic(hid_input); %
+
+        // size: <number of classes> by <number of data cases>
+        val classificationInput = hiddenToClassification * hiddenOutput // class_input = hid_to_class * hid_output;
+
+        // log(sum(exp of class_input)) is what we subtract to get properly normalized log class probabilities. size: <1> by <number of data cases>
+        val classificationNormalizer = RestrictedBoltzmannMachine.logSumExpOverRows(classificationInput) //class_normalizer = log_sum_exp_over_rows(class_input);
 
 
-          1
+        val tiledNormalizer = tile(classificationNormalizer, 1, classificationInput.rows).t
+
+        //log of probability of each class. size: <number of classes, i.e. 10> by <number of data cases>
+        val logClassificationProbability = classificationInput - tiledNormalizer // log_class_prob = class_input - repmat(class_normalizer, [size(class_input, 1), 1]);
+
+        // Matlab has a nice method ~= to determine inequality. I just subtract the two vectors and any non-zero gets mapped to 1
+        val errorRate:Double = mean((RestrictedBoltzmannMachine.argmaxOverRows(classificationInput) - RestrictedBoltzmannMachine.argmaxOverRows(data.targets)).map(x => (math.abs(x) min 1).toDouble))   // error_rate = mean(double(argmax_over_rows(class_input) ~= argmax_over_rows(data.targets))); % scalar
+
+
+        //  scalar. select the right log class probability using that sum; then take the mean over all data cases.
+        val loss:Double = -mean(sum(logClassificationProbability *:* data.targets, Axis._0)) // loss = -mean(sum(log_class_prob .* data.targets, 1))
+
+        logger.info(s"$id For the $dataName data, the classification cross-entropy loss is $loss, and the classification error rate (i.e. the misclassification rate) is $errorRate")
+
     }
-
-
-
-
-//      hid_output = logistic(hid_input); %
-//        class_input = hid_to_class * hid_output; % size: <number of classes> by <number of data cases>
-//          class_normalizer = log_sum_exp_over_rows(class_input); % log(sum(exp of class_input)) is what we subtract to get properly normalized log class probabilities. size: <1> by <number of data cases>
-//            log_class_prob = class_input - repmat(class_normalizer, [size(class_input, 1), 1]); % log of probability of each class. size: <number of classes, i.e. 10> by <number of data cases>
-//              error_rate = mean(double(argmax_over_rows(class_input) ~= argmax_over_rows(data.targets))); % scalar
-//              loss = -mean(sum(log_class_prob .* data.targets, 1)); % scalar. select the right log class probability using that sum; then take the mean over all data cases.
-//              fprintf('For the %s data, the classification cross-entropy loss is %f, and the classification error rate (i.e. the misclassification rate) is %f\n', data_name, loss, error_rate);
-//              end
-//              report_calls_to_sample_bernoulli = true;
 
   }
 
@@ -128,18 +134,18 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
 
 
   //    function show_rbm(rbm_w)
-  def show(rbmWeights:DenseMatrix[Double]): Unit ={
-    val numberHidden = rbmWeights.rows //    n_hid = size(rbm_w, 1);
-    val numberRows = math.ceil(math.sqrt(numberHidden)).toInt //    n_rows = ceil(sqrt(n_hid));
-    val blankLines = 4 //    blank_lines = 4;
-
-    val distance = 16 + blankLines //    distance = 16 + blank_lines;
-    val toShow = DenseMatrix.zeros(numberRows * distance + blankLines, numberRows * distance + blankLines) //    to_show = zeros([n_rows * distance + blank_lines, n_rows * distance + blank_lines]);
-    (0 until numberHidden).foreach(i => { //    for i = 0:n_hid-1,
-      val rowI = math.floor(i / numberRows).toInt // row_i = floor(i / n_rows);
-      val colI = i % numberRows
-      val pixels = rbmWeights
-    })
+  def show(id: String, rbmWeights:DenseMatrix[Double]): Unit ={
+//    val numberHidden = rbmWeights.rows //    n_hid = size(rbm_w, 1);
+//    val numberRows = math.ceil(math.sqrt(numberHidden)).toInt //    n_rows = ceil(sqrt(n_hid));
+//    val blankLines = 4 //    blank_lines = 4;
+//
+//    val distance = 16 + blankLines //    distance = 16 + blank_lines;
+//    val toShow = DenseMatrix.zeros(numberRows * distance + blankLines, numberRows * distance + blankLines) //    to_show = zeros([n_rows * distance + blank_lines, n_rows * distance + blank_lines]);
+//    (0 until numberHidden).foreach(i => { //    for i = 0:n_hid-1,
+//      val rowI = math.floor(i / numberRows).toInt // row_i = floor(i / n_rows);
+//      val colI = i % numberRows
+//      val pixels = rbmWeights
+//    })
 
 
 
@@ -185,12 +191,6 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
   }
 
 
-  /**
-    * org: function ret = logistic(input)
-    * @param input DenseMatrix
-    * @return DenseMatrix
-    */
-  def logistic(input: DenseMatrix[Double]):DenseMatrix[Double] = 1.0 ./ (exp(-input) + 1.0)
 
 
 
@@ -210,7 +210,42 @@ object RestrictedBoltzmannMachine extends LazyLogging{
   }
 
 
+  /**
+    * org: function ret = logistic(input)
+    * @param input DenseMatrix
+    * @return DenseMatrix
+    */
+  def logistic(input: DenseMatrix[Double]):DenseMatrix[Double] = 1.0 ./ (exp(-input) + 1.0)
 
+
+
+
+  /**
+    * This computes log(sum(exp(a), 1)) in a numerically stable way
+    * @param a DenseMatrix
+    * @return ret DenseVector[Double]
+    */
+  def logSumExpOverRows(a: DenseMatrix[Double]): DenseVector[Double] ={
+    val maxsSmall = max(a, Axis._0) // maxs_small = max(a, [], 1);
+    val maxsBig = tile(maxsSmall, 1, a.rows)    // maxs_big = repmat(maxs_small, [size(a, 1), 1]);
+    val ret = breeze.numerics.log(sum(exp(a - maxsBig), Axis._0)) + maxsSmall
+
+    ret.t
+  }
+
+
+
+
+
+  /**
+    * function indices = argmax_over_rows(matrix)
+    * @param matrix
+    * @return List of indices
+    */
+  def argmaxOverRows(matrix:DenseMatrix[Double]):DenseVector[Int] = {
+    val indices = matrix(::,*).map(dv => argmax(dv)).t // [dump, indices] = max(matrix);
+    indices
+  }
 
 
 }
