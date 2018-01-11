@@ -1,6 +1,7 @@
 package assignment4
 
 import assignment3.DataBundle
+import assignment4.Utils._
 import breeze.linalg._
 import breeze.numerics._
 import breeze.stats._
@@ -17,26 +18,39 @@ import scala.util.{Failure, Success, Try}
   */
 case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: DataBundle, testData: DataBundle, randomDataSource:RandomDataSource)  extends LazyLogging {
 
+  val testRbmWeights = randomDataSource.rand(MatrixSize(100, 256), 0.0) * 2.0 - 1.0 //    test_rbm_w = a4_rand([100, 256], 0) * 2 - 1;
+  val smallTestRbmWeights = randomDataSource.rand(MatrixSize(100, 256), 0.0) * 2.0 - 1.0 //small_test_rbm_w = a4_rand([10, 256], 0) * 2 - 1;
 
-  def init() = {
+  val temp = trainingData.batch(0, 1) //    temp = extract_mini_batch(data_sets.training, 1, 1);
+  val data1Case = sampleBernoulli(temp.inputs) //    data_1_case = sample_bernoulli(temp.inputs);
 
-    val test_rbm_w = randomDataSource.rand(MatrixSize(100, 256), 0.0) * 2.0 - 1.0 //    test_rbm_w = a4_rand([100, 256], 0) * 2 - 1;
-    val small_test_rbm_w = randomDataSource.rand(MatrixSize(100, 256), 0.0) * 2.0 - 1.0 //small_test_rbm_w = a4_rand([10, 256], 0) * 2 - 1;
+  val temp2 = trainingData.batch(99, 10) //    temp = extract_mini_batch(data_sets.training, 100, 10);
+  val data10Cases = sampleBernoulli(temp2.inputs) //    data_10_cases = sample_bernoulli(temp.inputs);
 
-    val temp = trainingData.batch(1, 1) //    temp = extract_mini_batch(data_sets.training, 1, 1);
-    val data_1_case = sampleBernoulli(temp.inputs) //    data_1_case = sample_bernoulli(temp.inputs);
-
-    val temp2 = trainingData.batch(100, 10) //    temp = extract_mini_batch(data_sets.training, 100, 10);
-    val data_10_cases = sampleBernoulli(temp.inputs) //    data_10_cases = sample_bernoulli(temp.inputs);
-
-    val temp3 = trainingData.batch(200, 37) //   temp = extract_mini_batch(data_sets.training, 200, 37);
-    val data_37_cases = sampleBernoulli(temp.inputs) //     data_37_cases = sample_bernoulli(temp.inputs);
+  val temp3 = trainingData.batch(199, 37) //   temp = extract_mini_batch(data_sets.training, 200, 37);
+  val data37Cases = sampleBernoulli(temp3.inputs) //     data_37_cases = sample_bernoulli(temp.inputs);
 
 
-    val test_hidden_state_1_case = sampleBernoulli(randomDataSource.rand(MatrixSize(100,1),0.0)) //    test_hidden_state_1_case = sample_bernoulli(a4_rand([100, 1], 0));
-    val test_hidden_state_10_cases = sampleBernoulli(randomDataSource.rand(MatrixSize(100,10),1.0))//    test_hidden_state_10_cases = sample_bernoulli(a4_rand([100, 10], 1));
-    val test_hidden_state_37_cases = sampleBernoulli(randomDataSource.rand(MatrixSize(100,37),2.0))//    test_hidden_state_37_cases = sample_bernoulli(a4_rand([100, 37], 2));
+  val test_hidden_state_1_case = sampleBernoulli(randomDataSource.rand(MatrixSize(100,1),0.0)) //    test_hidden_state_1_case = sample_bernoulli(a4_rand([100, 1], 0));
+  val test_hidden_state_10_cases = sampleBernoulli(randomDataSource.rand(MatrixSize(100,10),1.0))//    test_hidden_state_10_cases = sample_bernoulli(a4_rand([100, 10], 1));
+  val test_hidden_state_37_cases = sampleBernoulli(randomDataSource.rand(MatrixSize(100,37),2.0))//    test_hidden_state_37_cases = sample_bernoulli(a4_rand([100, 37], 2));
+
+
+
+  def Q3() = {
+    val (_,meanM, sumM) = describeMatrix("Q3. data1Case: ", visibleStateToHiddenProbabilities(testRbmWeights,data1Case)) //describe_matrix(visible_state_to_hidden_probabilities(test_rbm_w, data_1_case))
+
+    assertDouble(meanM, 0.447562)
+    assertDouble(sumM, 44.756160)
+
+    val (_,meanM2, sumM2) = describeMatrix("Q3. data10Cases: ", visibleStateToHiddenProbabilities(testRbmWeights,data10Cases)) //describe_matrix(visible_state_to_hidden_probabilities(test_rbm_w, data_10_cases))
+
+    assertDouble(meanM2, 0.459927)
+    assertDouble(sumM2, 459.927012)
+
+    describeMatrix("Q3. data37Cases: ", visibleStateToHiddenProbabilities(testRbmWeights,data37Cases)) // describe_matrix(visible_state_to_hidden_probabilities(test_rbm_w, data_37_cases))
   }
+
 
 
   /**
@@ -197,7 +211,7 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
     * @param reportCallsToSampleBernoulli
     * @return
     */
-  def sampleBernoulli(probabilities:DenseMatrix[Double], reportCallsToSampleBernoulli: Boolean = false):DenseMatrix[Int] = {
+  def sampleBernoulli(probabilities:DenseMatrix[Double], reportCallsToSampleBernoulli: Boolean = false):DenseMatrix[Double] = {
 
     if(reportCallsToSampleBernoulli) { //if report_calls_to_sample_bernoulli,
       logger.info(s"sample_bernoulli() was called with a matrix of size ${probabilities.rows} by ${probabilities.cols}. ") //fprintf('sample_bernoulli() was called with a matrix of size %d by %d. ', size(probabilities, 1), size(probabilities, 2));
@@ -207,27 +221,54 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
 
     val rand = randomDataSource.rand(MatrixSize(probabilities), seed)
 
-    (probabilities >:> rand).map(b => if (b) 1 else 0) // binary = +(probabilities > a4_rand(size(probabilities), seed)); % the "+" is to avoid the "logical" data type, which just confuses things.
+    (probabilities >:> rand).map(b => if (b) 1.0 else 0.0) // binary = +(probabilities > a4_rand(size(probabilities), seed)); % the "+" is to avoid the "logical" data type, which just confuses things.
   }
-
-
-
-
-
-
-}
-
-object RestrictedBoltzmannMachine extends LazyLogging{
 
 
   /**
     * describe_matrix
     * @param matrix
     */
-  def describeMatrix(matrix: DenseMatrix[Double]):Unit = {
-    logger.info(s"Describing a matrix of size ${matrix.rows} by ${matrix.cols}. The mean of the elements is ${mean(matrix)}. The sum of the elements is ${sum(matrix)}")
+  def describeMatrix(id: String, matrix: DenseMatrix[Double]):(MatrixSize, Double, Double) = {
+    val meanM = mean(matrix)
+    val sumM = sum(matrix)
+
+
+    logger.info(s"$id Describing a matrix of size ${matrix.rows} by ${matrix.cols}. The mean of the elements is $meanM. The sum of the elements is $sumM")
     //  fprintf('Describing a matrix of size %d by %d. The mean of the elements is %f. The sum of the elements is %f\n', size(matrix, 1), size(matrix, 2), mean(matrix(:)), sum(matrix(:)))
+
+    (MatrixSize(matrix), meanM, sumM)
   }
+
+//  function hidden_probability = visible_state_to_hidden_probabilities(rbm_w, visible_state)
+//  % <rbm_w> is a matrix of size <number of hidden units> by <number of visible units>
+//    % <visible_state> is a binary matrix of size <number of visible units> by <number of configurations that we're handling in parallel>.
+//% The returned value is a matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>.
+//  % This takes in the (binary) states of the visible units, and returns the activation probabilities of the hidden units conditional on those states.
+//  error('not yet implemented');
+//  end
+
+  /**
+    * visible_state_to_hidden_probabilities(rbm_w, visible_state)
+    * @param rbmWeights is a matrix of size <number of hidden units> by <number of visible units>
+    * @param visibleState is a binary matrix of size <number of visible units> by <number of configurations that we're handling in parallel>.
+    * @return The returned value is a matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>. This takes in the (binary) states of the visible units, and returns the activation probabilities of the hidden units conditional on those states.
+    */
+  def visibleStateToHiddenProbabilities(rbmWeights:DenseMatrix[Double], visibleState:DenseMatrix[Double]):DenseMatrix[Double] = {
+    // <solution>
+    RestrictedBoltzmannMachine.logistic(rbmWeights * visibleState)
+    // </solution>
+  }
+
+
+
+
+  }
+
+object RestrictedBoltzmannMachine extends LazyLogging{
+
+
+
 
 
   /**
