@@ -137,15 +137,18 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
   }
 
 
-
-  //    function show_rbm(rbm_w)
+  /**
+    * function show_rbm(rbm_w) Generates and saves visual representation f hidden units to file
+    * @param id
+    * @param rbmWeights
+    */
   def show(id: String, rbmWeights:DenseMatrix[Double]): Unit ={
     Try {
       val numberHidden = rbmWeights.rows //    n_hid = size(rbm_w, 1);
       val numberRows = math.ceil(math.sqrt(numberHidden)).toInt //    n_rows = ceil(sqrt(n_hid));
       val blankLines = 4 //    blank_lines = 4;
       val squareSize = 16
-      //
+
       val distance = squareSize + blankLines //    distance = 16 + blank_lines;
       val toShow = DenseMatrix.zeros[Double](numberRows * distance + blankLines, numberRows * distance + blankLines) //    to_show = zeros([n_rows * distance + blank_lines, n_rows * distance + blank_lines]);
       (0 until numberHidden).foreach(i => { //    for i = 0:n_hid-1,
@@ -156,8 +159,6 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
         val rowBase = rowI * distance + blankLines //    row_base = row_i*distance + blank_lines;
         val colBase = colI * distance + blankLines //    col_base = col_i*distance + blank_lines;
         toShow(rowBase until rowBase + squareSize, colBase until colBase + squareSize) := pixels // //    to_show(row_base+1:row_base+16, col_base+1:col_base+16) = pixels;
-
-        val y = toShow
       })
 
       val imageSize = toShow.cols
@@ -186,7 +187,6 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
       case Failure(_) =>
         logger.warn(s"$id Failed to display the RBM. No big deal (you do not need the display to finish the assignment), but you are missing out on an interesting picture.")
       case Success(f) => logger.info(s"$id Saved image $f")
-
     }
   }
 
