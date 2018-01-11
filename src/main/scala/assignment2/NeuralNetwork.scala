@@ -74,7 +74,7 @@ case class NeuralNetwork(
 
       val expanded_valid_target = expansion_matrix(::, target.toIndexedSequence())
 
-      val CE = -sum(expanded_valid_target.toDenseMatrix *:* log(output_layer_state_valid + tiny)) / input.cols
+      val CE = -sum(expanded_valid_target.toDenseMatrix *:* breeze.numerics.log(output_layer_state_valid + tiny)) / input.cols
 
       logger.info(f"$trainingCase: ${title.capitalize} CE $CE%1.3f")
     }
@@ -104,7 +104,7 @@ case class NeuralNetwork(
         val error_deriv = (output_layer_state - expanded_target_batch).toDenseMatrix
 
         // MEASURE LOSS FUNCTION.
-        val CE = -sum(expanded_target_batch.toDenseMatrix *:* log(output_layer_state + tiny)) / batchsize
+        val CE = -sum(expanded_target_batch.toDenseMatrix *:* breeze.numerics.log(output_layer_state + tiny)) / batchsize
 
 
 

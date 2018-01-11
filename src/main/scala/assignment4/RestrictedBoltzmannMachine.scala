@@ -4,7 +4,12 @@ import assignment3.DataBundle
 import breeze.linalg._
 import breeze.numerics._
 import breeze.stats._
+import com.sksamuel.scrimage.canvas.{Context, DrawableString, _}
+import com.sksamuel.scrimage.nio.PngWriter
+import com.sksamuel.scrimage.{Color, Grayscale, Image, Pixel}
 import com.typesafe.scalalogging.LazyLogging
+
+import scala.util.{Failure, Success, Try}
 
 /**
   * Created by Tom Lous on 08/01/2018.
@@ -135,39 +140,54 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
 
   //    function show_rbm(rbm_w)
   def show(id: String, rbmWeights:DenseMatrix[Double]): Unit ={
-//    val numberHidden = rbmWeights.rows //    n_hid = size(rbm_w, 1);
-//    val numberRows = math.ceil(math.sqrt(numberHidden)).toInt //    n_rows = ceil(sqrt(n_hid));
-//    val blankLines = 4 //    blank_lines = 4;
-//
-//    val distance = 16 + blankLines //    distance = 16 + blank_lines;
-//    val toShow = DenseMatrix.zeros(numberRows * distance + blankLines, numberRows * distance + blankLines) //    to_show = zeros([n_rows * distance + blank_lines, n_rows * distance + blank_lines]);
-//    (0 until numberHidden).foreach(i => { //    for i = 0:n_hid-1,
-//      val rowI = math.floor(i / numberRows).toInt // row_i = floor(i / n_rows);
-//      val colI = i % numberRows
-//      val pixels = rbmWeights
-//    })
+    Try {
+      val numberHidden = rbmWeights.rows //    n_hid = size(rbm_w, 1);
+      val numberRows = math.ceil(math.sqrt(numberHidden)).toInt //    n_rows = ceil(sqrt(n_hid));
+      val blankLines = 4 //    blank_lines = 4;
+      val squareSize = 16
+      //
+      val distance = squareSize + blankLines //    distance = 16 + blank_lines;
+      val toShow = DenseMatrix.zeros[Double](numberRows * distance + blankLines, numberRows * distance + blankLines) //    to_show = zeros([n_rows * distance + blank_lines, n_rows * distance + blank_lines]);
+      (0 until numberHidden).foreach(i => { //    for i = 0:n_hid-1,
+        val rowI = math.floor(i / numberRows).toInt // row_i = floor(i / n_rows);
+        val colI = i % numberRows //     col_i = mod(i, n_rows);
+        val pixels: DenseMatrix[Double] = rbmWeights(i, ::).t.toDenseMatrix.reshape(squareSize, squareSize).t ////    pixels = reshape(rbm_w(i+1, :), [16, 16]).';
 
+        val rowBase = rowI * distance + blankLines //    row_base = row_i*distance + blank_lines;
+        val colBase = colI * distance + blankLines //    col_base = col_i*distance + blank_lines;
+        toShow(rowBase until rowBase + squareSize, colBase until colBase + squareSize) := pixels // //    to_show(row_base+1:row_base+16, col_base+1:col_base+16) = pixels;
 
+        val y = toShow
+      })
 
+      val imageSize = toShow.cols
+      val extreme = max(abs(toShow)) //  extreme = max(abs(to_show(:)));
 
+      def grayScale(num: Double): Pixel = {
+        val rangeFactor = (num + extreme) / (extreme * 2)
 
-//
-//    col_i = mod(i, n_rows);
-//    pixels = reshape(rbm_w(i+1, :), [16, 16]).';
-//    row_base = row_i*distance + blank_lines;
-//    col_base = col_i*distance + blank_lines;
-//    to_show(row_base+1:row_base+16, col_base+1:col_base+16) = pixels;
-//    end
-//    extreme = max(abs(to_show(:)));
-//    try
-//      imshow(to_show, [-extreme, extreme]);
-//    title('hidden units of the RBM');
-//    catch err
-//    fprintf('Failed to display the RBM. No big deal (you do not need the display to finish the assignment), but you are missing out on an interesting picture.\n');
-//    end
-//    end
-//
+        Grayscale((rangeFactor * 255).toInt).toPixel
+      }
 
+      val pixels: Array[Pixel] = toShow.t.toArray.map(grayScale)
+
+      implicit val writer = PngWriter.NoCompression
+      import Canvas._
+
+      val image = Image(imageSize, imageSize, pixels)
+        .padTop(20, Color.White)
+        .draw(DrawableString("hidden units of the RBM", imageSize/2 - 60, 14, context = Context.Aliased, font = new java.awt.Font("default", 0, 10)))
+
+      val path = "src/main/resources/assignment4/image"
+      val name = "hidden-units-" + id.replaceAll("""\W+""", " ").trim.replaceAll("""\s+""", "-")
+      val file = new java.io.File(s"$path/$name.png")
+      image.output(file) // imshow(to_show, [-extreme, extreme]);
+    } match {
+      case Failure(_) =>
+        logger.warn(s"$id Failed to display the RBM. No big deal (you do not need the display to finish the assignment), but you are missing out on an interesting picture.")
+      case Success(f) => logger.info(s"$id Saved image $f")
+
+    }
   }
 
 
