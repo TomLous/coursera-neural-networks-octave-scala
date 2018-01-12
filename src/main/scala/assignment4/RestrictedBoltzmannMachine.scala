@@ -35,6 +35,9 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
   val testHiddenState10Cases = sampleBernoulli(randomDataSource.rand(MatrixSize(100,10),1.0))//    test_hidden_state_10_cases = sample_bernoulli(a4_rand([100, 10], 1));
   val testHiddenState37Cases = sampleBernoulli(randomDataSource.rand(MatrixSize(100,37),2.0))//    test_hidden_state_37_cases = sample_bernoulli(a4_rand([100, 37], 2));
 
+  def Q2() = {
+    main("Q2.", 300, 0.0, 0.0, 0)
+  }
 
 
   def Q3() = {
@@ -101,36 +104,41 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
   }
 
   def Q7() = {
-    val (dimM,meanM, sumM) = describeMatrix("Q7. CD1 & data1Case: ", CD1.runQ7(testRbmWeights, DataBundle(data1Case, null), this)) // describe_matrix(cd1(test_rbm_w, data_1_case))
+    val (dimM,meanM, sumM) = describeMatrix("Q7. CD1 & data1Case: ", CD1.runQ7(testRbmWeights, DataBundle(data1Case, null), this, true)) // describe_matrix(cd1(test_rbm_w, data_1_case))
 
     assertDouble(meanM, -0.160742)
     assertDouble(sumM, -4115.000000)
     assertDimensions(dimM, MatrixSize(100, 256))
 
-    val (dimM2,meanM2, sumM2) = describeMatrix("Q7. CD1 & data10Cases: ", CD1.runQ7(testRbmWeights, DataBundle(data10Cases, null), this)) // describe_matrix(configuration_goodness_gradient(data_10_cases, test_hidden_state_10_cases))
+    val (dimM2,meanM2, sumM2) = describeMatrix("Q7. CD1 & data10Cases: ", CD1.runQ7(testRbmWeights, DataBundle(data10Cases, null), this, true)) // describe_matrix(configuration_goodness_gradient(data_10_cases, test_hidden_state_10_cases))
 
     assertDouble(meanM2, -0.185137)
     assertDouble(sumM2, -4739.500000)
     assertDimensions(dimM2, MatrixSize(100, 256))
 
-    describeMatrix("Q7. CD1 & data37Cases : ",  CD1.runQ7(testRbmWeights, DataBundle(data37Cases, null), this)) // describe_matrix(configuration_goodness_gradient(data_37_cases, test_hidden_state_37_cases))
+    describeMatrix("Q7. CD1 & data37Cases : ",  CD1.runQ7(testRbmWeights, DataBundle(data37Cases, null), this, true)) // describe_matrix(configuration_goodness_gradient(data_37_cases, test_hidden_state_37_cases))
 
   }
 
   def Q8() = {
-    val (dimM,meanM, sumM) = describeMatrix("Q8. CD1 & data1Case: ", CD1.runQ8(testRbmWeights, DataBundle(data1Case, null), this)) // describe_matrix(cd1(test_rbm_w, data_1_case))
+    val (dimM,meanM, sumM) = describeMatrix("Q8. CD1 & data1Case: ", CD1.runQ8(testRbmWeights, DataBundle(data1Case, null), this, true)) // describe_matrix(cd1(test_rbm_w, data_1_case))
 
     assertDouble(meanM, -0.164335)
     assertDouble(sumM, -4206.981332)
     assertDimensions(dimM, MatrixSize(100, 256))
 
-    val (dimM2,meanM2, sumM2) = describeMatrix("Q8. CD1 & data10Cases: ", CD1.runQ8(testRbmWeights, DataBundle(data10Cases, null), this)) // describe_matrix(configuration_goodness_gradient(data_10_cases, test_hidden_state_10_cases))
+    val (dimM2,meanM2, sumM2) = describeMatrix("Q8. CD1 & data10Cases: ", CD1.runQ8(testRbmWeights, DataBundle(data10Cases, null), this, true)) // describe_matrix(configuration_goodness_gradient(data_10_cases, test_hidden_state_10_cases))
 
     assertDouble(meanM2, -0.185591)
     assertDouble(sumM2, -4751.142054)
     assertDimensions(dimM2, MatrixSize(100, 256))
 
-    describeMatrix("Q8. CD1 & data37Cases : ",  CD1.runQ8(testRbmWeights, DataBundle(data37Cases, null), this)) // describe_matrix(configuration_goodness_gradient(data_37_cases, test_hidden_state_37_cases))
+    describeMatrix("Q8. CD1 & data37Cases : ",  CD1.runQ8(testRbmWeights, DataBundle(data37Cases, null), this, true)) // describe_matrix(configuration_goodness_gradient(data_37_cases, test_hidden_state_37_cases))
+
+  }
+
+  def Q9() = {
+    main("Q9.",300, .02, .005, 1000)
 
   }
 
@@ -222,9 +230,9 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
 
         val gradient = gradientFunction.run(currentModel, miniBatch, this) // gradient = gradient_function(model, mini_batch);
 
-        val newMomentumSpeed = 0.9 * currentMomentumSpeed  //  momentum_speed = 0.9 * momentum_speed + gradient;
+        val newMomentumSpeed = 0.9 * currentMomentumSpeed  + gradient //  momentum_speed = 0.9 * momentum_speed + gradient;
 
-        val newModel = currentModel + momentumSpeed * learningRate // model = model + momentum_speed * learning_rate;
+        val newModel = currentModel + newMomentumSpeed * learningRate // model = model + momentum_speed * learning_rate;
 
         (nextStartOfNextMiniBatch, newMomentumSpeed, newModel)
     }

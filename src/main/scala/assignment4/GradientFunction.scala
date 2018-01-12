@@ -9,7 +9,7 @@ import breeze.numerics._
   * Copyright © 2018 Datlinq B.V..
   */
 trait GradientFunction {
-  def run(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine ): DenseMatrix[Double]
+  def run(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine, reportCallsToSampleBernoulli: Boolean = false): DenseMatrix[Double]
 
 }
 
@@ -22,29 +22,40 @@ trait GradientFunction {
   */
 object CD1 extends GradientFunction {
 
-  override def run(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine ): DenseMatrix[Double] =  runQ8(rbmWeights, visibleData, rbm)
+  override def run(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine, reportCallsToSampleBernoulli: Boolean = false): DenseMatrix[Double] =  runQ9(rbmWeights, visibleData, rbm, reportCallsToSampleBernoulli)
 
 
-  def runQ7(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine ): DenseMatrix[Double] =  {
+  def runQ7(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine, reportCallsToSampleBernoulli: Boolean = false): DenseMatrix[Double] =  {
     // <solution Q7>
-    val hiddenProbabilitiesSampled1 = rbm.sampleBernoulli(rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleData.inputs), true)
-    val visibleProbabilitiesSampled2 = rbm.sampleBernoulli(rbm.hiddenStateToVisibleProbabilities(rbmWeights, hiddenProbabilitiesSampled1), true)
-    val hiddenProbabilitiesSampled2 = rbm.sampleBernoulli(rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleProbabilitiesSampled2), true)
+    val hiddenProbabilitiesSampled1 = rbm.sampleBernoulli(rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleData.inputs), reportCallsToSampleBernoulli)
+    val visibleProbabilitiesSampled2 = rbm.sampleBernoulli(rbm.hiddenStateToVisibleProbabilities(rbmWeights, hiddenProbabilitiesSampled1), reportCallsToSampleBernoulli)
+    val hiddenProbabilitiesSampled2 = rbm.sampleBernoulli(rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleProbabilitiesSampled2), reportCallsToSampleBernoulli)
     val configurationGoodnesssGradient1 = rbm.configurationGoodnesssGradient(visibleData.inputs, hiddenProbabilitiesSampled1)
     val configurationGoodnesssGradient2 = rbm.configurationGoodnesssGradient(visibleProbabilitiesSampled2, hiddenProbabilitiesSampled2)
     configurationGoodnesssGradient1 - configurationGoodnesssGradient2
     // </solution Q7>
   }
 
-  def runQ8(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine ): DenseMatrix[Double] =  {
+  def runQ8(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine, reportCallsToSampleBernoulli: Boolean = false ): DenseMatrix[Double] =  {
     // <solution Q8>
-    val hiddenProbabilitiesSampled1 = rbm.sampleBernoulli(rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleData.inputs), true)
-    val visibleProbabilitiesSampled2 = rbm.sampleBernoulli(rbm.hiddenStateToVisibleProbabilities(rbmWeights, hiddenProbabilitiesSampled1), true)
+    val hiddenProbabilitiesSampled1 = rbm.sampleBernoulli(rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleData.inputs), reportCallsToSampleBernoulli)
+    val visibleProbabilitiesSampled2 = rbm.sampleBernoulli(rbm.hiddenStateToVisibleProbabilities(rbmWeights, hiddenProbabilitiesSampled1), reportCallsToSampleBernoulli)
     val hiddenProbabilities2 = rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleProbabilitiesSampled2)
     val configurationGoodnesssGradient1 = rbm.configurationGoodnesssGradient(visibleData.inputs, hiddenProbabilitiesSampled1)
     val configurationGoodnesssGradient2 = rbm.configurationGoodnesssGradient(visibleProbabilitiesSampled2, hiddenProbabilities2)
     configurationGoodnesssGradient1 - configurationGoodnesssGradient2
     // </solution Q8>
+  }
+
+  def runQ9(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine, reportCallsToSampleBernoulli: Boolean = false ): DenseMatrix[Double] =  {
+    val visibleProbabilitiesSampled1 =rbm.sampleBernoulli(visibleData.inputs, reportCallsToSampleBernoulli)
+    val hiddenProbabilitiesSampled1 = rbm.sampleBernoulli(rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleProbabilitiesSampled1), reportCallsToSampleBernoulli)
+    val visibleProbabilitiesSampled2 = rbm.sampleBernoulli(rbm.hiddenStateToVisibleProbabilities(rbmWeights, hiddenProbabilitiesSampled1), reportCallsToSampleBernoulli)
+    val hiddenProbabilities2 = rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleProbabilitiesSampled2)
+    val configurationGoodnesssGradient1 = rbm.configurationGoodnesssGradient(visibleData.inputs, hiddenProbabilitiesSampled1)
+    val configurationGoodnesssGradient2 = rbm.configurationGoodnesssGradient(visibleProbabilitiesSampled2, hiddenProbabilities2)
+    configurationGoodnesssGradient1 - configurationGoodnesssGradient2
+
   }
 }
 
@@ -57,7 +68,7 @@ object CD1 extends GradientFunction {
   */
 object ClassificationPhiGradient extends GradientFunction {
 
-  override def run(inputToClassification: DenseMatrix[Double], data: DataBundle, rbm:RestrictedBoltzmannMachine ): DenseMatrix[Double] = {
+  override def run(inputToClassification: DenseMatrix[Double], data: DataBundle, rbm:RestrictedBoltzmannMachine, reportCallsToSampleBernoulli: Boolean = false ): DenseMatrix[Double] = {
     // input to the components of the softmax. size: <number of classes> by <number of data cases>
     val classificationInput: DenseMatrix[Double] = inputToClassification * data.inputs // class_input = input_to_class * data.inputs
 
@@ -77,7 +88,7 @@ object ClassificationPhiGradient extends GradientFunction {
     val dLossByDClassificationInput: DenseMatrix[Double] = -(data.targets - classificationProbability) / data.inputs.cols.toDouble // d_loss_by_d_class_input = -(data.targets - class_prob) ./ size(data.inputs, 2);
 
     // size: <number of classes> by <number of input units>
-    val dLossByDInputToClassification = dLossByDClassificationInput *:* data.inputs.t //  d_loss_by_d_input_to_class = d_loss_by_d_class_input * data.inputs.'; %
+    val dLossByDInputToClassification = dLossByDClassificationInput * data.inputs.t //  d_loss_by_d_input_to_class = d_loss_by_d_class_input * data.inputs.'; %
 
     val dPhiByDInputToClassification = -dLossByDInputToClassification //  d_phi_by_d_input_to_class = -d_loss_by_d_input_to_class;
 

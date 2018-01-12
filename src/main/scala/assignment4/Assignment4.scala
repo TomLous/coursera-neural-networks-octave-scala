@@ -45,7 +45,7 @@ object Assignment4 extends App with LazyLogging {
 
   val restrictedBoltzmannMachine = RestrictedBoltzmannMachine(trainingData, validationData, testData, randomDataSource)
 
-  restrictedBoltzmannMachine.main("Q2.", 300, 0.0, 0.0, 0)
+  restrictedBoltzmannMachine.Q2()
 
   restrictedBoltzmannMachine.Q3()
 
@@ -58,6 +58,8 @@ object Assignment4 extends App with LazyLogging {
   restrictedBoltzmannMachine.Q7()
 
   restrictedBoltzmannMachine.Q8()
+
+  restrictedBoltzmannMachine.Q9()
 
 
 
