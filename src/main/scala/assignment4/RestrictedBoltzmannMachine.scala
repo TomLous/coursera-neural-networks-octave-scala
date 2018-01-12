@@ -55,7 +55,7 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
 
 
   def Q4() = {
-    val (dimM,meanM, sumM) = describeMatrix("Q4 testHiddenState1Case: ", hiddenStateToVisibleProbabilities(testRbmWeights,testHiddenState1Case)) // describe_matrix(hidden_state_to_visible_probabilities(test_rbm_w, test_hidden_state_1_case))
+    val (dimM,meanM, sumM) = describeMatrix("Q4. testHiddenState1Case: ", hiddenStateToVisibleProbabilities(testRbmWeights,testHiddenState1Case)) // describe_matrix(hidden_state_to_visible_probabilities(test_rbm_w, test_hidden_state_1_case))
 
     assertDouble(meanM, 0.474996)
     assertDouble(sumM, 121.598898)
@@ -81,6 +81,23 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
 
     val mean3 = configurationGoodnesss(testRbmWeights, data37Cases, testHiddenState37Cases) // configuration_goodness(test_rbm_w, data_37_cases, test_hidden_state_37_cases)
     logger.info(s"Q5. configurationGoodnesss(testRbmWeights, data37Cases, testHiddenState37Cases) = $mean3")
+  }
+
+  def Q6() = {
+    val (dimM,meanM, sumM) = describeMatrix("Q6. data1Case & testHiddenState1Case: ", configurationGoodnesssGradient(data1Case,testHiddenState1Case)) // describe_matrix(configuration_goodness_gradient(data_1_case, test_hidden_state_1_case))
+
+    assertDouble(meanM, 0.159922)
+    assertDouble(sumM, 4094.000000)
+    assertDimensions(dimM, MatrixSize(100, 256))
+
+    val (dimM2,meanM2, sumM2) = describeMatrix("Q6. data10Cases & testHiddenState10Cases: ", configurationGoodnesssGradient(data10Cases,testHiddenState10Cases)) // describe_matrix(configuration_goodness_gradient(data_10_cases, test_hidden_state_10_cases))
+
+    assertDouble(meanM2, 0.116770)
+    assertDouble(sumM2, 2989.300000)
+    assertDimensions(dimM2, MatrixSize(100, 256))
+
+    describeMatrix("Q6. data37Cases & testHiddenState37Cases: ", configurationGoodnesssGradient(data37Cases,testHiddenState37Cases)) // describe_matrix(configuration_goodness_gradient(data_37_cases, test_hidden_state_37_cases))
+
   }
 
 
@@ -298,8 +315,6 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
   }
 
 
-
-
   /**
     * G = configuration_goodness(rbm_w, visible_state, hidden_state)
     * @param rbmWeights is a matrix of size <number of hidden units> by <number of visible units>
@@ -309,12 +324,21 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
     */
   def configurationGoodnesss(rbmWeights:DenseMatrix[Double], visibleState:DenseMatrix[Double], hiddenState:DenseMatrix[Double]):Double = {
     // <solution Q5>
-//    val vsthp = visibleStateToHiddenProbabilities(rbmWeights, visibleState)
-//    val hstvp = hiddenStateToVisibleProbabilities(rbmWeights, hiddenState)
-    val totalEnergy =  sum(hiddenState * visibleState.t *:* rbmWeights)
-
-    totalEnergy / visibleState.cols
+    sum(hiddenState * visibleState.t *:* rbmWeights) / visibleState.cols
     // </solution Q5>
+  }
+
+
+  /**
+    * d_G_by_rbm_w = configuration_goodness_gradient(visible_state, hidden_state)
+    * @param visibleState is a binary matrix of size <number of visible units> by <number of configurations that we're handling in parallel>.
+    * @param hiddenState is a (possibly but not necessarily binary) matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>.
+    * @return  This returns the gradient of the mean configuration goodness (negative energy, as computed by function <configuration_goodness>) with respect to the model parameters. Thus, the returned value is of the same shape as the model parameters, which by the way are not provided to this function. Notice that we're talking about the mean over data cases (as opposed to the sum over data cases).
+    */
+  def configurationGoodnesssGradient(visibleState:DenseMatrix[Double], hiddenState:DenseMatrix[Double]):DenseMatrix[Double] = {
+    // <solution Q6>
+    hiddenState * visibleState.t / visibleState.cols.toDouble
+    // </solution Q6>
   }
 
 }
