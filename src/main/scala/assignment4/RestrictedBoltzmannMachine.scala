@@ -100,6 +100,40 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
 
   }
 
+  def Q7() = {
+    val (dimM,meanM, sumM) = describeMatrix("Q7. CD1 & data1Case: ", CD1.runQ7(testRbmWeights, DataBundle(data1Case, null), this)) // describe_matrix(cd1(test_rbm_w, data_1_case))
+
+    assertDouble(meanM, -0.160742)
+    assertDouble(sumM, -4115.000000)
+    assertDimensions(dimM, MatrixSize(100, 256))
+
+    val (dimM2,meanM2, sumM2) = describeMatrix("Q7. CD1 & data10Cases: ", CD1.runQ7(testRbmWeights, DataBundle(data10Cases, null), this)) // describe_matrix(configuration_goodness_gradient(data_10_cases, test_hidden_state_10_cases))
+
+    assertDouble(meanM2, -0.185137)
+    assertDouble(sumM2, -4739.500000)
+    assertDimensions(dimM2, MatrixSize(100, 256))
+
+    describeMatrix("Q7. CD1 & data37Cases : ",  CD1.runQ7(testRbmWeights, DataBundle(data37Cases, null), this)) // describe_matrix(configuration_goodness_gradient(data_37_cases, test_hidden_state_37_cases))
+
+  }
+
+  def Q8() = {
+    val (dimM,meanM, sumM) = describeMatrix("Q8. CD1 & data1Case: ", CD1.runQ8(testRbmWeights, DataBundle(data1Case, null), this)) // describe_matrix(cd1(test_rbm_w, data_1_case))
+
+    assertDouble(meanM, -0.164335)
+    assertDouble(sumM, -4206.981332)
+    assertDimensions(dimM, MatrixSize(100, 256))
+
+    val (dimM2,meanM2, sumM2) = describeMatrix("Q8. CD1 & data10Cases: ", CD1.runQ8(testRbmWeights, DataBundle(data10Cases, null), this)) // describe_matrix(configuration_goodness_gradient(data_10_cases, test_hidden_state_10_cases))
+
+    assertDouble(meanM2, -0.185591)
+    assertDouble(sumM2, -4751.142054)
+    assertDimensions(dimM2, MatrixSize(100, 256))
+
+    describeMatrix("Q8. CD1 & data37Cases : ",  CD1.runQ8(testRbmWeights, DataBundle(data37Cases, null), this)) // describe_matrix(configuration_goodness_gradient(data_37_cases, test_hidden_state_37_cases))
+
+  }
+
 
   /**
     * function a4_main(n_hid, lr_rbm, lr_classification, n_iterations)
@@ -118,7 +152,7 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
     val inputToHidden = rbmWeights //      input_to_hid = rbm_w;
 
     // calculate the hidden layer representation of the labeled data
-    val hiddenRepresentation = RestrictedBoltzmannMachine.logistic(inputToHidden * trainingData.inputs) //      hidden_representation = logistic(input_to_hid * data_sets.training.inputs);
+    val hiddenRepresentation = logistic(inputToHidden * trainingData.inputs) //      hidden_representation = logistic(input_to_hid * data_sets.training.inputs);
 
     // train hid_to_class
     val data2 = DataBundle(hiddenRepresentation, trainingData.targets) //      data_2.inputs = hidden_representation; data_2.targets = data_sets.training.targets;
@@ -139,13 +173,13 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
         val hiddenInput = inputToHidden * data.inputs //    hid_input = input_to_hid * data.inputs;
 
         // size: <number of hidden units> by <number of data cases>
-        val hiddenOutput = RestrictedBoltzmannMachine.logistic(hiddenInput) //      hid_output = logistic(hid_input); %
+        val hiddenOutput = logistic(hiddenInput) //      hid_output = logistic(hid_input); %
 
         // size: <number of classes> by <number of data cases>
         val classificationInput = hiddenToClassification * hiddenOutput // class_input = hid_to_class * hid_output;
 
         // log(sum(exp of class_input)) is what we subtract to get properly normalized log class probabilities. size: <1> by <number of data cases>
-        val classificationNormalizer = RestrictedBoltzmannMachine.logSumExpOverRows(classificationInput) //class_normalizer = log_sum_exp_over_rows(class_input);
+        val classificationNormalizer = logSumExpOverRows(classificationInput) //class_normalizer = log_sum_exp_over_rows(class_input);
 
 
         val tiledNormalizer = tile(classificationNormalizer, 1, classificationInput.rows).t
@@ -154,7 +188,7 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
         val logClassificationProbability = classificationInput - tiledNormalizer // log_class_prob = class_input - repmat(class_normalizer, [size(class_input, 1), 1]);
 
         // Matlab has a nice method ~= to determine inequality. I just subtract the two vectors and any non-zero gets mapped to 1
-        val errorRate:Double = mean((RestrictedBoltzmannMachine.argmaxOverRows(classificationInput) - RestrictedBoltzmannMachine.argmaxOverRows(data.targets)).map(x => (math.abs(x) min 1).toDouble))   // error_rate = mean(double(argmax_over_rows(class_input) ~= argmax_over_rows(data.targets))); % scalar
+        val errorRate:Double = mean((argmaxOverRows(classificationInput) - argmaxOverRows(data.targets)).map(x => (math.abs(x) min 1).toDouble))   // error_rate = mean(double(argmax_over_rows(class_input) ~= argmax_over_rows(data.targets))); % scalar
 
 
         //  scalar. select the right log class probability using that sum; then take the mean over all data cases.
@@ -186,7 +220,7 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
 
         val nextStartOfNextMiniBatch = (startOfNextMiniBatch + miniBatchSize) % data.inputs.cols  //        start_of_next_mini_batch = mod(start_of_next_mini_batch + mini_batch_size, size(training_data.inputs, 2));
 
-        val gradient = gradientFunction.run(currentModel, miniBatch) // gradient = gradient_function(model, mini_batch);
+        val gradient = gradientFunction.run(currentModel, miniBatch, this) // gradient = gradient_function(model, mini_batch);
 
         val newMomentumSpeed = 0.9 * currentMomentumSpeed  //  momentum_speed = 0.9 * momentum_speed + gradient;
 
@@ -289,66 +323,6 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
   }
 
 
-
-  /**
-    * visible_state_to_hidden_probabilities(rbm_w, visible_state)
-    * @param rbmWeights is a matrix of size <number of hidden units> by <number of visible units>
-    * @param visibleState is a binary matrix of size <number of visible units> by <number of configurations that we're handling in parallel>.
-    * @return The returned value is a matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>. This takes in the (binary) states of the visible units, and returns the activation probabilities of the hidden units conditional on those states.
-    */
-  def visibleStateToHiddenProbabilities(rbmWeights:DenseMatrix[Double], visibleState:DenseMatrix[Double]):DenseMatrix[Double] = {
-    // <solution Q3>
-    RestrictedBoltzmannMachine.logistic(rbmWeights * visibleState)
-    // </solution Q3>
-  }
-
-  /**
-    * visible_probability = hidden_state_to_visible_probabilities(rbm_w, hidden_state)
-    * @param rbmWeights is a matrix of size <number of hidden units> by <number of visible units>
-    * @param hiddenState is a binary matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>.
-    * @return The returned value is a matrix of size <number of visible units> by <number of configurations that we're handling in parallel>. This takes in the (binary) states of the hidden units, and returns the activation probabilities of the visible units, conditional on those states.
-    */
-  def hiddenStateToVisibleProbabilities(rbmWeights:DenseMatrix[Double], hiddenState:DenseMatrix[Double]):DenseMatrix[Double] = {
-    // <solution Q4>
-    RestrictedBoltzmannMachine.logistic(rbmWeights.t * hiddenState)
-    // </solution Q4>
-  }
-
-
-  /**
-    * G = configuration_goodness(rbm_w, visible_state, hidden_state)
-    * @param rbmWeights is a matrix of size <number of hidden units> by <number of visible units>
-    * @param visibleState is a binary matrix of size <number of visible units> by <number of configurations that we're handling in parallel>.
-    * @param hiddenState is a binary matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>.
-    * @return  the mean over cases of the goodness (negative energy) of the described configurations.
-    */
-  def configurationGoodnesss(rbmWeights:DenseMatrix[Double], visibleState:DenseMatrix[Double], hiddenState:DenseMatrix[Double]):Double = {
-    // <solution Q5>
-    sum(hiddenState * visibleState.t *:* rbmWeights) / visibleState.cols
-    // </solution Q5>
-  }
-
-
-  /**
-    * d_G_by_rbm_w = configuration_goodness_gradient(visible_state, hidden_state)
-    * @param visibleState is a binary matrix of size <number of visible units> by <number of configurations that we're handling in parallel>.
-    * @param hiddenState is a (possibly but not necessarily binary) matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>.
-    * @return  This returns the gradient of the mean configuration goodness (negative energy, as computed by function <configuration_goodness>) with respect to the model parameters. Thus, the returned value is of the same shape as the model parameters, which by the way are not provided to this function. Notice that we're talking about the mean over data cases (as opposed to the sum over data cases).
-    */
-  def configurationGoodnesssGradient(visibleState:DenseMatrix[Double], hiddenState:DenseMatrix[Double]):DenseMatrix[Double] = {
-    // <solution Q6>
-    hiddenState * visibleState.t / visibleState.cols.toDouble
-    // </solution Q6>
-  }
-
-}
-
-object RestrictedBoltzmannMachine extends LazyLogging{
-
-
-
-
-
   /**
     * org: function ret = logistic(input)
     * @param input DenseMatrix
@@ -385,6 +359,69 @@ object RestrictedBoltzmannMachine extends LazyLogging{
     val indices = matrix(::,*).map(dv => argmax(dv)).t // [dump, indices] = max(matrix);
     indices
   }
+
+
+  /**
+    * visible_state_to_hidden_probabilities(rbm_w, visible_state)
+    * @param rbmWeights is a matrix of size <number of hidden units> by <number of visible units>
+    * @param visibleState is a binary matrix of size <number of visible units> by <number of configurations that we're handling in parallel>.
+    * @return The returned value is a matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>. This takes in the (binary) states of the visible units, and returns the activation probabilities of the hidden units conditional on those states.
+    */
+  def visibleStateToHiddenProbabilities(rbmWeights:DenseMatrix[Double], visibleState:DenseMatrix[Double]):DenseMatrix[Double] = {
+    // <solution Q3>
+    logistic(rbmWeights * visibleState)
+    // </solution Q3>
+  }
+
+  /**
+    * visible_probability = hidden_state_to_visible_probabilities(rbm_w, hidden_state)
+    * @param rbmWeights is a matrix of size <number of hidden units> by <number of visible units>
+    * @param hiddenState is a binary matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>.
+    * @return The returned value is a matrix of size <number of visible units> by <number of configurations that we're handling in parallel>. This takes in the (binary) states of the hidden units, and returns the activation probabilities of the visible units, conditional on those states.
+    */
+  def hiddenStateToVisibleProbabilities(rbmWeights:DenseMatrix[Double], hiddenState:DenseMatrix[Double]):DenseMatrix[Double] = {
+    // <solution Q4>
+    logistic(rbmWeights.t * hiddenState)
+    // </solution Q4>
+  }
+
+
+  /**
+    * G = configuration_goodness(rbm_w, visible_state, hidden_state)
+    * @param rbmWeights is a matrix of size <number of hidden units> by <number of visible units>
+    * @param visibleState is a binary matrix of size <number of visible units> by <number of configurations that we're handling in parallel>.
+    * @param hiddenState is a binary matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>.
+    * @return  the mean over cases of the goodness (negative energy) of the described configurations.
+    */
+  def configurationGoodnesss(rbmWeights:DenseMatrix[Double], visibleState:DenseMatrix[Double], hiddenState:DenseMatrix[Double]):Double = {
+    // <solution Q5>
+    sum(hiddenState * visibleState.t *:* rbmWeights) / visibleState.cols
+    // </solution Q5>
+  }
+
+
+  /**
+    * d_G_by_rbm_w = configuration_goodness_gradient(visible_state, hidden_state)
+    * @param visibleState is a binary matrix of size <number of visible units> by <number of configurations that we're handling in parallel>.
+    * @param hiddenState is a (possibly but not necessarily binary) matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>.
+    * @return  This returns the gradient of the mean configuration goodness (negative energy, as computed by function <configuration_goodness>) with respect to the model parameters. Thus, the returned value is of the same shape as the model parameters, which by the way are not provided to this function. Notice that we're talking about the mean over data cases (as opposed to the sum over data cases).
+    */
+  def configurationGoodnesssGradient(visibleState:DenseMatrix[Double], hiddenState:DenseMatrix[Double]):DenseMatrix[Double] = {
+    // <solution Q6>
+    hiddenState * visibleState.t / visibleState.cols.toDouble
+    // </solution Q6>
+  }
+
+
+}
+
+object RestrictedBoltzmannMachine extends LazyLogging{
+
+
+
+
+
+
 
 
 }

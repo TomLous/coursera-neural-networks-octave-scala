@@ -9,13 +9,43 @@ import breeze.numerics._
   * Copyright © 2018 Datlinq B.V..
   */
 trait GradientFunction {
-  def run(rbmWeights: DenseMatrix[Double], visibleData: DataBundle): DenseMatrix[Double]
+  def run(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine ): DenseMatrix[Double]
 
 }
 
 
+/**
+  * function ret = cd1(rbm_w, visible_data)
+  * % <rbm_w> is a matrix of size <number of hidden units> by <number of visible units>
+  * % <visible_data> is a (possibly but not necessarily binary) matrix of size <number of visible units> by <number of data cases>
+  * % The returned value is the gradient approximation produced by CD-1. It's of the same shape as <rbm_w>.
+  */
 object CD1 extends GradientFunction {
-  override def run(rbmWeights: DenseMatrix[Double], visibleData: DataBundle): DenseMatrix[Double] = ???
+
+  override def run(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine ): DenseMatrix[Double] =  runQ8(rbmWeights, visibleData, rbm)
+
+
+  def runQ7(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine ): DenseMatrix[Double] =  {
+    // <solution Q7>
+    val hiddenProbabilitiesSampled1 = rbm.sampleBernoulli(rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleData.inputs), true)
+    val visibleProbabilitiesSampled2 = rbm.sampleBernoulli(rbm.hiddenStateToVisibleProbabilities(rbmWeights, hiddenProbabilitiesSampled1), true)
+    val hiddenProbabilitiesSampled2 = rbm.sampleBernoulli(rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleProbabilitiesSampled2), true)
+    val configurationGoodnesssGradient1 = rbm.configurationGoodnesssGradient(visibleData.inputs, hiddenProbabilitiesSampled1)
+    val configurationGoodnesssGradient2 = rbm.configurationGoodnesssGradient(visibleProbabilitiesSampled2, hiddenProbabilitiesSampled2)
+    configurationGoodnesssGradient1 - configurationGoodnesssGradient2
+    // </solution Q7>
+  }
+
+  def runQ8(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine ): DenseMatrix[Double] =  {
+    // <solution Q8>
+    val hiddenProbabilitiesSampled1 = rbm.sampleBernoulli(rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleData.inputs), true)
+    val visibleProbabilitiesSampled2 = rbm.sampleBernoulli(rbm.hiddenStateToVisibleProbabilities(rbmWeights, hiddenProbabilitiesSampled1), true)
+    val hiddenProbabilities2 = rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleProbabilitiesSampled2)
+    val configurationGoodnesssGradient1 = rbm.configurationGoodnesssGradient(visibleData.inputs, hiddenProbabilitiesSampled1)
+    val configurationGoodnesssGradient2 = rbm.configurationGoodnesssGradient(visibleProbabilitiesSampled2, hiddenProbabilities2)
+    configurationGoodnesssGradient1 - configurationGoodnesssGradient2
+    // </solution Q8>
+  }
 }
 
 /**
@@ -27,12 +57,12 @@ object CD1 extends GradientFunction {
   */
 object ClassificationPhiGradient extends GradientFunction {
 
-  override def run(inputToClassification: DenseMatrix[Double], data: DataBundle): DenseMatrix[Double] = {
+  override def run(inputToClassification: DenseMatrix[Double], data: DataBundle, rbm:RestrictedBoltzmannMachine ): DenseMatrix[Double] = {
     // input to the components of the softmax. size: <number of classes> by <number of data cases>
     val classificationInput: DenseMatrix[Double] = inputToClassification * data.inputs // class_input = input_to_class * data.inputs
 
     // log(sum(exp)) is what we subtract to get normalized log class probabilities. size: <1> by <number of data cases>
-    val classificationNormalizer = RestrictedBoltzmannMachine.logSumExpOverRows(classificationInput) //class_normalizer = log_sum_exp_over_rows(class_input);
+    val classificationNormalizer = rbm.logSumExpOverRows(classificationInput) //class_normalizer = log_sum_exp_over_rows(class_input);
 
     val tiledNormalizer = tile(classificationNormalizer, 1, classificationInput.rows).t
 
