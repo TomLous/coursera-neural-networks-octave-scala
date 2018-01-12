@@ -1,0 +1,875 @@
+15:12:24.178 [main] INFO  assignment3.Assignment3$ - Reading file /assignment3/data.mat
+15:12:25.321 [main] INFO  assignment3.NeuralNetwork - n_training_cases 1000
+15:12:25.324 [main] INFO  assignment3.Assignment3$ - ________________________________________________________________________________
+15:12:25.325 [main] INFO  assignment3.Assignment3$ - Q2. What is the loss on the training data for that test run? Write your answer with at least 5 digits after the decimal point.
+15:12:25.657 [main] INFO  assignment3.NeuralNetwork - Q2: The loss on the training data is 2.302585092994046
+15:12:25.673 [main] INFO  assignment3.NeuralNetwork - Q2: The classification error rate on the training data is 0.9000000000000002
+15:12:25.679 [main] INFO  assignment3.NeuralNetwork - Q2: The loss on the validation data is 2.302585092994046
+15:12:25.680 [main] INFO  assignment3.NeuralNetwork - Q2: The classification error rate on the validation data is 0.9000000000000002
+15:12:25.709 [main] INFO  assignment3.NeuralNetwork - Q2: The loss on the test data is 2.302585092994046
+15:12:25.716 [main] INFO  assignment3.NeuralNetwork - Q2: The classification error rate on the test data is 0.8999999999999974
+15:12:25.716 [main] INFO  assignment3.Assignment3$ - 391 ms elapsed
+15:12:25.716 [main] INFO  assignment3.Assignment3$ - ________________________________________________________________________________
+15:12:25.717 [main] INFO  assignment3.Assignment3$ - Q3a.  run with huge weight decay, so that the weight decay loss overshadows the classification loss. 
+15:12:25.819 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 1.0819640010595322E-6, fdHere: 999999.9998501065, analyticHere: 999999.9998511885
+15:12:25.820 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 999999.9998501065 but analytic gradient 999999.9998511885. That looks like an error.
+15:12:25.831 [main] INFO  assignment3.NeuralNetwork - Q3a: After 1 optimization iterations, training data loss is 4.655936634806804E7, and validation data loss is 4.6559366348381884E7
+15:12:25.838 [main] INFO  assignment3.NeuralNetwork - Q3a: After 2 optimization iterations, training data loss is 4.655936634806804E7, and validation data loss is 4.6559366348381884E7
+15:12:25.845 [main] INFO  assignment3.NeuralNetwork - Q3a: After 3 optimization iterations, training data loss is 4.655936634806804E7, and validation data loss is 4.6559366348381884E7
+15:12:25.852 [main] INFO  assignment3.NeuralNetwork - Q3a: After 4 optimization iterations, training data loss is 4.655936634806804E7, and validation data loss is 4.6559366348381884E7
+15:12:25.859 [main] INFO  assignment3.NeuralNetwork - Q3a: After 5 optimization iterations, training data loss is 4.655936634806804E7, and validation data loss is 4.6559366348381884E7
+15:12:25.866 [main] INFO  assignment3.NeuralNetwork - Q3a: After 6 optimization iterations, training data loss is 4.655936634806804E7, and validation data loss is 4.6559366348381884E7
+15:12:25.872 [main] INFO  assignment3.NeuralNetwork - Q3a: After 7 optimization iterations, training data loss is 4.655936634806804E7, and validation data loss is 4.6559366348381884E7
+15:12:25.880 [main] INFO  assignment3.NeuralNetwork - Q3a: After 8 optimization iterations, training data loss is 4.655936634806804E7, and validation data loss is 4.6559366348381884E7
+15:12:25.886 [main] INFO  assignment3.NeuralNetwork - Q3a: After 9 optimization iterations, training data loss is 4.655936634806804E7, and validation data loss is 4.6559366348381884E7
+15:12:25.893 [main] INFO  assignment3.NeuralNetwork - Q3a: After 10 optimization iterations, training data loss is 4.655936634806804E7, and validation data loss is 4.6559366348381884E7
+15:12:25.921 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 1.0819640010595322E-6, fdHere: 999999.9998501065, analyticHere: 999999.9998511885
+15:12:25.921 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 999999.9998501065 but analytic gradient 999999.9998511885. That looks like an error.
+15:12:28.537 [main] INFO  assignment3.NeuralNetwork - Q3a: Saved src/main/resources/assignment3/plots/image-loss-Q3a-1.0E7-7-10-0.0-0.0-false-4.png
+15:12:28.540 [main] INFO  assignment3.NeuralNetwork - Q3a: The loss on the training data is 4.655936634806804E7
+15:12:28.543 [main] INFO  assignment3.NeuralNetwork - Q3a: The classification loss (i.e. without weight decay) on the training data is 2.3027878412519405
+15:12:28.546 [main] INFO  assignment3.NeuralNetwork - Q3a: The classification error rate on the training data is 0.896
+15:12:28.549 [main] INFO  assignment3.NeuralNetwork - Q3a: The loss on the validation data is 4.6559366348381884E7
+15:12:28.552 [main] INFO  assignment3.NeuralNetwork - Q3a: The classification loss (i.e. without weight decay) on the validation data is 2.303101683622592
+15:12:28.554 [main] INFO  assignment3.NeuralNetwork - Q3a: The classification error rate on the validation data is 0.8979999999999999
+15:12:28.578 [main] INFO  assignment3.NeuralNetwork - Q3a: The loss on the test data is 4.6559366348213516E7
+15:12:28.598 [main] INFO  assignment3.NeuralNetwork - Q3a: The classification loss (i.e. without weight decay) on the test data is 2.302933309345889
+15:12:28.608 [main] INFO  assignment3.NeuralNetwork - Q3a: The classification error rate on the test data is 0.8977777777777785
+15:12:28.608 [main] INFO  assignment3.Assignment3$ - 2891 ms elapsed
+15:12:28.609 [main] INFO  assignment3.Assignment3$ - ________________________________________________________________________________
+15:12:28.609 [main] INFO  assignment3.Assignment3$ - Q3b.  turn off weight decay, and you'll see the gradient error message coming back 
+15:12:28.637 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 1.460615482729022E-14, fdHere: -1.4881152888019528E-4, analyticHere: -1.4881152889480143E-4
+15:12:28.638 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient -1.4881152888019528E-4 but analytic gradient -1.4881152889480143E-4. That looks like an error.
+15:12:28.644 [main] INFO  assignment3.NeuralNetwork - Q3b: After 1 optimization iterations, training data loss is 2.3027878412519405, and validation data loss is 2.303101683622592
+15:12:28.650 [main] INFO  assignment3.NeuralNetwork - Q3b: After 2 optimization iterations, training data loss is 2.3027878412519405, and validation data loss is 2.303101683622592
+15:12:28.657 [main] INFO  assignment3.NeuralNetwork - Q3b: After 3 optimization iterations, training data loss is 2.3027878412519405, and validation data loss is 2.303101683622592
+15:12:28.663 [main] INFO  assignment3.NeuralNetwork - Q3b: After 4 optimization iterations, training data loss is 2.3027878412519405, and validation data loss is 2.303101683622592
+15:12:28.669 [main] INFO  assignment3.NeuralNetwork - Q3b: After 5 optimization iterations, training data loss is 2.3027878412519405, and validation data loss is 2.303101683622592
+15:12:28.674 [main] INFO  assignment3.NeuralNetwork - Q3b: After 6 optimization iterations, training data loss is 2.3027878412519405, and validation data loss is 2.303101683622592
+15:12:28.680 [main] INFO  assignment3.NeuralNetwork - Q3b: After 7 optimization iterations, training data loss is 2.3027878412519405, and validation data loss is 2.303101683622592
+15:12:28.686 [main] INFO  assignment3.NeuralNetwork - Q3b: After 8 optimization iterations, training data loss is 2.3027878412519405, and validation data loss is 2.303101683622592
+15:12:28.692 [main] INFO  assignment3.NeuralNetwork - Q3b: After 9 optimization iterations, training data loss is 2.3027878412519405, and validation data loss is 2.303101683622592
+15:12:28.697 [main] INFO  assignment3.NeuralNetwork - Q3b: After 10 optimization iterations, training data loss is 2.3027878412519405, and validation data loss is 2.303101683622592
+15:12:28.728 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 1.460615482729022E-14, fdHere: -1.4881152888019528E-4, analyticHere: -1.4881152889480143E-4
+15:12:28.728 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient -1.4881152888019528E-4 but analytic gradient -1.4881152889480143E-4. That looks like an error.
+15:12:29.344 [main] INFO  assignment3.NeuralNetwork - Q3b: Saved src/main/resources/assignment3/plots/image-loss-Q3b-0.0-7-10-0.0-0.0-false-4.png
+15:12:29.348 [main] INFO  assignment3.NeuralNetwork - Q3b: The loss on the training data is 2.3027878412519405
+15:12:29.350 [main] INFO  assignment3.NeuralNetwork - Q3b: The classification error rate on the training data is 0.896
+15:12:29.354 [main] INFO  assignment3.NeuralNetwork - Q3b: The loss on the validation data is 2.303101683622592
+15:12:29.356 [main] INFO  assignment3.NeuralNetwork - Q3b: The classification error rate on the validation data is 0.8979999999999999
+15:12:29.386 [main] INFO  assignment3.NeuralNetwork - Q3b: The loss on the test data is 2.302933309345889
+15:12:29.400 [main] INFO  assignment3.NeuralNetwork - Q3b: The classification error rate on the test data is 0.8977777777777785
+15:12:29.400 [main] INFO  assignment3.Assignment3$ - 791 ms elapsed
+15:12:29.400 [main] INFO  assignment3.Assignment3$ - ________________________________________________________________________________
+15:12:29.401 [main] INFO  assignment3.Assignment3$ - Q3c.  best see the effect of the optimization
+15:12:29.444 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:29.444 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:29.501 [main] INFO  assignment3.NeuralNetwork - Q3c: After 7 optimization iterations, training data loss is 2.3047112684339104, and validation data loss is 2.3047470727568213
+15:12:29.562 [main] INFO  assignment3.NeuralNetwork - Q3c: After 14 optimization iterations, training data loss is 2.3044965945431852, and validation data loss is 2.304542744692985
+15:12:29.623 [main] INFO  assignment3.NeuralNetwork - Q3c: After 21 optimization iterations, training data loss is 2.304332369591587, and validation data loss is 2.304389041131436
+15:12:29.686 [main] INFO  assignment3.NeuralNetwork - Q3c: After 28 optimization iterations, training data loss is 2.3042053751855733, and validation data loss is 2.304269136835799
+15:12:29.745 [main] INFO  assignment3.NeuralNetwork - Q3c: After 35 optimization iterations, training data loss is 2.304096814634249, and validation data loss is 2.30416072384198
+15:12:29.807 [main] INFO  assignment3.NeuralNetwork - Q3c: After 42 optimization iterations, training data loss is 2.3039349575306556, and validation data loss is 2.304006470383584
+15:12:29.848 [main] INFO  assignment3.NeuralNetwork - Q3c: After 49 optimization iterations, training data loss is 2.303771484692849, and validation data loss is 2.3038538696259026
+15:12:29.887 [main] INFO  assignment3.NeuralNetwork - Q3c: After 56 optimization iterations, training data loss is 2.3036455586033386, and validation data loss is 2.303731681098452
+15:12:29.927 [main] INFO  assignment3.NeuralNetwork - Q3c: After 63 optimization iterations, training data loss is 2.3035373070663017, and validation data loss is 2.3036343567165245
+15:12:29.967 [main] INFO  assignment3.NeuralNetwork - Q3c: After 70 optimization iterations, training data loss is 2.3034412881384316, and validation data loss is 2.3035386318127546
+15:12:29.997 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.09994109674074066, diff: 4.8799966888626867E-14, fdHere: 1.419193649179057E-4, analyticHere: 1.4191936496670566E-4
+15:12:29.997 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.09994109674074066, has finite difference gradient 1.419193649179057E-4 but analytic gradient 1.4191936496670566E-4. That looks like an error.
+15:12:30.662 [main] INFO  assignment3.NeuralNetwork - Q3c: Saved src/main/resources/assignment3/plots/image-loss-Q3c-0.0-10-70-0.005-0.0-false-4.png
+15:12:30.666 [main] INFO  assignment3.NeuralNetwork - Q3c: The loss on the training data is 2.3034412881384316
+15:12:30.667 [main] INFO  assignment3.NeuralNetwork - Q3c: The classification error rate on the training data is 0.8980000000000007
+15:12:30.670 [main] INFO  assignment3.NeuralNetwork - Q3c: The loss on the validation data is 2.3035386318127546
+15:12:30.672 [main] INFO  assignment3.NeuralNetwork - Q3c: The classification error rate on the validation data is 0.8990000000000007
+15:12:30.694 [main] INFO  assignment3.NeuralNetwork - Q3c: The loss on the test data is 2.303527138030711
+15:12:30.707 [main] INFO  assignment3.NeuralNetwork - Q3c: The classification error rate on the test data is 0.8988888888888905
+15:12:30.707 [main] INFO  assignment3.Assignment3$ - 1306 ms elapsed
+15:12:30.707 [main] INFO  assignment3.Assignment3$ - ________________________________________________________________________________
+15:12:30.708 [main] INFO  assignment3.Assignment3$ - Q4a.  Let's try a bigger learning rate: LR=0.5, and still no momentum.
+15:12:30.735 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:30.735 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:30.774 [main] INFO  assignment3.NeuralNetwork - Q4a: After 7 optimization iterations, training data loss is 2.295214000340844, and validation data loss is 2.296183948149294
+15:12:30.814 [main] INFO  assignment3.NeuralNetwork - Q4a: After 14 optimization iterations, training data loss is 2.279388561594213, and validation data loss is 2.281181812950983
+15:12:30.854 [main] INFO  assignment3.NeuralNetwork - Q4a: After 21 optimization iterations, training data loss is 2.262946397814296, and validation data loss is 2.2660960593106703
+15:12:30.893 [main] INFO  assignment3.NeuralNetwork - Q4a: After 28 optimization iterations, training data loss is 2.2388761157658803, and validation data loss is 2.2429391302388515
+15:12:30.932 [main] INFO  assignment3.NeuralNetwork - Q4a: After 35 optimization iterations, training data loss is 2.2124019734443063, and validation data loss is 2.216077130044514
+15:12:30.976 [main] INFO  assignment3.NeuralNetwork - Q4a: After 42 optimization iterations, training data loss is 2.1606274967522956, and validation data loss is 2.1659776133056328
+15:12:31.015 [main] INFO  assignment3.NeuralNetwork - Q4a: After 49 optimization iterations, training data loss is 2.0951523705477806, and validation data loss is 2.1024989283383873
+15:12:31.054 [main] INFO  assignment3.NeuralNetwork - Q4a: After 56 optimization iterations, training data loss is 2.034657816666912, and validation data loss is 2.042572111409818
+15:12:31.094 [main] INFO  assignment3.NeuralNetwork - Q4a: After 63 optimization iterations, training data loss is 1.9661022595533955, and validation data loss is 1.9762244670194384
+15:12:31.134 [main] INFO  assignment3.NeuralNetwork - Q4a: After 70 optimization iterations, training data loss is 1.901005932454295, and validation data loss is 1.908767802812043
+15:12:31.159 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.09599765389638176, diff: 2.004951041886631E-13, fdHere: 5.331772998783818E-5, analyticHere: 5.3317729787343076E-5
+15:12:31.159 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.09599765389638176, has finite difference gradient 5.331772998783818E-5 but analytic gradient 5.3317729787343076E-5. That looks like an error.
+15:12:31.787 [main] INFO  assignment3.NeuralNetwork - Q4a: Saved src/main/resources/assignment3/plots/image-loss-Q4a-0.0-10-70-0.5-0.0-false-4.png
+15:12:31.790 [main] INFO  assignment3.NeuralNetwork - Q4a: The loss on the training data is 1.901005932454295
+15:12:31.792 [main] INFO  assignment3.NeuralNetwork - Q4a: The classification error rate on the training data is 0.6170000000000005
+15:12:31.794 [main] INFO  assignment3.NeuralNetwork - Q4a: The loss on the validation data is 1.908767802812043
+15:12:31.796 [main] INFO  assignment3.NeuralNetwork - Q4a: The classification error rate on the validation data is 0.6240000000000002
+15:12:31.820 [main] INFO  assignment3.NeuralNetwork - Q4a: The loss on the test data is 1.8979759429663783
+15:12:31.832 [main] INFO  assignment3.NeuralNetwork - Q4a: The classification error rate on the test data is 0.61944444444444
+15:12:31.832 [main] INFO  assignment3.Assignment3$ - 1124 ms elapsed
+15:12:31.832 [main] INFO  assignment3.Assignment3$ - ________________________________________________________________________________
+15:12:31.833 [main] INFO  assignment3.Assignment3$ - Q4b.  0.002, 0.01, 0.05, 0.2, 1.0, 5.0, and 20.0
+15:12:31.859 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:31.859 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:31.897 [main] INFO  assignment3.NeuralNetwork - Q4b-1: After 7 optimization iterations, training data loss is 2.3048044007855406, and validation data loss is 2.304834764200643
+15:12:31.936 [main] INFO  assignment3.NeuralNetwork - Q4b-1: After 14 optimization iterations, training data loss is 2.304717812704568, and validation data loss is 2.3047523135736077
+15:12:31.975 [main] INFO  assignment3.NeuralNetwork - Q4b-1: After 21 optimization iterations, training data loss is 2.304651165548627, and validation data loss is 2.3046898781429075
+15:12:32.014 [main] INFO  assignment3.NeuralNetwork - Q4b-1: After 28 optimization iterations, training data loss is 2.304599453051911, and validation data loss is 2.3046409998337998
+15:12:32.052 [main] INFO  assignment3.NeuralNetwork - Q4b-1: After 35 optimization iterations, training data loss is 2.3045551855686495, and validation data loss is 2.3045968002920567
+15:12:32.104 [main] INFO  assignment3.NeuralNetwork - Q4b-1: After 42 optimization iterations, training data loss is 2.3044884618306227, and validation data loss is 2.3045331183225737
+15:12:32.161 [main] INFO  assignment3.NeuralNetwork - Q4b-1: After 49 optimization iterations, training data loss is 2.304420773200354, and validation data loss is 2.3044697911185614
+15:12:32.215 [main] INFO  assignment3.NeuralNetwork - Q4b-1: After 56 optimization iterations, training data loss is 2.30436798618476, and validation data loss is 2.304418509248221
+15:12:32.271 [main] INFO  assignment3.NeuralNetwork - Q4b-1: After 63 optimization iterations, training data loss is 2.30432287353661, and validation data loss is 2.3043777853963774
+15:12:32.336 [main] INFO  assignment3.NeuralNetwork - Q4b-1: After 70 optimization iterations, training data loss is 2.3042828375704327, and validation data loss is 2.304337885382
+15:12:32.373 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.09997647159426681, diff: 1.8546172627156854E-14, fdHere: 1.4203859999978308E-4, analyticHere: 1.420385999812369E-4
+15:12:32.374 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.09997647159426681, has finite difference gradient 1.4203859999978308E-4 but analytic gradient 1.420385999812369E-4. That looks like an error.
+15:12:32.988 [main] INFO  assignment3.NeuralNetwork - Q4b-1: Saved src/main/resources/assignment3/plots/image-loss-Q4b-1-0.0-10-70-0.002-0.0-false-4.png
+15:12:32.993 [main] INFO  assignment3.NeuralNetwork - Q4b-1: The loss on the training data is 2.3042828375704327
+15:12:32.995 [main] INFO  assignment3.NeuralNetwork - Q4b-1: The classification error rate on the training data is 0.9000000000000004
+15:12:33.000 [main] INFO  assignment3.NeuralNetwork - Q4b-1: The loss on the validation data is 2.304337885382
+15:12:33.002 [main] INFO  assignment3.NeuralNetwork - Q4b-1: The classification error rate on the validation data is 0.9000000000000004
+15:12:33.035 [main] INFO  assignment3.NeuralNetwork - Q4b-1: The loss on the test data is 2.304352145536674
+15:12:33.051 [main] INFO  assignment3.NeuralNetwork - Q4b-1: The classification error rate on the test data is 0.899999999999998
+15:12:33.088 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:33.089 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:33.147 [main] INFO  assignment3.NeuralNetwork - Q4b-2: After 7 optimization iterations, training data loss is 2.3045584062778524, and validation data loss is 2.304603294983553
+15:12:33.207 [main] INFO  assignment3.NeuralNetwork - Q4b-2: After 14 optimization iterations, training data loss is 2.3041348729786213, and validation data loss is 2.3042004595646257
+15:12:33.265 [main] INFO  assignment3.NeuralNetwork - Q4b-2: After 21 optimization iterations, training data loss is 2.303813996824804, and validation data loss is 2.303900602557704
+15:12:33.304 [main] INFO  assignment3.NeuralNetwork - Q4b-2: After 28 optimization iterations, training data loss is 2.3035670066800495, and validation data loss is 2.303667809031191
+15:12:33.343 [main] INFO  assignment3.NeuralNetwork - Q4b-2: After 35 optimization iterations, training data loss is 2.303356119672394, and validation data loss is 2.303457142940698
+15:12:33.382 [main] INFO  assignment3.NeuralNetwork - Q4b-2: After 42 optimization iterations, training data loss is 2.303047180058483, and validation data loss is 2.303163413894652
+15:12:33.421 [main] INFO  assignment3.NeuralNetwork - Q4b-2: After 49 optimization iterations, training data loss is 2.3027371205427034, and validation data loss is 2.3028750082596825
+15:12:33.460 [main] INFO  assignment3.NeuralNetwork - Q4b-2: After 56 optimization iterations, training data loss is 2.302502541583178, and validation data loss is 2.302647835320655
+15:12:33.499 [main] INFO  assignment3.NeuralNetwork - Q4b-2: After 63 optimization iterations, training data loss is 2.302298350532107, and validation data loss is 2.30246538156178
+15:12:33.538 [main] INFO  assignment3.NeuralNetwork - Q4b-2: After 70 optimization iterations, training data loss is 2.302116913914794, and validation data loss is 2.302284387737722
+15:12:33.563 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.09988192291229463, diff: 1.0484801503569952E-13, fdHere: 1.4170041385489635E-4, analyticHere: 1.4170041395974436E-4
+15:12:33.563 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.09988192291229463, has finite difference gradient 1.4170041385489635E-4 but analytic gradient 1.4170041395974436E-4. That looks like an error.
+15:12:34.172 [main] INFO  assignment3.NeuralNetwork - Q4b-2: Saved src/main/resources/assignment3/plots/image-loss-Q4b-2-0.0-10-70-0.01-0.0-false-4.png
+15:12:34.175 [main] INFO  assignment3.NeuralNetwork - Q4b-2: The loss on the training data is 2.302116913914794
+15:12:34.177 [main] INFO  assignment3.NeuralNetwork - Q4b-2: The classification error rate on the training data is 0.8769999999999998
+15:12:34.180 [main] INFO  assignment3.NeuralNetwork - Q4b-2: The loss on the validation data is 2.302284387737722
+15:12:34.181 [main] INFO  assignment3.NeuralNetwork - Q4b-2: The classification error rate on the validation data is 0.8820000000000002
+15:12:34.209 [main] INFO  assignment3.NeuralNetwork - Q4b-2: The loss on the test data is 2.3022301244815937
+15:12:34.223 [main] INFO  assignment3.NeuralNetwork - Q4b-2: The classification error rate on the test data is 0.8812222222222252
+15:12:34.253 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:34.254 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:34.298 [main] INFO  assignment3.NeuralNetwork - Q4b-3: After 7 optimization iterations, training data loss is 2.3034335503916386, and validation data loss is 2.303551814202046
+15:12:34.344 [main] INFO  assignment3.NeuralNetwork - Q4b-3: After 14 optimization iterations, training data loss is 2.301512609422417, and validation data loss is 2.3017343760375786
+15:12:34.388 [main] INFO  assignment3.NeuralNetwork - Q4b-3: After 21 optimization iterations, training data loss is 2.3001335277610058, and validation data loss is 2.300460097138759
+15:12:34.430 [main] INFO  assignment3.NeuralNetwork - Q4b-3: After 28 optimization iterations, training data loss is 2.29906611009797, and validation data loss is 2.2994646675018533
+15:12:34.471 [main] INFO  assignment3.NeuralNetwork - Q4b-3: After 35 optimization iterations, training data loss is 2.2981300058627983, and validation data loss is 2.2985267637260702
+15:12:34.513 [main] INFO  assignment3.NeuralNetwork - Q4b-3: After 42 optimization iterations, training data loss is 2.2968913785295566, and validation data loss is 2.297365867491659
+15:12:34.555 [main] INFO  assignment3.NeuralNetwork - Q4b-3: After 49 optimization iterations, training data loss is 2.2956568651877465, and validation data loss is 2.2962390886409683
+15:12:34.596 [main] INFO  assignment3.NeuralNetwork - Q4b-3: After 56 optimization iterations, training data loss is 2.2947526023409246, and validation data loss is 2.295372656293322
+15:12:34.639 [main] INFO  assignment3.NeuralNetwork - Q4b-3: After 63 optimization iterations, training data loss is 2.293834052437357, and validation data loss is 2.2945646455394786
+15:12:34.682 [main] INFO  assignment3.NeuralNetwork - Q4b-3: After 70 optimization iterations, training data loss is 2.292967469429034, and validation data loss is 2.2936957536607214
+15:12:34.715 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.0994002529943778, diff: 3.741495503174763E-13, fdHere: 1.389670606869592E-4, analyticHere: 1.3896706106110874E-4
+15:12:34.716 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.0994002529943778, has finite difference gradient 1.389670606869592E-4 but analytic gradient 1.3896706106110874E-4. That looks like an error.
+15:12:35.357 [main] INFO  assignment3.NeuralNetwork - Q4b-3: Saved src/main/resources/assignment3/plots/image-loss-Q4b-3-0.0-10-70-0.05-0.0-false-4.png
+15:12:35.361 [main] INFO  assignment3.NeuralNetwork - Q4b-3: The loss on the training data is 2.292967469429034
+15:12:35.362 [main] INFO  assignment3.NeuralNetwork - Q4b-3: The classification error rate on the training data is 0.8679999999999997
+15:12:35.365 [main] INFO  assignment3.NeuralNetwork - Q4b-3: The loss on the validation data is 2.2936957536607214
+15:12:35.367 [main] INFO  assignment3.NeuralNetwork - Q4b-3: The classification error rate on the validation data is 0.8710000000000004
+15:12:35.394 [main] INFO  assignment3.NeuralNetwork - Q4b-3: The loss on the test data is 2.293293791049259
+15:12:35.406 [main] INFO  assignment3.NeuralNetwork - Q4b-3: The classification error rate on the test data is 0.8721111111111125
+15:12:35.440 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:35.440 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:35.481 [main] INFO  assignment3.NeuralNetwork - Q4b-4: After 7 optimization iterations, training data loss is 2.3003023898168116, and validation data loss is 2.3007046269438995
+15:12:35.523 [main] INFO  assignment3.NeuralNetwork - Q4b-4: After 14 optimization iterations, training data loss is 2.2939371337711965, and validation data loss is 2.2947402879681262
+15:12:35.569 [main] INFO  assignment3.NeuralNetwork - Q4b-4: After 21 optimization iterations, training data loss is 2.289018608645292, and validation data loss is 2.2902769488022514
+15:12:35.618 [main] INFO  assignment3.NeuralNetwork - Q4b-4: After 28 optimization iterations, training data loss is 2.2838810601652764, and validation data loss is 2.285473258124087
+15:12:35.661 [main] INFO  assignment3.NeuralNetwork - Q4b-4: After 35 optimization iterations, training data loss is 2.278752909567817, and validation data loss is 2.2802932135644793
+15:12:35.703 [main] INFO  assignment3.NeuralNetwork - Q4b-4: After 42 optimization iterations, training data loss is 2.271181341945696, and validation data loss is 2.273147328870224
+15:12:35.746 [main] INFO  assignment3.NeuralNetwork - Q4b-4: After 49 optimization iterations, training data loss is 2.261878581322113, and validation data loss is 2.26441225432713
+15:12:35.787 [main] INFO  assignment3.NeuralNetwork - Q4b-4: After 56 optimization iterations, training data loss is 2.252677634052492, and validation data loss is 2.255531930819955
+15:12:35.828 [main] INFO  assignment3.NeuralNetwork - Q4b-4: After 63 optimization iterations, training data loss is 2.2406842112856116, and validation data loss is 2.2443053415803904
+15:12:35.867 [main] INFO  assignment3.NeuralNetwork - Q4b-4: After 70 optimization iterations, training data loss is 2.2289688119367024, and validation data loss is 2.23250379022622
+15:12:35.892 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.09765127110627264, diff: 3.188831577266571E-13, fdHere: 1.1190276217893508E-4, analyticHere: 1.1190276249781824E-4
+15:12:35.892 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.09765127110627264, has finite difference gradient 1.1190276217893508E-4 but analytic gradient 1.1190276249781824E-4. That looks like an error.
+15:12:36.498 [main] INFO  assignment3.NeuralNetwork - Q4b-4: Saved src/main/resources/assignment3/plots/image-loss-Q4b-4-0.0-10-70-0.2-0.0-false-4.png
+15:12:36.501 [main] INFO  assignment3.NeuralNetwork - Q4b-4: The loss on the training data is 2.2289688119367024
+15:12:36.503 [main] INFO  assignment3.NeuralNetwork - Q4b-4: The classification error rate on the training data is 0.6710000000000009
+15:12:36.506 [main] INFO  assignment3.NeuralNetwork - Q4b-4: The loss on the validation data is 2.23250379022622
+15:12:36.507 [main] INFO  assignment3.NeuralNetwork - Q4b-4: The classification error rate on the validation data is 0.6970000000000011
+15:12:36.530 [main] INFO  assignment3.NeuralNetwork - Q4b-4: The loss on the test data is 2.2299878440541345
+15:12:36.542 [main] INFO  assignment3.NeuralNetwork - Q4b-4: The classification error rate on the test data is 0.6793333333333355
+15:12:36.567 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:36.567 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:36.606 [main] INFO  assignment3.NeuralNetwork - Q4b-5: After 7 optimization iterations, training data loss is 2.286899506876534, and validation data loss is 2.28856908731129
+15:12:36.649 [main] INFO  assignment3.NeuralNetwork - Q4b-5: After 14 optimization iterations, training data loss is 2.264118947896816, and validation data loss is 2.2668224195612905
+15:12:36.687 [main] INFO  assignment3.NeuralNetwork - Q4b-5: After 21 optimization iterations, training data loss is 2.2256491015254074, and validation data loss is 2.2307169169765575
+15:12:36.725 [main] INFO  assignment3.NeuralNetwork - Q4b-5: After 28 optimization iterations, training data loss is 2.1480464046270487, and validation data loss is 2.1553592659991354
+15:12:36.764 [main] INFO  assignment3.NeuralNetwork - Q4b-5: After 35 optimization iterations, training data loss is 2.0564505845217522, and validation data loss is 2.0625970049406277
+15:12:36.802 [main] INFO  assignment3.NeuralNetwork - Q4b-5: After 42 optimization iterations, training data loss is 1.9311215612620418, and validation data loss is 1.9393935135873468
+15:12:36.841 [main] INFO  assignment3.NeuralNetwork - Q4b-5: After 49 optimization iterations, training data loss is 1.8122289029313894, and validation data loss is 1.8221205713568847
+15:12:36.879 [main] INFO  assignment3.NeuralNetwork - Q4b-5: After 56 optimization iterations, training data loss is 1.7653888908889699, and validation data loss is 1.7792047635835282
+15:12:36.917 [main] INFO  assignment3.NeuralNetwork - Q4b-5: After 63 optimization iterations, training data loss is 1.6623471589484555, and validation data loss is 1.6718653432050206
+15:12:36.959 [main] INFO  assignment3.NeuralNetwork - Q4b-5: After 70 optimization iterations, training data loss is 1.5988439383842201, and validation data loss is 1.6080400576080451
+15:12:36.997 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.09751203689354394, diff: 1.2382830898898314E-13, fdHere: -4.3185409676071984E-5, analyticHere: -4.3185409552243675E-5
+15:12:36.997 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.09751203689354394, has finite difference gradient -4.3185409676071984E-5 but analytic gradient -4.3185409552243675E-5. That looks like an error.
+15:12:37.590 [main] INFO  assignment3.NeuralNetwork - Q4b-5: Saved src/main/resources/assignment3/plots/image-loss-Q4b-5-0.0-10-70-1.0-0.0-false-4.png
+15:12:37.594 [main] INFO  assignment3.NeuralNetwork - Q4b-5: The loss on the training data is 1.5988439383842201
+15:12:37.596 [main] INFO  assignment3.NeuralNetwork - Q4b-5: The classification error rate on the training data is 0.5870000000000002
+15:12:37.600 [main] INFO  assignment3.NeuralNetwork - Q4b-5: The loss on the validation data is 1.6080400576080451
+15:12:37.603 [main] INFO  assignment3.NeuralNetwork - Q4b-5: The classification error rate on the validation data is 0.6000000000000003
+15:12:37.637 [main] INFO  assignment3.NeuralNetwork - Q4b-5: The loss on the test data is 1.5960594559249377
+15:12:37.652 [main] INFO  assignment3.NeuralNetwork - Q4b-5: The classification error rate on the test data is 0.5844444444444443
+15:12:37.688 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:37.689 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:37.745 [main] INFO  assignment3.NeuralNetwork - Q4b-6: After 7 optimization iterations, training data loss is 2.301886249013893, and validation data loss is 2.3021677951528
+15:12:37.801 [main] INFO  assignment3.NeuralNetwork - Q4b-6: After 14 optimization iterations, training data loss is 2.3017871524002733, and validation data loss is 2.30208980655026
+15:12:37.858 [main] INFO  assignment3.NeuralNetwork - Q4b-6: After 21 optimization iterations, training data loss is 2.3017788266841523, and validation data loss is 2.302083528342868
+15:12:37.917 [main] INFO  assignment3.NeuralNetwork - Q4b-6: After 28 optimization iterations, training data loss is 2.3017349967463927, and validation data loss is 2.3020537241839203
+15:12:37.974 [main] INFO  assignment3.NeuralNetwork - Q4b-6: After 35 optimization iterations, training data loss is 2.3017173885829054, and validation data loss is 2.30204599399052
+15:12:38.030 [main] INFO  assignment3.NeuralNetwork - Q4b-6: After 42 optimization iterations, training data loss is 2.301608469894316, and validation data loss is 2.3019709325557485
+15:12:38.083 [main] INFO  assignment3.NeuralNetwork - Q4b-6: After 49 optimization iterations, training data loss is 2.301600435745786, and validation data loss is 2.3019538225469733
+15:12:38.121 [main] INFO  assignment3.NeuralNetwork - Q4b-6: After 56 optimization iterations, training data loss is 2.3013095686082177, and validation data loss is 2.3017556076852266
+15:12:38.159 [main] INFO  assignment3.NeuralNetwork - Q4b-6: After 63 optimization iterations, training data loss is 2.3013228660568643, and validation data loss is 2.3017421291852473
+15:12:38.196 [main] INFO  assignment3.NeuralNetwork - Q4b-6: After 70 optimization iterations, training data loss is 2.3013219771726634, and validation data loss is 2.301741234628574
+15:12:38.221 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.0999916326859913, diff: 4.264660964593738E-15, fdHere: -3.0296236670432353E-6, analyticHere: -3.0296236713078962E-6
+15:12:38.222 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.0999916326859913, has finite difference gradient -3.0296236670432353E-6 but analytic gradient -3.0296236713078962E-6. That looks like an error.
+15:12:38.805 [main] INFO  assignment3.NeuralNetwork - Q4b-6: Saved src/main/resources/assignment3/plots/image-loss-Q4b-6-0.0-10-70-5.0-0.0-false-4.png
+15:12:38.809 [main] INFO  assignment3.NeuralNetwork - Q4b-6: The loss on the training data is 2.3013219771726634
+15:12:38.811 [main] INFO  assignment3.NeuralNetwork - Q4b-6: The classification error rate on the training data is 0.9000000000000009
+15:12:38.814 [main] INFO  assignment3.NeuralNetwork - Q4b-6: The loss on the validation data is 2.301741234628574
+15:12:38.815 [main] INFO  assignment3.NeuralNetwork - Q4b-6: The classification error rate on the validation data is 0.9000000000000009
+15:12:38.839 [main] INFO  assignment3.NeuralNetwork - Q4b-6: The loss on the test data is 2.3020147429721782
+15:12:38.852 [main] INFO  assignment3.NeuralNetwork - Q4b-6: The classification error rate on the test data is 0.8999999999999991
+15:12:38.878 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:38.878 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:38.915 [main] INFO  assignment3.NeuralNetwork - Q4b-7: After 7 optimization iterations, training data loss is 2.302585089464332, and validation data loss is 2.302585087861073
+15:12:38.953 [main] INFO  assignment3.NeuralNetwork - Q4b-7: After 14 optimization iterations, training data loss is 2.3025850894643285, and validation data loss is 2.302585087861063
+15:12:38.991 [main] INFO  assignment3.NeuralNetwork - Q4b-7: After 21 optimization iterations, training data loss is 2.3025850894643285, and validation data loss is 2.302585087861063
+15:12:39.029 [main] INFO  assignment3.NeuralNetwork - Q4b-7: After 28 optimization iterations, training data loss is 2.3025850894643285, and validation data loss is 2.302585087861063
+15:12:39.067 [main] INFO  assignment3.NeuralNetwork - Q4b-7: After 35 optimization iterations, training data loss is 2.3025850894643285, and validation data loss is 2.302585087861063
+15:12:39.105 [main] INFO  assignment3.NeuralNetwork - Q4b-7: After 42 optimization iterations, training data loss is 2.3025850894643165, and validation data loss is 2.3025850878610226
+15:12:39.142 [main] INFO  assignment3.NeuralNetwork - Q4b-7: After 49 optimization iterations, training data loss is 2.3025850894643165, and validation data loss is 2.3025850878610226
+15:12:39.180 [main] INFO  assignment3.NeuralNetwork - Q4b-7: After 56 optimization iterations, training data loss is 2.302585089464283, and validation data loss is 2.302585087860871
+15:12:39.218 [main] INFO  assignment3.NeuralNetwork - Q4b-7: After 63 optimization iterations, training data loss is 2.3025850894642836, and validation data loss is 2.302585087860871
+15:12:39.255 [main] INFO  assignment3.NeuralNetwork - Q4b-7: After 70 optimization iterations, training data loss is 2.3025850894642836, and validation data loss is 2.302585087860871
+15:12:39.280 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.10000000000000309, diff: 1.1050617179703084E-14, fdHere: -9.367506770274758E-15, analyticHere: 1.6831104094283257E-15
+15:12:39.280 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.10000000000000309, has finite difference gradient -9.367506770274758E-15 but analytic gradient 1.6831104094283257E-15. That looks like an error.
+15:12:39.885 [main] INFO  assignment3.NeuralNetwork - Q4b-7: Saved src/main/resources/assignment3/plots/image-loss-Q4b-7-0.0-10-70-20.0-0.0-false-4.png
+15:12:39.888 [main] INFO  assignment3.NeuralNetwork - Q4b-7: The loss on the training data is 2.3025850894642836
+15:12:39.890 [main] INFO  assignment3.NeuralNetwork - Q4b-7: The classification error rate on the training data is 0.9040000000000005
+15:12:39.892 [main] INFO  assignment3.NeuralNetwork - Q4b-7: The loss on the validation data is 2.302585087860871
+15:12:39.894 [main] INFO  assignment3.NeuralNetwork - Q4b-7: The classification error rate on the validation data is 0.9140000000000006
+15:12:39.917 [main] INFO  assignment3.NeuralNetwork - Q4b-7: The loss on the test data is 2.3025849486744456
+15:12:39.931 [main] INFO  assignment3.NeuralNetwork - Q4b-7: The classification error rate on the test data is 0.915
+15:12:39.957 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:39.957 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:39.995 [main] INFO  assignment3.NeuralNetwork - Q4b-8: After 7 optimization iterations, training data loss is 2.3046385626476757, and validation data loss is 2.3046776845327543
+15:12:40.033 [main] INFO  assignment3.NeuralNetwork - Q4b-8: After 14 optimization iterations, training data loss is 2.3041762082316994, and validation data loss is 2.304240440122021
+15:12:40.071 [main] INFO  assignment3.NeuralNetwork - Q4b-8: After 21 optimization iterations, training data loss is 2.303592994796791, and validation data loss is 2.3036930770780084
+15:12:40.108 [main] INFO  assignment3.NeuralNetwork - Q4b-8: After 28 optimization iterations, training data loss is 2.3030512034267416, and validation data loss is 2.303181961131154
+15:12:40.149 [main] INFO  assignment3.NeuralNetwork - Q4b-8: After 35 optimization iterations, training data loss is 2.302521359962757, and validation data loss is 2.3026726047542314
+15:12:40.189 [main] INFO  assignment3.NeuralNetwork - Q4b-8: After 42 optimization iterations, training data loss is 2.3019839479910678, and validation data loss is 2.3021605941957377
+15:12:40.230 [main] INFO  assignment3.NeuralNetwork - Q4b-8: After 49 optimization iterations, training data loss is 2.3014394799674145, and validation data loss is 2.301647057507509
+15:12:40.271 [main] INFO  assignment3.NeuralNetwork - Q4b-8: After 56 optimization iterations, training data loss is 2.3009815089545973, and validation data loss is 2.3012128274858483
+15:12:40.312 [main] INFO  assignment3.NeuralNetwork - Q4b-8: After 63 optimization iterations, training data loss is 2.3005443457375607, and validation data loss is 2.300804096176569
+15:12:40.354 [main] INFO  assignment3.NeuralNetwork - Q4b-8: After 70 optimization iterations, training data loss is 2.3001348432396904, and validation data loss is 2.300421722270623
+15:12:40.380 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.09980925960079519, diff: 1.776963179465213E-13, fdHere: 1.4182366096897325E-4, analyticHere: 1.4182366079127694E-4
+15:12:40.381 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.09980925960079519, has finite difference gradient 1.4182366096897325E-4 but analytic gradient 1.4182366079127694E-4. That looks like an error.
+15:12:40.987 [main] INFO  assignment3.NeuralNetwork - Q4b-8: Saved src/main/resources/assignment3/plots/image-loss-Q4b-8-0.0-10-70-0.002-0.9-false-4.png
+15:12:40.991 [main] INFO  assignment3.NeuralNetwork - Q4b-8: The loss on the training data is 2.3001348432396904
+15:12:40.993 [main] INFO  assignment3.NeuralNetwork - Q4b-8: The classification error rate on the training data is 0.9000000000000004
+15:12:40.996 [main] INFO  assignment3.NeuralNetwork - Q4b-8: The loss on the validation data is 2.300421722270623
+15:12:40.998 [main] INFO  assignment3.NeuralNetwork - Q4b-8: The classification error rate on the validation data is 0.9000000000000004
+15:12:41.023 [main] INFO  assignment3.NeuralNetwork - Q4b-8: The loss on the test data is 2.300286927691802
+15:12:41.036 [main] INFO  assignment3.NeuralNetwork - Q4b-8: The classification error rate on the test data is 0.899999999999998
+15:12:41.066 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:41.067 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:41.115 [main] INFO  assignment3.NeuralNetwork - Q4b-9: After 7 optimization iterations, training data loss is 2.3037891819629133, and validation data loss is 2.303878055744107
+15:12:41.153 [main] INFO  assignment3.NeuralNetwork - Q4b-9: After 14 optimization iterations, training data loss is 2.301689752891228, and validation data loss is 2.3019045598937633
+15:12:41.192 [main] INFO  assignment3.NeuralNetwork - Q4b-9: After 21 optimization iterations, training data loss is 2.2991454147917123, and validation data loss is 2.2995391585616924
+15:12:41.230 [main] INFO  assignment3.NeuralNetwork - Q4b-9: After 28 optimization iterations, training data loss is 2.296941510723586, and validation data loss is 2.297489639566407
+15:12:41.268 [main] INFO  assignment3.NeuralNetwork - Q4b-9: After 35 optimization iterations, training data loss is 2.2948114180356893, and validation data loss is 2.29546181625855
+15:12:41.306 [main] INFO  assignment3.NeuralNetwork - Q4b-9: After 42 optimization iterations, training data loss is 2.292641467656794, and validation data loss is 2.293419694870366
+15:12:41.344 [main] INFO  assignment3.NeuralNetwork - Q4b-9: After 49 optimization iterations, training data loss is 2.2903453941980096, and validation data loss is 2.291280283851989
+15:12:41.383 [main] INFO  assignment3.NeuralNetwork - Q4b-9: After 56 optimization iterations, training data loss is 2.2883139813044338, and validation data loss is 2.289370247262208
+15:12:41.421 [main] INFO  assignment3.NeuralNetwork - Q4b-9: After 63 optimization iterations, training data loss is 2.2862077471408666, and validation data loss is 2.287415189544095
+15:12:41.459 [main] INFO  assignment3.NeuralNetwork - Q4b-9: After 70 optimization iterations, training data loss is 2.284022182099779, and validation data loss is 2.285377369944383
+15:12:41.484 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.0990520620901571, diff: 3.4573795107233074E-13, fdHere: 1.3780501420621732E-4, analyticHere: 1.3780501386047937E-4
+15:12:41.484 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.0990520620901571, has finite difference gradient 1.3780501420621732E-4 but analytic gradient 1.3780501386047937E-4. That looks like an error.
+15:12:42.067 [main] INFO  assignment3.NeuralNetwork - Q4b-9: Saved src/main/resources/assignment3/plots/image-loss-Q4b-9-0.0-10-70-0.01-0.9-false-4.png
+15:12:42.070 [main] INFO  assignment3.NeuralNetwork - Q4b-9: The loss on the training data is 2.284022182099779
+15:12:42.072 [main] INFO  assignment3.NeuralNetwork - Q4b-9: The classification error rate on the training data is 0.6849999999999993
+15:12:42.075 [main] INFO  assignment3.NeuralNetwork - Q4b-9: The loss on the validation data is 2.285377369944383
+15:12:42.076 [main] INFO  assignment3.NeuralNetwork - Q4b-9: The classification error rate on the validation data is 0.7019999999999998
+15:12:42.099 [main] INFO  assignment3.NeuralNetwork - Q4b-9: The loss on the test data is 2.284537608626136
+15:12:42.112 [main] INFO  assignment3.NeuralNetwork - Q4b-9: The classification error rate on the test data is 0.693444444444446
+15:12:42.138 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:42.138 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:42.176 [main] INFO  assignment3.NeuralNetwork - Q4b-10: After 7 optimization iterations, training data loss is 2.3007994298760224, and validation data loss is 2.3011421166066945
+15:12:42.219 [main] INFO  assignment3.NeuralNetwork - Q4b-10: After 14 optimization iterations, training data loss is 2.292746428055094, and validation data loss is 2.293722501713243
+15:12:42.258 [main] INFO  assignment3.NeuralNetwork - Q4b-10: After 21 optimization iterations, training data loss is 2.281059044335265, and validation data loss is 2.282968801050827
+15:12:42.296 [main] INFO  assignment3.NeuralNetwork - Q4b-10: After 28 optimization iterations, training data loss is 2.267741073808221, and validation data loss is 2.2705693945078367
+15:12:42.335 [main] INFO  assignment3.NeuralNetwork - Q4b-10: After 35 optimization iterations, training data loss is 2.2491376944331165, and validation data loss is 2.2526878123421192
+15:12:42.374 [main] INFO  assignment3.NeuralNetwork - Q4b-10: After 42 optimization iterations, training data loss is 2.2214630952679815, and validation data loss is 2.2260781275611827
+15:12:42.413 [main] INFO  assignment3.NeuralNetwork - Q4b-10: After 49 optimization iterations, training data loss is 2.180550052945022, and validation data loss is 2.1866146978420646
+15:12:42.452 [main] INFO  assignment3.NeuralNetwork - Q4b-10: After 56 optimization iterations, training data loss is 2.1318526520912253, and validation data loss is 2.1390107596435417
+15:12:42.490 [main] INFO  assignment3.NeuralNetwork - Q4b-10: After 63 optimization iterations, training data loss is 2.073963430457852, and validation data loss is 2.08278414895518
+15:12:42.529 [main] INFO  assignment3.NeuralNetwork - Q4b-10: After 70 optimization iterations, training data loss is 2.008605654657265, and validation data loss is 2.018598026098854
+15:12:42.554 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.09578948471640086, diff: 2.5165675478829724E-13, fdHere: 8.575738604625627E-5, analyticHere: 8.575738579459951E-5
+15:12:42.555 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.09578948471640086, has finite difference gradient 8.575738604625627E-5 but analytic gradient 8.575738579459951E-5. That looks like an error.
+15:12:43.151 [main] INFO  assignment3.NeuralNetwork - Q4b-10: Saved src/main/resources/assignment3/plots/image-loss-Q4b-10-0.0-10-70-0.05-0.9-false-4.png
+15:12:43.154 [main] INFO  assignment3.NeuralNetwork - Q4b-10: The loss on the training data is 2.008605654657265
+15:12:43.155 [main] INFO  assignment3.NeuralNetwork - Q4b-10: The classification error rate on the training data is 0.7309999999999991
+15:12:43.158 [main] INFO  assignment3.NeuralNetwork - Q4b-10: The loss on the validation data is 2.018598026098854
+15:12:43.159 [main] INFO  assignment3.NeuralNetwork - Q4b-10: The classification error rate on the validation data is 0.7490000000000009
+15:12:43.182 [main] INFO  assignment3.NeuralNetwork - Q4b-10: The loss on the test data is 2.0081789337863953
+15:12:43.194 [main] INFO  assignment3.NeuralNetwork - Q4b-10: The classification error rate on the test data is 0.7247777777777785
+15:12:43.219 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:43.219 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:43.258 [main] INFO  assignment3.NeuralNetwork - Q4b-11: After 7 optimization iterations, training data loss is 2.2957373335102234, and validation data loss is 2.2970785218114798
+15:12:43.297 [main] INFO  assignment3.NeuralNetwork - Q4b-11: After 14 optimization iterations, training data loss is 2.2517621527572373, and validation data loss is 2.2557232110978678
+15:12:43.335 [main] INFO  assignment3.NeuralNetwork - Q4b-11: After 21 optimization iterations, training data loss is 2.145114997014523, and validation data loss is 2.154930916656293
+15:12:43.375 [main] INFO  assignment3.NeuralNetwork - Q4b-11: After 28 optimization iterations, training data loss is 1.9811434293389394, and validation data loss is 1.9964485723966343
+15:12:43.413 [main] INFO  assignment3.NeuralNetwork - Q4b-11: After 35 optimization iterations, training data loss is 1.7895625900146988, and validation data loss is 1.8047037769301104
+15:12:43.452 [main] INFO  assignment3.NeuralNetwork - Q4b-11: After 42 optimization iterations, training data loss is 1.5906969488777256, and validation data loss is 1.6108365160555174
+15:12:43.492 [main] INFO  assignment3.NeuralNetwork - Q4b-11: After 49 optimization iterations, training data loss is 1.4387324661568168, and validation data loss is 1.4675616896593162
+15:12:43.549 [main] INFO  assignment3.NeuralNetwork - Q4b-11: After 56 optimization iterations, training data loss is 1.328663885551468, and validation data loss is 1.3533706849266387
+15:12:43.596 [main] INFO  assignment3.NeuralNetwork - Q4b-11: After 63 optimization iterations, training data loss is 1.1763657616665704, and validation data loss is 1.2048149481440285
+15:12:43.634 [main] INFO  assignment3.NeuralNetwork - Q4b-11: After 70 optimization iterations, training data loss is 1.083428603066617, and validation data loss is 1.1225024808456616
+15:12:43.659 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.09530344741181276, diff: 1.6071921625591262E-14, fdHere: 5.107943661314743E-5, analyticHere: 5.107943662921935E-5
+15:12:43.659 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.09530344741181276, has finite difference gradient 5.107943661314743E-5 but analytic gradient 5.107943662921935E-5. That looks like an error.
+15:12:44.237 [main] INFO  assignment3.NeuralNetwork - Q4b-11: Saved src/main/resources/assignment3/plots/image-loss-Q4b-11-0.0-10-70-0.2-0.9-false-4.png
+15:12:44.240 [main] INFO  assignment3.NeuralNetwork - Q4b-11: The loss on the training data is 1.083428603066617
+15:12:44.243 [main] INFO  assignment3.NeuralNetwork - Q4b-11: The classification error rate on the training data is 0.30999999999999955
+15:12:44.246 [main] INFO  assignment3.NeuralNetwork - Q4b-11: The loss on the validation data is 1.1225024808456616
+15:12:44.247 [main] INFO  assignment3.NeuralNetwork - Q4b-11: The classification error rate on the validation data is 0.35799999999999965
+15:12:44.272 [main] INFO  assignment3.NeuralNetwork - Q4b-11: The loss on the test data is 1.0976232826759924
+15:12:44.284 [main] INFO  assignment3.NeuralNetwork - Q4b-11: The classification error rate on the test data is 0.348888888888889
+15:12:44.310 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:44.310 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:44.348 [main] INFO  assignment3.NeuralNetwork - Q4b-12: After 7 optimization iterations, training data loss is 2.2845195044307562, and validation data loss is 2.2861773660851696
+15:12:44.387 [main] INFO  assignment3.NeuralNetwork - Q4b-12: After 14 optimization iterations, training data loss is 2.199529321674871, and validation data loss is 2.2091801057704066
+15:12:44.425 [main] INFO  assignment3.NeuralNetwork - Q4b-12: After 21 optimization iterations, training data loss is 2.1333415835259757, and validation data loss is 2.1488747320453268
+15:12:44.463 [main] INFO  assignment3.NeuralNetwork - Q4b-12: After 28 optimization iterations, training data loss is 2.1303131837892244, and validation data loss is 2.143844152438414
+15:12:44.502 [main] INFO  assignment3.NeuralNetwork - Q4b-12: After 35 optimization iterations, training data loss is 2.0675965818465376, and validation data loss is 2.084823244280538
+15:12:44.540 [main] INFO  assignment3.NeuralNetwork - Q4b-12: After 42 optimization iterations, training data loss is 1.88414174743007, and validation data loss is 1.9256901921035807
+15:12:44.579 [main] INFO  assignment3.NeuralNetwork - Q4b-12: After 49 optimization iterations, training data loss is 2.127404837522583, and validation data loss is 2.1272269637783587
+15:12:44.617 [main] INFO  assignment3.NeuralNetwork - Q4b-12: After 56 optimization iterations, training data loss is 1.9246663854367498, and validation data loss is 1.9539525294501823
+15:12:44.656 [main] INFO  assignment3.NeuralNetwork - Q4b-12: After 63 optimization iterations, training data loss is 2.0900980842166392, and validation data loss is 2.139464725198552
+15:12:44.694 [main] INFO  assignment3.NeuralNetwork - Q4b-12: After 70 optimization iterations, training data loss is 2.0187231224881614, and validation data loss is 2.0413227609476765
+15:12:44.719 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.09788639178434104, diff: 2.802923478274428E-13, fdHere: -5.833660030735155E-9, analyticHere: -5.8333797383873275E-9
+15:12:44.719 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.09788639178434104, has finite difference gradient -5.833660030735155E-9 but analytic gradient -5.8333797383873275E-9. That looks like an error.
+15:12:45.339 [main] INFO  assignment3.NeuralNetwork - Q4b-12: Saved src/main/resources/assignment3/plots/image-loss-Q4b-12-0.0-10-70-1.0-0.9-false-4.png
+15:12:45.342 [main] INFO  assignment3.NeuralNetwork - Q4b-12: The loss on the training data is 2.0187231224881614
+15:12:45.344 [main] INFO  assignment3.NeuralNetwork - Q4b-12: The classification error rate on the training data is 0.7610000000000001
+15:12:45.346 [main] INFO  assignment3.NeuralNetwork - Q4b-12: The loss on the validation data is 2.0413227609476765
+15:12:45.348 [main] INFO  assignment3.NeuralNetwork - Q4b-12: The classification error rate on the validation data is 0.7519999999999996
+15:12:45.371 [main] INFO  assignment3.NeuralNetwork - Q4b-12: The loss on the test data is 2.0384727502627866
+15:12:45.382 [main] INFO  assignment3.NeuralNetwork - Q4b-12: The classification error rate on the test data is 0.7553333333333304
+15:12:45.408 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:45.408 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:45.446 [main] INFO  assignment3.NeuralNetwork - Q4b-13: After 7 optimization iterations, training data loss is 2.3025850790560964, and validation data loss is 2.302585045825134
+15:12:45.484 [main] INFO  assignment3.NeuralNetwork - Q4b-13: After 14 optimization iterations, training data loss is 2.3025850929883878, and validation data loss is 2.302585092954801
+15:12:45.522 [main] INFO  assignment3.NeuralNetwork - Q4b-13: After 21 optimization iterations, training data loss is 2.302585092993887, and validation data loss is 2.302585092992738
+15:12:45.561 [main] INFO  assignment3.NeuralNetwork - Q4b-13: After 28 optimization iterations, training data loss is 2.3025850929940193, and validation data loss is 2.302585092993798
+15:12:45.598 [main] INFO  assignment3.NeuralNetwork - Q4b-13: After 35 optimization iterations, training data loss is 2.302585092994035, and validation data loss is 2.3025850929938887
+15:12:45.637 [main] INFO  assignment3.NeuralNetwork - Q4b-13: After 42 optimization iterations, training data loss is 2.3025850929940384, and validation data loss is 2.3025850929939176
+15:12:45.674 [main] INFO  assignment3.NeuralNetwork - Q4b-13: After 49 optimization iterations, training data loss is 2.3025850929940397, and validation data loss is 2.3025850929939278
+15:12:45.712 [main] INFO  assignment3.NeuralNetwork - Q4b-13: After 56 optimization iterations, training data loss is 2.30258509299404, and validation data loss is 2.302585092993932
+15:12:45.750 [main] INFO  assignment3.NeuralNetwork - Q4b-13: After 63 optimization iterations, training data loss is 2.302585092994041, and validation data loss is 2.3025850929939344
+15:12:45.788 [main] INFO  assignment3.NeuralNetwork - Q4b-13: After 70 optimization iterations, training data loss is 2.302585092994041, and validation data loss is 2.3025850929939353
+15:12:45.812 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1000000000000295, diff: 1.0581811994819296E-14, fdHere: -1.0581813203458523E-14, analyticHere: -1.2086392270107754E-21
+15:12:45.812 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1000000000000295, has finite difference gradient -1.0581813203458523E-14 but analytic gradient -1.2086392270107754E-21. That looks like an error.
+15:12:46.422 [main] INFO  assignment3.NeuralNetwork - Q4b-13: Saved src/main/resources/assignment3/plots/image-loss-Q4b-13-0.0-10-70-5.0-0.9-false-4.png
+15:12:46.425 [main] INFO  assignment3.NeuralNetwork - Q4b-13: The loss on the training data is 2.302585092994041
+15:12:46.427 [main] INFO  assignment3.NeuralNetwork - Q4b-13: The classification error rate on the training data is 0.8860000000000011
+15:12:46.430 [main] INFO  assignment3.NeuralNetwork - Q4b-13: The loss on the validation data is 2.3025850929939353
+15:12:46.431 [main] INFO  assignment3.NeuralNetwork - Q4b-13: The classification error rate on the validation data is 0.8910000000000003
+15:12:46.453 [main] INFO  assignment3.NeuralNetwork - Q4b-13: The loss on the test data is 2.302585091315784
+15:12:46.465 [main] INFO  assignment3.NeuralNetwork - Q4b-13: The classification error rate on the test data is 0.8809999999999978
+15:12:46.491 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:12:46.491 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:12:46.535 [main] INFO  assignment3.NeuralNetwork - Q4b-14: After 7 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:12:46.585 [main] INFO  assignment3.NeuralNetwork - Q4b-14: After 14 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:12:46.640 [main] INFO  assignment3.NeuralNetwork - Q4b-14: After 21 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:12:46.694 [main] INFO  assignment3.NeuralNetwork - Q4b-14: After 28 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:12:46.749 [main] INFO  assignment3.NeuralNetwork - Q4b-14: After 35 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:12:46.804 [main] INFO  assignment3.NeuralNetwork - Q4b-14: After 42 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:12:46.860 [main] INFO  assignment3.NeuralNetwork - Q4b-14: After 49 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:12:46.916 [main] INFO  assignment3.NeuralNetwork - Q4b-14: After 56 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:12:46.972 [main] INFO  assignment3.NeuralNetwork - Q4b-14: After 63 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:12:47.028 [main] INFO  assignment3.NeuralNetwork - Q4b-14: After 70 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:12:47.063 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 3.989863994746656E-15, fdHere: -3.989863994746656E-15, analyticHere: 6.599166829348957E-116
+15:12:47.063 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient -3.989863994746656E-15 but analytic gradient 6.599166829348957E-116. That looks like an error.
+15:12:47.669 [main] INFO  assignment3.NeuralNetwork - Q4b-14: Saved src/main/resources/assignment3/plots/image-loss-Q4b-14-0.0-10-70-20.0-0.9-false-4.png
+15:12:47.673 [main] INFO  assignment3.NeuralNetwork - Q4b-14: The loss on the training data is 2.302585092994046
+15:12:47.676 [main] INFO  assignment3.NeuralNetwork - Q4b-14: The classification error rate on the training data is 0.8960000000000006
+15:12:47.680 [main] INFO  assignment3.NeuralNetwork - Q4b-14: The loss on the validation data is 2.302585092994046
+15:12:47.683 [main] INFO  assignment3.NeuralNetwork - Q4b-14: The classification error rate on the validation data is 0.8909999999999982
+15:12:47.714 [main] INFO  assignment3.NeuralNetwork - Q4b-14: The loss on the test data is 2.302585092994046
+15:12:47.734 [main] INFO  assignment3.NeuralNetwork - Q4b-14: The classification error rate on the test data is 0.8907777777777806
+15:12:47.734 [main] INFO  assignment3.Assignment3$ - 15901 ms elapsed
+15:12:47.734 [main] INFO  assignment3.Assignment3$ - ________________________________________________________________________________
+15:12:47.734 [main] INFO  assignment3.Assignment3$ - Q6.  Generalization
+15:12:47.913 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 2.90890412885797E-13, fdHere: 1.4152998629619884E-4, analyticHere: 1.4152998600530843E-4
+15:12:47.913 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4152998629619884E-4 but analytic gradient 1.4152998600530843E-4. That looks like an error.
+15:12:52.128 [main] INFO  assignment3.NeuralNetwork - Q6: After 100 optimization iterations, training data loss is 0.23165008514701507, and validation data loss is 0.4164690053720463
+15:12:56.230 [main] INFO  assignment3.NeuralNetwork - Q6: After 200 optimization iterations, training data loss is 0.044370728513230116, and validation data loss is 0.34819242000861733
+15:13:00.410 [main] INFO  assignment3.NeuralNetwork - Q6: After 300 optimization iterations, training data loss is 0.016940499673836897, and validation data loss is 0.3759669108287839
+15:13:04.478 [main] INFO  assignment3.NeuralNetwork - Q6: After 400 optimization iterations, training data loss is 0.01013085121525337, and validation data loss is 0.3903189176255817
+15:13:08.590 [main] INFO  assignment3.NeuralNetwork - Q6: After 500 optimization iterations, training data loss is 0.007063398549083355, and validation data loss is 0.40049561252375515
+15:13:12.721 [main] INFO  assignment3.NeuralNetwork - Q6: After 600 optimization iterations, training data loss is 0.005355386679001267, and validation data loss is 0.4085127213589796
+15:13:16.907 [main] INFO  assignment3.NeuralNetwork - Q6: After 700 optimization iterations, training data loss is 0.004279430763253978, and validation data loss is 0.4151528821057018
+15:13:21.066 [main] INFO  assignment3.NeuralNetwork - Q6: After 800 optimization iterations, training data loss is 0.0035447922430012625, and validation data loss is 0.4208273217208592
+15:13:25.222 [main] INFO  assignment3.NeuralNetwork - Q6: After 900 optimization iterations, training data loss is 0.0030139420188624536, and validation data loss is 0.42578396071482094
+15:13:29.350 [main] INFO  assignment3.NeuralNetwork - Q6: After 1000 optimization iterations, training data loss is 0.002613868738064488, and validation data loss is 0.430185075113971
+15:13:29.521 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.09817238894377814, diff: 1.2663560783969497E-16, fdHere: -3.2329450430172024E-7, analyticHere: -3.2329450442835585E-7
+15:13:29.521 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.09817238894377814, has finite difference gradient -3.2329450430172024E-7 but analytic gradient -3.2329450442835585E-7. That looks like an error.
+15:13:30.115 [main] INFO  assignment3.NeuralNetwork - Q6: Saved src/main/resources/assignment3/plots/image-loss-Q6-0.0-200-1000-0.35-0.9-false-100.png
+15:13:30.133 [main] INFO  assignment3.NeuralNetwork - Q6: The loss on the training data is 0.002613868738064488
+15:13:30.151 [main] INFO  assignment3.NeuralNetwork - Q6: The classification error rate on the training data is 0.0
+15:13:30.169 [main] INFO  assignment3.NeuralNetwork - Q6: The loss on the validation data is 0.430185075113971
+15:13:30.185 [main] INFO  assignment3.NeuralNetwork - Q6: The classification error rate on the validation data is 0.08699999999999987
+15:13:30.342 [main] INFO  assignment3.NeuralNetwork - Q6: The loss on the test data is 0.4649881729414181
+15:13:30.490 [main] INFO  assignment3.NeuralNetwork - Q6: The classification error rate on the test data is 0.09377777777777789
+15:13:30.490 [main] INFO  assignment3.Assignment3$ - 42756 ms elapsed
+15:13:30.490 [main] INFO  assignment3.Assignment3$ - ________________________________________________________________________________
+15:13:30.491 [main] INFO  assignment3.Assignment3$ - Q7.  Early Stopping
+15:13:30.674 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 2.90890412885797E-13, fdHere: 1.4152998629619884E-4, analyticHere: 1.4152998600530843E-4
+15:13:30.674 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4152998629619884E-4 but analytic gradient 1.4152998600530843E-4. That looks like an error.
+15:13:34.861 [main] INFO  assignment3.NeuralNetwork - Q7: After 100 optimization iterations, training data loss is 0.23165008514701507, and validation data loss is 0.4164690053720463
+15:13:39.291 [main] INFO  assignment3.NeuralNetwork - Q7: After 200 optimization iterations, training data loss is 0.044370728513230116, and validation data loss is 0.34819242000861733
+15:13:43.551 [main] INFO  assignment3.NeuralNetwork - Q7: After 300 optimization iterations, training data loss is 0.016940499673836897, and validation data loss is 0.3759669108287839
+15:13:47.690 [main] INFO  assignment3.NeuralNetwork - Q7: After 400 optimization iterations, training data loss is 0.01013085121525337, and validation data loss is 0.3903189176255817
+15:13:51.923 [main] INFO  assignment3.NeuralNetwork - Q7: After 500 optimization iterations, training data loss is 0.007063398549083355, and validation data loss is 0.40049561252375515
+15:13:56.216 [main] INFO  assignment3.NeuralNetwork - Q7: After 600 optimization iterations, training data loss is 0.005355386679001267, and validation data loss is 0.4085127213589796
+15:14:00.392 [main] INFO  assignment3.NeuralNetwork - Q7: After 700 optimization iterations, training data loss is 0.004279430763253978, and validation data loss is 0.4151528821057018
+15:14:04.498 [main] INFO  assignment3.NeuralNetwork - Q7: After 800 optimization iterations, training data loss is 0.0035447922430012625, and validation data loss is 0.4208273217208592
+15:14:08.745 [main] INFO  assignment3.NeuralNetwork - Q7: After 900 optimization iterations, training data loss is 0.0030139420188624536, and validation data loss is 0.42578396071482094
+15:14:12.935 [main] INFO  assignment3.NeuralNetwork - Q7: After 1000 optimization iterations, training data loss is 0.002613868738064488, and validation data loss is 0.430185075113971
+15:14:13.107 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.09817238894377814, diff: 1.2663560783969497E-16, fdHere: -3.2329450430172024E-7, analyticHere: -3.2329450442835585E-7
+15:14:13.107 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.09817238894377814, has finite difference gradient -3.2329450430172024E-7 but analytic gradient -3.2329450442835585E-7. That looks like an error.
+15:14:13.107 [main] INFO  assignment3.NeuralNetwork - Q7: Early stopping: validation loss was lowest after 160 iterations. We chose the model that we had then.\n'
+15:14:13.767 [main] INFO  assignment3.NeuralNetwork - Q7: Saved src/main/resources/assignment3/plots/image-loss-Q7-0.0-200-1000-0.35-0.9-true-100.png
+15:14:13.788 [main] INFO  assignment3.NeuralNetwork - Q7: The loss on the training data is 0.07147097732820529
+15:14:13.804 [main] INFO  assignment3.NeuralNetwork - Q7: The classification error rate on the training data is 0.01699999999999998
+15:14:13.822 [main] INFO  assignment3.NeuralNetwork - Q7: The loss on the validation data is 0.3345047418988364
+15:14:13.838 [main] INFO  assignment3.NeuralNetwork - Q7: The classification error rate on the validation data is 0.09500000000000015
+15:14:14.017 [main] INFO  assignment3.NeuralNetwork - Q7: The loss on the test data is 0.3711397374636594
+15:14:14.260 [main] INFO  assignment3.NeuralNetwork - Q7: The classification error rate on the test data is 0.09855555555555572
+15:14:14.260 [main] INFO  assignment3.Assignment3$ - 43769 ms elapsed
+15:14:14.260 [main] INFO  assignment3.Assignment3$ - ________________________________________________________________________________
+15:14:14.260 [main] INFO  assignment3.Assignment3$ - Q8.  Weight Decay
+15:14:14.435 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 1.4913625889789728E-12, fdHere: 0.5001415299874967, analyticHere: 0.5001415299860054
+15:14:14.435 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 0.5001415299874967 but analytic gradient 0.5001415299860054. That looks like an error.
+15:14:18.659 [main] INFO  assignment3.NeuralNetwork - Q8-1: After 100 optimization iterations, training data loss is 2.31437111252595, and validation data loss is 2.3143709006261903
+15:14:22.789 [main] INFO  assignment3.NeuralNetwork - Q8-1: After 200 optimization iterations, training data loss is 2.302585650087632, and validation data loss is 2.302585650088845
+15:14:26.926 [main] INFO  assignment3.NeuralNetwork - Q8-1: After 300 optimization iterations, training data loss is 2.3025850929999856, and validation data loss is 2.302585092999985
+15:14:31.030 [main] INFO  assignment3.NeuralNetwork - Q8-1: After 400 optimization iterations, training data loss is 2.302585092994044, and validation data loss is 2.302585092994044
+15:14:35.053 [main] INFO  assignment3.NeuralNetwork - Q8-1: After 500 optimization iterations, training data loss is 2.3025850929940552, and validation data loss is 2.3025850929940552
+15:14:39.117 [main] INFO  assignment3.NeuralNetwork - Q8-1: After 600 optimization iterations, training data loss is 2.3025850929940455, and validation data loss is 2.3025850929940455
+15:14:43.153 [main] INFO  assignment3.NeuralNetwork - Q8-1: After 700 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:14:47.062 [main] INFO  assignment3.NeuralNetwork - Q8-1: After 800 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:14:51.018 [main] INFO  assignment3.NeuralNetwork - Q8-1: After 900 optimization iterations, training data loss is 2.3025850929940455, and validation data loss is 2.3025850929940455
+15:14:55.077 [main] INFO  assignment3.NeuralNetwork - Q8-1: After 1000 optimization iterations, training data loss is 2.302585092994045, and validation data loss is 2.302585092994045
+15:14:55.241 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: -6.174074757892762E-21, diff: 6.93866188419361E-16, fdHere: -6.938893903907228E-16, analyticHere: -2.320197136177027E-20
+15:14:55.242 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value -6.174074757892762E-21, has finite difference gradient -6.938893903907228E-16 but analytic gradient -2.320197136177027E-20. That looks like an error.
+15:14:55.843 [main] INFO  assignment3.NeuralNetwork - Q8-1: Saved src/main/resources/assignment3/plots/image-loss-Q8-1-5.0-200-1000-0.35-0.9-false-100.png
+15:14:55.862 [main] INFO  assignment3.NeuralNetwork - Q8-1: The loss on the training data is 2.302585092994045
+15:14:55.879 [main] INFO  assignment3.NeuralNetwork - Q8-1: The classification loss (i.e. without weight decay) on the training data is 2.302585092994045
+15:14:55.894 [main] INFO  assignment3.NeuralNetwork - Q8-1: The classification error rate on the training data is 0.9000000000000011
+15:14:55.911 [main] INFO  assignment3.NeuralNetwork - Q8-1: The loss on the validation data is 2.302585092994045
+15:14:55.927 [main] INFO  assignment3.NeuralNetwork - Q8-1: The classification loss (i.e. without weight decay) on the validation data is 2.302585092994045
+15:14:55.943 [main] INFO  assignment3.NeuralNetwork - Q8-1: The classification error rate on the validation data is 0.9000000000000011
+15:14:56.100 [main] INFO  assignment3.NeuralNetwork - Q8-1: The loss on the test data is 2.302585092994045
+15:14:56.250 [main] INFO  assignment3.NeuralNetwork - Q8-1: The classification loss (i.e. without weight decay) on the test data is 2.302585092994045
+15:14:56.402 [main] INFO  assignment3.NeuralNetwork - Q8-1: The classification error rate on the test data is 0.8999999999999994
+15:14:56.591 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 2.996966824014846E-13, fdHere: 0.0011415299863050052, analyticHere: 0.0011415299860053085
+15:14:56.591 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 0.0011415299863050052 but analytic gradient 0.0011415299860053085. That looks like an error.
+15:15:00.771 [main] INFO  assignment3.NeuralNetwork - Q8-2: After 100 optimization iterations, training data loss is 1.0785301083214431, and validation data loss is 1.1367464125358486
+15:15:04.966 [main] INFO  assignment3.NeuralNetwork - Q8-2: After 200 optimization iterations, training data loss is 1.010166911459845, and validation data loss is 1.0776496709947487
+15:15:09.149 [main] INFO  assignment3.NeuralNetwork - Q8-2: After 300 optimization iterations, training data loss is 1.0100452921307643, and validation data loss is 1.0771509724589636
+15:15:13.263 [main] INFO  assignment3.NeuralNetwork - Q8-2: After 400 optimization iterations, training data loss is 1.009759514781348, and validation data loss is 1.077286805294486
+15:15:17.290 [main] INFO  assignment3.NeuralNetwork - Q8-2: After 500 optimization iterations, training data loss is 1.008427185427475, and validation data loss is 1.0760403604736266
+15:15:21.355 [main] INFO  assignment3.NeuralNetwork - Q8-2: After 600 optimization iterations, training data loss is 1.0076167723790088, and validation data loss is 1.075131792159809
+15:15:25.460 [main] INFO  assignment3.NeuralNetwork - Q8-2: After 700 optimization iterations, training data loss is 1.0071893392588382, and validation data loss is 1.0747618723246846
+15:15:29.557 [main] INFO  assignment3.NeuralNetwork - Q8-2: After 800 optimization iterations, training data loss is 1.0067209658717198, and validation data loss is 1.0743055303696458
+15:15:33.705 [main] INFO  assignment3.NeuralNetwork - Q8-2: After 900 optimization iterations, training data loss is 1.0062955261339017, and validation data loss is 1.0738821474877733
+15:15:37.872 [main] INFO  assignment3.NeuralNetwork - Q8-2: After 1000 optimization iterations, training data loss is 1.0059824870566907, and validation data loss is 1.073589461651407
+15:15:38.063 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.007745834935657988, diff: 2.6353295630790474E-15, fdHere: -5.077544229081105E-6, analyticHere: -5.077544226445775E-6
+15:15:38.063 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.007745834935657988, has finite difference gradient -5.077544229081105E-6 but analytic gradient -5.077544226445775E-6. That looks like an error.
+15:15:38.696 [main] INFO  assignment3.NeuralNetwork - Q8-2: Saved src/main/resources/assignment3/plots/image-loss-Q8-2-0.01-200-1000-0.35-0.9-false-100.png
+15:15:38.716 [main] INFO  assignment3.NeuralNetwork - Q8-2: The loss on the training data is 1.0059824870566907
+15:15:38.734 [main] INFO  assignment3.NeuralNetwork - Q8-2: The classification loss (i.e. without weight decay) on the training data is 0.4421562443255294
+15:15:38.754 [main] INFO  assignment3.NeuralNetwork - Q8-2: The classification error rate on the training data is 0.06100000000000008
+15:15:38.771 [main] INFO  assignment3.NeuralNetwork - Q8-2: The loss on the validation data is 1.073589461651407
+15:15:38.789 [main] INFO  assignment3.NeuralNetwork - Q8-2: The classification loss (i.e. without weight decay) on the validation data is 0.5097632189202456
+15:15:38.805 [main] INFO  assignment3.NeuralNetwork - Q8-2: The classification error rate on the validation data is 0.09100000000000005
+15:15:38.962 [main] INFO  assignment3.NeuralNetwork - Q8-2: The loss on the test data is 1.0750592389219915
+15:15:39.137 [main] INFO  assignment3.NeuralNetwork - Q8-2: The classification loss (i.e. without weight decay) on the test data is 0.5112329961908303
+15:15:39.280 [main] INFO  assignment3.NeuralNetwork - Q8-2: The classification error rate on the test data is 0.09755555555555556
+15:15:39.453 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 2.357031236854823E-12, fdHere: 0.10014152998836234, analyticHere: 0.10014152998600531
+15:15:39.453 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 0.10014152998836234 but analytic gradient 0.10014152998600531. That looks like an error.
+15:15:43.473 [main] INFO  assignment3.NeuralNetwork - Q8-3: After 100 optimization iterations, training data loss is 2.303331328481661, and validation data loss is 2.303331181889385
+15:15:47.457 [main] INFO  assignment3.NeuralNetwork - Q8-3: After 200 optimization iterations, training data loss is 2.302585155817035, and validation data loss is 2.30258515581467
+15:15:51.582 [main] INFO  assignment3.NeuralNetwork - Q8-3: After 300 optimization iterations, training data loss is 2.3025850929955913, and validation data loss is 2.302585092995591
+15:15:55.561 [main] INFO  assignment3.NeuralNetwork - Q8-3: After 400 optimization iterations, training data loss is 2.302585092994047, and validation data loss is 2.302585092994047
+15:15:59.601 [main] INFO  assignment3.NeuralNetwork - Q8-3: After 500 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:16:03.702 [main] INFO  assignment3.NeuralNetwork - Q8-3: After 600 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:16:07.731 [main] INFO  assignment3.NeuralNetwork - Q8-3: After 700 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:16:11.836 [main] INFO  assignment3.NeuralNetwork - Q8-3: After 800 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:16:15.835 [main] INFO  assignment3.NeuralNetwork - Q8-3: After 900 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:16:19.788 [main] INFO  assignment3.NeuralNetwork - Q8-3: After 1000 optimization iterations, training data loss is 2.302585092994046, and validation data loss is 2.302585092994046
+15:16:19.952 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: -2.2373946411645704E-21, diff: 3.12250849840831E-15, fdHere: -3.1225022567582528E-15, analyticHere: 6.2416500573716195E-21
+15:16:19.953 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value -2.2373946411645704E-21, has finite difference gradient -3.1225022567582528E-15 but analytic gradient 6.2416500573716195E-21. That looks like an error.
+15:16:20.545 [main] INFO  assignment3.NeuralNetwork - Q8-3: Saved src/main/resources/assignment3/plots/image-loss-Q8-3-1.0-200-1000-0.35-0.9-false-100.png
+15:16:20.565 [main] INFO  assignment3.NeuralNetwork - Q8-3: The loss on the training data is 2.302585092994046
+15:16:20.582 [main] INFO  assignment3.NeuralNetwork - Q8-3: The classification loss (i.e. without weight decay) on the training data is 2.302585092994046
+15:16:20.597 [main] INFO  assignment3.NeuralNetwork - Q8-3: The classification error rate on the training data is 0.9000000000000011
+15:16:20.614 [main] INFO  assignment3.NeuralNetwork - Q8-3: The loss on the validation data is 2.302585092994046
+15:16:20.635 [main] INFO  assignment3.NeuralNetwork - Q8-3: The classification loss (i.e. without weight decay) on the validation data is 2.302585092994046
+15:16:20.654 [main] INFO  assignment3.NeuralNetwork - Q8-3: The classification error rate on the validation data is 0.9000000000000011
+15:16:20.829 [main] INFO  assignment3.NeuralNetwork - Q8-3: The loss on the test data is 2.302585092994046
+15:16:21.012 [main] INFO  assignment3.NeuralNetwork - Q8-3: The classification loss (i.e. without weight decay) on the test data is 2.302585092994046
+15:16:21.164 [main] INFO  assignment3.NeuralNetwork - Q8-3: The classification error rate on the test data is 0.8999999999999994
+15:16:21.360 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 2.90890412885797E-13, fdHere: 1.4152998629619884E-4, analyticHere: 1.4152998600530843E-4
+15:16:21.360 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4152998629619884E-4 but analytic gradient 1.4152998600530843E-4. That looks like an error.
+15:16:25.410 [main] INFO  assignment3.NeuralNetwork - Q8-4: After 100 optimization iterations, training data loss is 0.23165008514701507, and validation data loss is 0.4164690053720463
+15:16:29.479 [main] INFO  assignment3.NeuralNetwork - Q8-4: After 200 optimization iterations, training data loss is 0.044370728513230116, and validation data loss is 0.34819242000861733
+15:16:33.618 [main] INFO  assignment3.NeuralNetwork - Q8-4: After 300 optimization iterations, training data loss is 0.016940499673836897, and validation data loss is 0.3759669108287839
+15:16:37.838 [main] INFO  assignment3.NeuralNetwork - Q8-4: After 400 optimization iterations, training data loss is 0.01013085121525337, and validation data loss is 0.3903189176255817
+15:16:42.005 [main] INFO  assignment3.NeuralNetwork - Q8-4: After 500 optimization iterations, training data loss is 0.007063398549083355, and validation data loss is 0.40049561252375515
+15:16:46.256 [main] INFO  assignment3.NeuralNetwork - Q8-4: After 600 optimization iterations, training data loss is 0.005355386679001267, and validation data loss is 0.4085127213589796
+15:16:50.361 [main] INFO  assignment3.NeuralNetwork - Q8-4: After 700 optimization iterations, training data loss is 0.004279430763253978, and validation data loss is 0.4151528821057018
+15:16:54.472 [main] INFO  assignment3.NeuralNetwork - Q8-4: After 800 optimization iterations, training data loss is 0.0035447922430012625, and validation data loss is 0.4208273217208592
+15:16:58.510 [main] INFO  assignment3.NeuralNetwork - Q8-4: After 900 optimization iterations, training data loss is 0.0030139420188624536, and validation data loss is 0.42578396071482094
+15:17:02.637 [main] INFO  assignment3.NeuralNetwork - Q8-4: After 1000 optimization iterations, training data loss is 0.002613868738064488, and validation data loss is 0.430185075113971
+15:17:02.808 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.09817238894377814, diff: 1.2663560783969497E-16, fdHere: -3.2329450430172024E-7, analyticHere: -3.2329450442835585E-7
+15:17:02.808 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.09817238894377814, has finite difference gradient -3.2329450430172024E-7 but analytic gradient -3.2329450442835585E-7. That looks like an error.
+15:17:03.499 [main] INFO  assignment3.NeuralNetwork - Q8-4: Saved src/main/resources/assignment3/plots/image-loss-Q8-4-0.0-200-1000-0.35-0.9-false-100.png
+15:17:03.519 [main] INFO  assignment3.NeuralNetwork - Q8-4: The loss on the training data is 0.002613868738064488
+15:17:03.536 [main] INFO  assignment3.NeuralNetwork - Q8-4: The classification error rate on the training data is 0.0
+15:17:03.555 [main] INFO  assignment3.NeuralNetwork - Q8-4: The loss on the validation data is 0.430185075113971
+15:17:03.574 [main] INFO  assignment3.NeuralNetwork - Q8-4: The classification error rate on the validation data is 0.08699999999999987
+15:17:03.776 [main] INFO  assignment3.NeuralNetwork - Q8-4: The loss on the test data is 0.4649881729414181
+15:17:03.933 [main] INFO  assignment3.NeuralNetwork - Q8-4: The classification error rate on the test data is 0.09377777777777789
+15:17:04.121 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 3.22909342494182E-13, fdHere: 2.4152998632821776E-4, analyticHere: 2.4152998600530842E-4
+15:17:04.121 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 2.4152998632821776E-4 but analytic gradient 2.4152998600530842E-4. That looks like an error.
+15:17:08.240 [main] INFO  assignment3.NeuralNetwork - Q8-5: After 100 optimization iterations, training data loss is 0.4592059621815031, and validation data loss is 0.6108031405735738
+15:17:12.382 [main] INFO  assignment3.NeuralNetwork - Q8-5: After 200 optimization iterations, training data loss is 0.34075893434631965, and validation data loss is 0.5700118429187087
+15:17:16.494 [main] INFO  assignment3.NeuralNetwork - Q8-5: After 300 optimization iterations, training data loss is 0.26492643734555144, and validation data loss is 0.4862569366893349
+15:17:20.750 [main] INFO  assignment3.NeuralNetwork - Q8-5: After 400 optimization iterations, training data loss is 0.25700195576707335, and validation data loss is 0.4792881356826826
+15:17:25.068 [main] INFO  assignment3.NeuralNetwork - Q8-5: After 500 optimization iterations, training data loss is 0.2595227758517992, and validation data loss is 0.47740403721339636
+15:17:29.448 [main] INFO  assignment3.NeuralNetwork - Q8-5: After 600 optimization iterations, training data loss is 0.31518282423843097, and validation data loss is 0.5593360831018773
+15:17:33.566 [main] INFO  assignment3.NeuralNetwork - Q8-5: After 700 optimization iterations, training data loss is 0.2382509803799465, and validation data loss is 0.4558755933586964
+15:17:37.644 [main] INFO  assignment3.NeuralNetwork - Q8-5: After 800 optimization iterations, training data loss is 0.23454304505182164, and validation data loss is 0.44618175381278424
+15:17:41.724 [main] INFO  assignment3.NeuralNetwork - Q8-5: After 900 optimization iterations, training data loss is 0.23300442060427962, and validation data loss is 0.4424053500370081
+15:17:45.995 [main] INFO  assignment3.NeuralNetwork - Q8-5: After 1000 optimization iterations, training data loss is 0.2453582285582217, and validation data loss is 0.4624749377496383
+15:17:46.185 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.012037447831783012, diff: 2.9167427072771326E-15, fdHere: -1.2106794386782492E-6, analyticHere: -1.2106794357615065E-6
+15:17:46.186 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.012037447831783012, has finite difference gradient -1.2106794386782492E-6 but analytic gradient -1.2106794357615065E-6. That looks like an error.
+15:17:46.787 [main] INFO  assignment3.NeuralNetwork - Q8-5: Saved src/main/resources/assignment3/plots/image-loss-Q8-5-0.001-200-1000-0.35-0.9-false-100.png
+15:17:46.807 [main] INFO  assignment3.NeuralNetwork - Q8-5: The loss on the training data is 0.2453582285582217
+15:17:46.826 [main] INFO  assignment3.NeuralNetwork - Q8-5: The classification loss (i.e. without weight decay) on the training data is 0.07079316523589375
+15:17:46.843 [main] INFO  assignment3.NeuralNetwork - Q8-5: The classification error rate on the training data is 0.004999999999999999
+15:17:46.865 [main] INFO  assignment3.NeuralNetwork - Q8-5: The loss on the validation data is 0.4624749377496383
+15:17:46.883 [main] INFO  assignment3.NeuralNetwork - Q8-5: The classification loss (i.e. without weight decay) on the validation data is 0.28790987442731036
+15:17:46.900 [main] INFO  assignment3.NeuralNetwork - Q8-5: The classification error rate on the validation data is 0.08999999999999989
+15:17:47.067 [main] INFO  assignment3.NeuralNetwork - Q8-5: The loss on the test data is 0.4645382155296015
+15:17:47.227 [main] INFO  assignment3.NeuralNetwork - Q8-5: The classification loss (i.e. without weight decay) on the test data is 0.28997315220727354
+15:17:47.409 [main] INFO  assignment3.NeuralNetwork - Q8-5: The classification error rate on the test data is 0.08655555555555565
+15:17:47.590 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 2.422587683844485E-13, fdHere: 1.515299862475672E-4, analyticHere: 1.5152998600530843E-4
+15:17:47.590 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.515299862475672E-4 but analytic gradient 1.5152998600530843E-4. That looks like an error.
+15:17:51.709 [main] INFO  assignment3.NeuralNetwork - Q8-6: After 100 optimization iterations, training data loss is 0.26600237078620453, and validation data loss is 0.446770948476967
+15:17:55.871 [main] INFO  assignment3.NeuralNetwork - Q8-6: After 200 optimization iterations, training data loss is 0.08617846740054598, and validation data loss is 0.3764997433791441
+15:18:00.055 [main] INFO  assignment3.NeuralNetwork - Q8-6: After 300 optimization iterations, training data loss is 0.06152617866787027, and validation data loss is 0.3962752911349188
+15:18:04.340 [main] INFO  assignment3.NeuralNetwork - Q8-6: After 400 optimization iterations, training data loss is 0.05591030608802966, and validation data loss is 0.4015092056721631
+15:18:08.639 [main] INFO  assignment3.NeuralNetwork - Q8-6: After 500 optimization iterations, training data loss is 0.05325659645165717, and validation data loss is 0.4021375517457302
+15:18:12.806 [main] INFO  assignment3.NeuralNetwork - Q8-6: After 600 optimization iterations, training data loss is 0.05157168103840671, and validation data loss is 0.4006844880730309
+15:18:16.999 [main] INFO  assignment3.NeuralNetwork - Q8-6: After 700 optimization iterations, training data loss is 0.05030711610359453, and validation data loss is 0.3981560905385181
+15:18:21.015 [main] INFO  assignment3.NeuralNetwork - Q8-6: After 800 optimization iterations, training data loss is 0.04926674299072063, and validation data loss is 0.39507042813884
+15:18:25.096 [main] INFO  assignment3.NeuralNetwork - Q8-6: After 900 optimization iterations, training data loss is 0.048367193689150434, and validation data loss is 0.3917255363007236
+15:18:29.135 [main] INFO  assignment3.NeuralNetwork - Q8-6: After 1000 optimization iterations, training data loss is 0.04756797427016983, and validation data loss is 0.38830098609912195
+15:18:29.305 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.07076704350669155, diff: 1.1550471611609069E-15, fdHere: 6.2606892636514824E-6, analyticHere: 6.260689262496435E-6
+15:18:29.305 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.07076704350669155, has finite difference gradient 6.2606892636514824E-6 but analytic gradient 6.260689262496435E-6. That looks like an error.
+15:18:29.927 [main] INFO  assignment3.NeuralNetwork - Q8-6: Saved src/main/resources/assignment3/plots/image-loss-Q8-6-1.0E-4-200-1000-0.35-0.9-false-100.png
+15:18:29.946 [main] INFO  assignment3.NeuralNetwork - Q8-6: The loss on the training data is 0.04756797427016983
+15:18:29.964 [main] INFO  assignment3.NeuralNetwork - Q8-6: The classification loss (i.e. without weight decay) on the training data is 0.007560946472649857
+15:18:29.982 [main] INFO  assignment3.NeuralNetwork - Q8-6: The classification error rate on the training data is 0.0
+15:18:29.999 [main] INFO  assignment3.NeuralNetwork - Q8-6: The loss on the validation data is 0.38830098609912195
+15:18:30.018 [main] INFO  assignment3.NeuralNetwork - Q8-6: The classification loss (i.e. without weight decay) on the validation data is 0.348293958301602
+15:18:30.035 [main] INFO  assignment3.NeuralNetwork - Q8-6: The classification error rate on the validation data is 0.0849999999999999
+15:18:30.197 [main] INFO  assignment3.NeuralNetwork - Q8-6: The loss on the test data is 0.4091039595498518
+15:18:30.363 [main] INFO  assignment3.NeuralNetwork - Q8-6: The classification loss (i.e. without weight decay) on the test data is 0.3690969317523318
+15:18:30.516 [main] INFO  assignment3.NeuralNetwork - Q8-6: The classification error rate on the test data is 0.09077777777777774
+15:18:30.516 [main] INFO  assignment3.Assignment3$ - 256256 ms elapsed
+15:18:30.516 [main] INFO  assignment3.Assignment3$ - ________________________________________________________________________________
+15:18:30.517 [main] INFO  assignment3.Assignment3$ - Q9. Reducing the number of hidden units.
+15:18:30.560 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 2.39961467647762E-13, fdHere: 8.662820470510535E-6, analyticHere: 8.662820230549067E-6
+15:18:30.560 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 8.662820470510535E-6 but analytic gradient 8.662820230549067E-6. That looks like an error.
+15:18:31.538 [main] INFO  assignment3.NeuralNetwork - Q9-1: After 100 optimization iterations, training data loss is 0.1830456738205595, and validation data loss is 0.3355841826226642
+15:18:32.518 [main] INFO  assignment3.NeuralNetwork - Q9-1: After 200 optimization iterations, training data loss is 0.0503573407714002, and validation data loss is 0.2888215978985546
+15:18:33.496 [main] INFO  assignment3.NeuralNetwork - Q9-1: After 300 optimization iterations, training data loss is 0.02400733073008012, and validation data loss is 0.292849347344528
+15:18:34.485 [main] INFO  assignment3.NeuralNetwork - Q9-1: After 400 optimization iterations, training data loss is 0.01485866279134552, and validation data loss is 0.29770308402010975
+15:18:35.464 [main] INFO  assignment3.NeuralNetwork - Q9-1: After 500 optimization iterations, training data loss is 0.01053719290205883, and validation data loss is 0.3019749613197985
+15:18:36.443 [main] INFO  assignment3.NeuralNetwork - Q9-1: After 600 optimization iterations, training data loss is 0.008077657100734183, and validation data loss is 0.3057277602203544
+15:18:37.417 [main] INFO  assignment3.NeuralNetwork - Q9-1: After 700 optimization iterations, training data loss is 0.0065075063942517065, and validation data loss is 0.3090438673365396
+15:18:38.398 [main] INFO  assignment3.NeuralNetwork - Q9-1: After 800 optimization iterations, training data loss is 0.00542554558856216, and validation data loss is 0.3120005670482642
+15:18:39.372 [main] INFO  assignment3.NeuralNetwork - Q9-1: After 900 optimization iterations, training data loss is 0.004638365152709115, and validation data loss is 0.3146614160301658
+15:18:40.351 [main] INFO  assignment3.NeuralNetwork - Q9-1: After 1000 optimization iterations, training data loss is 0.00404192494518168, and validation data loss is 0.3170766948955833
+15:18:40.394 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.04442789543222561, diff: 5.882402414291148E-16, fdHere: 2.95073072462306E-6, analyticHere: 2.95073072403482E-6
+15:18:40.394 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.04442789543222561, has finite difference gradient 2.95073072462306E-6 but analytic gradient 2.95073072403482E-6. That looks like an error.
+15:18:41.004 [main] INFO  assignment3.NeuralNetwork - Q9-1: Saved src/main/resources/assignment3/plots/image-loss-Q9-1-0.0-30-1000-0.35-0.9-false-100.png
+15:18:41.009 [main] INFO  assignment3.NeuralNetwork - Q9-1: The loss on the training data is 0.00404192494518168
+15:18:41.012 [main] INFO  assignment3.NeuralNetwork - Q9-1: The classification error rate on the training data is 0.0
+15:18:41.016 [main] INFO  assignment3.NeuralNetwork - Q9-1: The loss on the validation data is 0.3170766948955833
+15:18:41.019 [main] INFO  assignment3.NeuralNetwork - Q9-1: The classification error rate on the validation data is 0.07799999999999992
+15:18:41.060 [main] INFO  assignment3.NeuralNetwork - Q9-1: The loss on the test data is 0.3646506201427026
+15:18:41.090 [main] INFO  assignment3.NeuralNetwork - Q9-1: The classification error rate on the test data is 0.08722222222222209
+15:18:41.208 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 2.3139042765185636E-14, fdHere: 1.7148524246689278E-4, analyticHere: 1.7148524244375374E-4
+15:18:41.208 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.7148524246689278E-4 but analytic gradient 1.7148524244375374E-4. That looks like an error.
+15:18:43.931 [main] INFO  assignment3.NeuralNetwork - Q9-2: After 100 optimization iterations, training data loss is 0.20985784033570148, and validation data loss is 0.4149053638992361
+15:18:46.703 [main] INFO  assignment3.NeuralNetwork - Q9-2: After 200 optimization iterations, training data loss is 0.04415320459136835, and validation data loss is 0.325259803146249
+15:18:49.443 [main] INFO  assignment3.NeuralNetwork - Q9-2: After 300 optimization iterations, training data loss is 0.018897354504112628, and validation data loss is 0.34657214720382923
+15:18:52.194 [main] INFO  assignment3.NeuralNetwork - Q9-2: After 400 optimization iterations, training data loss is 0.010847558042442187, and validation data loss is 0.3601742205956202
+15:18:55.013 [main] INFO  assignment3.NeuralNetwork - Q9-2: After 500 optimization iterations, training data loss is 0.007446696449815619, and validation data loss is 0.3697043593136579
+15:18:57.786 [main] INFO  assignment3.NeuralNetwork - Q9-2: After 600 optimization iterations, training data loss is 0.005605409441812703, and validation data loss is 0.3772487066334955
+15:19:00.540 [main] INFO  assignment3.NeuralNetwork - Q9-2: After 700 optimization iterations, training data loss is 0.004462262976650985, and validation data loss is 0.3834977460764959
+15:19:03.303 [main] INFO  assignment3.NeuralNetwork - Q9-2: After 800 optimization iterations, training data loss is 0.003688410575917328, and validation data loss is 0.3888296662197818
+15:19:06.139 [main] INFO  assignment3.NeuralNetwork - Q9-2: After 900 optimization iterations, training data loss is 0.00313225175054329, and validation data loss is 0.3934779139324677
+15:19:08.999 [main] INFO  assignment3.NeuralNetwork - Q9-2: After 1000 optimization iterations, training data loss is 0.002714612066567686, and validation data loss is 0.3975969312749998
+15:19:09.135 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.08599058866418313, diff: 8.609439811052945E-16, fdHere: 7.75090118198655E-7, analyticHere: 7.75090117337711E-7
+15:19:09.135 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.08599058866418313, has finite difference gradient 7.75090118198655E-7 but analytic gradient 7.75090117337711E-7. That looks like an error.
+15:19:09.861 [main] INFO  assignment3.NeuralNetwork - Q9-2: Saved src/main/resources/assignment3/plots/image-loss-Q9-2-0.0-130-1000-0.35-0.9-false-100.png
+15:19:09.875 [main] INFO  assignment3.NeuralNetwork - Q9-2: The loss on the training data is 0.002714612066567686
+15:19:09.886 [main] INFO  assignment3.NeuralNetwork - Q9-2: The classification error rate on the training data is 0.0
+15:19:09.899 [main] INFO  assignment3.NeuralNetwork - Q9-2: The loss on the validation data is 0.3975969312749998
+15:19:09.910 [main] INFO  assignment3.NeuralNetwork - Q9-2: The classification error rate on the validation data is 0.08699999999999994
+15:19:10.029 [main] INFO  assignment3.NeuralNetwork - Q9-2: The loss on the test data is 0.418396290216068
+15:19:10.132 [main] INFO  assignment3.NeuralNetwork - Q9-2: The classification error rate on the test data is 0.08866666666666712
+15:19:10.294 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 1.2441817595718746E-13, fdHere: -1.0518619899223258E-4, analyticHere: -1.051861988678144E-4
+15:19:10.295 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient -1.0518619899223258E-4 but analytic gradient -1.051861988678144E-4. That looks like an error.
+15:19:13.860 [main] INFO  assignment3.NeuralNetwork - Q9-3: After 100 optimization iterations, training data loss is 0.23167199563056667, and validation data loss is 0.42420087384857097
+15:19:17.603 [main] INFO  assignment3.NeuralNetwork - Q9-3: After 200 optimization iterations, training data loss is 0.04381578263693224, and validation data loss is 0.33725356653073474
+15:19:21.377 [main] INFO  assignment3.NeuralNetwork - Q9-3: After 300 optimization iterations, training data loss is 0.01758512566547469, and validation data loss is 0.3695056734175775
+15:19:24.929 [main] INFO  assignment3.NeuralNetwork - Q9-3: After 400 optimization iterations, training data loss is 0.0103746748016055, and validation data loss is 0.3845791172155567
+15:19:28.454 [main] INFO  assignment3.NeuralNetwork - Q9-3: After 500 optimization iterations, training data loss is 0.007207928215192758, and validation data loss is 0.3952760536695242
+15:19:32.061 [main] INFO  assignment3.NeuralNetwork - Q9-3: After 600 optimization iterations, training data loss is 0.005457305237621052, and validation data loss is 0.40366558976273526
+15:19:35.697 [main] INFO  assignment3.NeuralNetwork - Q9-3: After 700 optimization iterations, training data loss is 0.004357697823045611, and validation data loss is 0.4105923355059455
+15:19:39.213 [main] INFO  assignment3.NeuralNetwork - Q9-3: After 800 optimization iterations, training data loss is 0.0036079742405989044, and validation data loss is 0.4164995718063101
+15:19:42.785 [main] INFO  assignment3.NeuralNetwork - Q9-3: After 900 optimization iterations, training data loss is 0.0030666527593934635, and validation data loss is 0.42165228812040767
+15:19:46.390 [main] INFO  assignment3.NeuralNetwork - Q9-3: After 1000 optimization iterations, training data loss is 0.002658887399487033, and validation data loss is 0.42622267739087416
+15:19:46.545 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.14908029715127055, diff: 5.60495359604445E-16, fdHere: -2.490794913009018E-7, analyticHere: -2.4907949186139715E-7
+15:19:46.546 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.14908029715127055, has finite difference gradient -2.490794913009018E-7 but analytic gradient -2.4907949186139715E-7. That looks like an error.
+15:19:47.208 [main] INFO  assignment3.NeuralNetwork - Q9-3: Saved src/main/resources/assignment3/plots/image-loss-Q9-3-0.0-170-1000-0.35-0.9-false-100.png
+15:19:47.226 [main] INFO  assignment3.NeuralNetwork - Q9-3: The loss on the training data is 0.002658887399487033
+15:19:47.241 [main] INFO  assignment3.NeuralNetwork - Q9-3: The classification error rate on the training data is 0.0
+15:19:47.256 [main] INFO  assignment3.NeuralNetwork - Q9-3: The loss on the validation data is 0.42622267739087416
+15:19:47.270 [main] INFO  assignment3.NeuralNetwork - Q9-3: The classification error rate on the validation data is 0.08200000000000006
+15:19:47.411 [main] INFO  assignment3.NeuralNetwork - Q9-3: The loss on the test data is 0.47044313464181586
+15:19:47.588 [main] INFO  assignment3.NeuralNetwork - Q9-3: The classification error rate on the test data is 0.09211111111111113
+15:19:47.685 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 8.956712138592305E-14, fdHere: 4.982843410279714E-6, analyticHere: 4.982843499846835E-6
+15:19:47.685 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 4.982843410279714E-6 but analytic gradient 4.982843499846835E-6. That looks like an error.
+15:19:49.984 [main] INFO  assignment3.NeuralNetwork - Q9-4: After 100 optimization iterations, training data loss is 0.26294505103952837, and validation data loss is 0.4283297838006662
+15:19:52.256 [main] INFO  assignment3.NeuralNetwork - Q9-4: After 200 optimization iterations, training data loss is 0.043848401227822416, and validation data loss is 0.31225776432396385
+15:19:54.634 [main] INFO  assignment3.NeuralNetwork - Q9-4: After 300 optimization iterations, training data loss is 0.0187106298102213, and validation data loss is 0.33005679319936837
+15:19:56.879 [main] INFO  assignment3.NeuralNetwork - Q9-4: After 400 optimization iterations, training data loss is 0.011124088069943508, and validation data loss is 0.3390856089798068
+15:19:59.140 [main] INFO  assignment3.NeuralNetwork - Q9-4: After 500 optimization iterations, training data loss is 0.0077336097002821975, and validation data loss is 0.34618426388247303
+15:20:01.407 [main] INFO  assignment3.NeuralNetwork - Q9-4: After 600 optimization iterations, training data loss is 0.005853171998983495, and validation data loss is 0.3520416206678722
+15:20:03.665 [main] INFO  assignment3.NeuralNetwork - Q9-4: After 700 optimization iterations, training data loss is 0.004671771363155814, and validation data loss is 0.3570214470047182
+15:20:05.926 [main] INFO  assignment3.NeuralNetwork - Q9-4: After 800 optimization iterations, training data loss is 0.003866719256436315, and validation data loss is 0.36134823541859357
+15:20:08.174 [main] INFO  assignment3.NeuralNetwork - Q9-4: After 900 optimization iterations, training data loss is 0.0032858520933005783, and validation data loss is 0.3651707916956712
+15:20:10.461 [main] INFO  assignment3.NeuralNetwork - Q9-4: After 1000 optimization iterations, training data loss is 0.002848588634089113, and validation data loss is 0.36859273283710176
+15:20:10.584 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.10223036339514162, diff: 3.157304193582972E-16, fdHere: 3.443740770343111E-7, analyticHere: 3.443740767185807E-7
+15:20:10.585 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.10223036339514162, has finite difference gradient 3.443740770343111E-7 but analytic gradient 3.443740767185807E-7. That looks like an error.
+15:20:11.306 [main] INFO  assignment3.NeuralNetwork - Q9-4: Saved src/main/resources/assignment3/plots/image-loss-Q9-4-0.0-100-1000-0.35-0.9-false-100.png
+15:20:11.316 [main] INFO  assignment3.NeuralNetwork - Q9-4: The loss on the training data is 0.002848588634089113
+15:20:11.325 [main] INFO  assignment3.NeuralNetwork - Q9-4: The classification error rate on the training data is 0.0
+15:20:11.335 [main] INFO  assignment3.NeuralNetwork - Q9-4: The loss on the validation data is 0.36859273283710176
+15:20:11.344 [main] INFO  assignment3.NeuralNetwork - Q9-4: The classification error rate on the validation data is 0.0819999999999999
+15:20:11.434 [main] INFO  assignment3.NeuralNetwork - Q9-4: The loss on the test data is 0.4088451368927215
+15:20:11.508 [main] INFO  assignment3.NeuralNetwork - Q9-4: The classification error rate on the test data is 0.0864444444444444
+15:20:11.534 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.157414851771682E-14, fdHere: 1.4211351000697342E-4, analyticHere: 1.4211350993539927E-4
+15:20:11.534 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.4211351000697342E-4 but analytic gradient 1.4211350993539927E-4. That looks like an error.
+15:20:12.152 [main] INFO  assignment3.NeuralNetwork - Q9-5: After 100 optimization iterations, training data loss is 0.30544803814413535, and validation data loss is 0.47671750882257985
+15:20:12.771 [main] INFO  assignment3.NeuralNetwork - Q9-5: After 200 optimization iterations, training data loss is 0.10458177116296084, and validation data loss is 0.3759326694186479
+15:20:13.387 [main] INFO  assignment3.NeuralNetwork - Q9-5: After 300 optimization iterations, training data loss is 0.055787605317509745, and validation data loss is 0.3714053490397367
+15:20:14.011 [main] INFO  assignment3.NeuralNetwork - Q9-5: After 400 optimization iterations, training data loss is 0.03740377586837425, and validation data loss is 0.377906585927205
+15:20:14.632 [main] INFO  assignment3.NeuralNetwork - Q9-5: After 500 optimization iterations, training data loss is 0.027500664590111083, and validation data loss is 0.386838336220058
+15:20:15.255 [main] INFO  assignment3.NeuralNetwork - Q9-5: After 600 optimization iterations, training data loss is 0.021422670663387787, and validation data loss is 0.3954030075143639
+15:20:15.878 [main] INFO  assignment3.NeuralNetwork - Q9-5: After 700 optimization iterations, training data loss is 0.017426071139523384, and validation data loss is 0.4030379033720908
+15:20:16.502 [main] INFO  assignment3.NeuralNetwork - Q9-5: After 800 optimization iterations, training data loss is 0.014643531055040945, and validation data loss is 0.40984538697739403
+15:20:17.129 [main] INFO  assignment3.NeuralNetwork - Q9-5: After 900 optimization iterations, training data loss is 0.012605105911933756, and validation data loss is 0.41602285856145116
+15:20:17.756 [main] INFO  assignment3.NeuralNetwork - Q9-5: After 1000 optimization iterations, training data loss is 0.011050431302326262, and validation data loss is 0.42170454905552557
+15:20:17.784 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: -0.054229986338772546, diff: 6.529709227747621E-16, fdHere: 1.3458687132974047E-5, analyticHere: 1.3458687132321076E-5
+15:20:17.784 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value -0.054229986338772546, has finite difference gradient 1.3458687132974047E-5 but analytic gradient 1.3458687132321076E-5. That looks like an error.
+15:20:18.382 [main] INFO  assignment3.NeuralNetwork - Q9-5: Saved src/main/resources/assignment3/plots/image-loss-Q9-5-0.0-10-1000-0.35-0.9-false-100.png
+15:20:18.385 [main] INFO  assignment3.NeuralNetwork - Q9-5: The loss on the training data is 0.011050431302326262
+15:20:18.387 [main] INFO  assignment3.NeuralNetwork - Q9-5: The classification error rate on the training data is 0.0
+15:20:18.390 [main] INFO  assignment3.NeuralNetwork - Q9-5: The loss on the validation data is 0.42170454905552557
+15:20:18.392 [main] INFO  assignment3.NeuralNetwork - Q9-5: The classification error rate on the validation data is 0.107
+15:20:18.417 [main] INFO  assignment3.NeuralNetwork - Q9-5: The loss on the test data is 0.38947110627635756
+15:20:18.428 [main] INFO  assignment3.NeuralNetwork - Q9-5: The classification error rate on the test data is 0.10033333333333308
+15:20:18.428 [main] INFO  assignment3.Assignment3$ - 107911 ms elapsed
+15:20:18.428 [main] INFO  assignment3.Assignment3$ - ________________________________________________________________________________
+15:20:18.428 [main] INFO  assignment3.Assignment3$ - Q10. Reducing the number of hidden units. With Early stopping
+15:20:18.462 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 2.6274509369421384E-13, fdHere: 1.3458826036566451E-4, analyticHere: 1.345882606284096E-4
+15:20:18.462 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.3458826036566451E-4 but analytic gradient 1.345882606284096E-4. That looks like an error.
+15:20:19.230 [main] INFO  assignment3.NeuralNetwork - Q10-1: After 100 optimization iterations, training data loss is 0.2243574671192126, and validation data loss is 0.3778872809638506
+15:20:20.001 [main] INFO  assignment3.NeuralNetwork - Q10-1: After 200 optimization iterations, training data loss is 0.06480381788369087, and validation data loss is 0.3078815180744605
+15:20:20.773 [main] INFO  assignment3.NeuralNetwork - Q10-1: After 300 optimization iterations, training data loss is 0.030944044879025405, and validation data loss is 0.30657442689404496
+15:20:21.554 [main] INFO  assignment3.NeuralNetwork - Q10-1: After 400 optimization iterations, training data loss is 0.01891112046237235, and validation data loss is 0.3101535318769164
+15:20:22.329 [main] INFO  assignment3.NeuralNetwork - Q10-1: After 500 optimization iterations, training data loss is 0.013538217168524288, and validation data loss is 0.31458212132594227
+15:20:23.103 [main] INFO  assignment3.NeuralNetwork - Q10-1: After 600 optimization iterations, training data loss is 0.01047208097958457, and validation data loss is 0.31872021071811857
+15:20:23.879 [main] INFO  assignment3.NeuralNetwork - Q10-1: After 700 optimization iterations, training data loss is 0.008502856360358425, and validation data loss is 0.32252361435560617
+15:20:24.652 [main] INFO  assignment3.NeuralNetwork - Q10-1: After 800 optimization iterations, training data loss is 0.0071372391845637186, and validation data loss is 0.3260122635980463
+15:20:25.430 [main] INFO  assignment3.NeuralNetwork - Q10-1: After 900 optimization iterations, training data loss is 0.0061375068044469345, and validation data loss is 0.3292229881789117
+15:20:26.204 [main] INFO  assignment3.NeuralNetwork - Q10-1: After 1000 optimization iterations, training data loss is 0.005375550614949873, and validation data loss is 0.33219185167658194
+15:20:26.238 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.15892838351202304, diff: 4.564131157161391E-16, fdHere: -2.066859448251218E-6, analyticHere: -2.066859448707631E-6
+15:20:26.238 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.15892838351202304, has finite difference gradient -2.066859448251218E-6 but analytic gradient -2.066859448707631E-6. That looks like an error.
+15:20:26.238 [main] INFO  assignment3.NeuralNetwork - Q10-1: Early stopping: validation loss was lowest after 270 iterations. We chose the model that we had then.\n'
+15:20:26.859 [main] INFO  assignment3.NeuralNetwork - Q10-1: Saved src/main/resources/assignment3/plots/image-loss-Q10-1-0.0-18-1000-0.35-0.9-true-100.png
+15:20:26.863 [main] INFO  assignment3.NeuralNetwork - Q10-1: The loss on the training data is 0.037046576132806076
+15:20:26.866 [main] INFO  assignment3.NeuralNetwork - Q10-1: The classification error rate on the training data is 0.0020000000000000026
+15:20:26.869 [main] INFO  assignment3.NeuralNetwork - Q10-1: The loss on the validation data is 0.3060834247247325
+15:20:26.871 [main] INFO  assignment3.NeuralNetwork - Q10-1: The classification error rate on the validation data is 0.09200000000000004
+15:20:26.901 [main] INFO  assignment3.NeuralNetwork - Q10-1: The loss on the test data is 0.2845253666396857
+15:20:26.919 [main] INFO  assignment3.NeuralNetwork - Q10-1: The classification error rate on the test data is 0.0830000000000003
+15:20:27.128 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 1.0723664794695664E-13, fdHere: 1.3684865838407834E-4, analyticHere: 1.3684865849131498E-4
+15:20:27.128 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.3684865838407834E-4 but analytic gradient 1.3684865849131498E-4. That looks like an error.
+15:20:32.000 [main] INFO  assignment3.NeuralNetwork - Q10-2: After 100 optimization iterations, training data loss is 0.23600904256377353, and validation data loss is 0.44001015921976144
+15:20:36.823 [main] INFO  assignment3.NeuralNetwork - Q10-2: After 200 optimization iterations, training data loss is 0.04503035331253117, and validation data loss is 0.35477945875775546
+15:20:41.696 [main] INFO  assignment3.NeuralNetwork - Q10-2: After 300 optimization iterations, training data loss is 0.01810671704897725, and validation data loss is 0.39421061896078174
+15:20:46.364 [main] INFO  assignment3.NeuralNetwork - Q10-2: After 400 optimization iterations, training data loss is 0.010488447710725697, and validation data loss is 0.41364027735937114
+15:20:51.137 [main] INFO  assignment3.NeuralNetwork - Q10-2: After 500 optimization iterations, training data loss is 0.007212319219836633, and validation data loss is 0.4275111764461494
+15:20:55.996 [main] INFO  assignment3.NeuralNetwork - Q10-2: After 600 optimization iterations, training data loss is 0.005424717114036793, and validation data loss is 0.4382867404786004
+15:21:00.797 [main] INFO  assignment3.NeuralNetwork - Q10-2: After 700 optimization iterations, training data loss is 0.004311773362414366, and validation data loss is 0.4470899953489301
+15:21:05.756 [main] INFO  assignment3.NeuralNetwork - Q10-2: After 800 optimization iterations, training data loss is 0.003557785579777514, and validation data loss is 0.4545274955464147
+15:21:10.638 [main] INFO  assignment3.NeuralNetwork - Q10-2: After 900 optimization iterations, training data loss is 0.0030160043100061133, and validation data loss is 0.46096330689375764
+15:21:15.538 [main] INFO  assignment3.NeuralNetwork - Q10-2: After 1000 optimization iterations, training data loss is 0.002609432043159076, and validation data loss is 0.4666330763179975
+15:21:15.741 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.08481923957645617, diff: 1.1043943791568629E-15, fdHere: 3.1533808105598183E-7, analyticHere: 3.153380821603762E-7
+15:21:15.741 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.08481923957645617, has finite difference gradient 3.1533808105598183E-7 but analytic gradient 3.153380821603762E-7. That looks like an error.
+15:21:15.741 [main] INFO  assignment3.NeuralNetwork - Q10-2: Early stopping: validation loss was lowest after 163 iterations. We chose the model that we had then.\n'
+15:21:16.334 [main] INFO  assignment3.NeuralNetwork - Q10-2: Saved src/main/resources/assignment3/plots/image-loss-Q10-2-0.0-236-1000-0.35-0.9-true-100.png
+15:21:16.358 [main] INFO  assignment3.NeuralNetwork - Q10-2: The loss on the training data is 0.07625318533773878
+15:21:16.377 [main] INFO  assignment3.NeuralNetwork - Q10-2: The classification error rate on the training data is 0.017000000000000005
+15:21:16.397 [main] INFO  assignment3.NeuralNetwork - Q10-2: The loss on the validation data is 0.3438406836524784
+15:21:16.416 [main] INFO  assignment3.NeuralNetwork - Q10-2: The classification error rate on the validation data is 0.09500000000000008
+15:21:16.595 [main] INFO  assignment3.NeuralNetwork - Q10-2: The loss on the test data is 0.33912420265322424
+15:21:16.767 [main] INFO  assignment3.NeuralNetwork - Q10-2: The classification error rate on the test data is 0.09411111111111088
+15:21:16.853 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 5.90101758961032E-13, fdHere: -5.957687760783231E-5, analyticHere: -5.957687819793407E-5
+15:21:16.853 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient -5.957687760783231E-5 but analytic gradient -5.957687819793407E-5. That looks like an error.
+15:21:18.752 [main] INFO  assignment3.NeuralNetwork - Q10-3: After 100 optimization iterations, training data loss is 0.18530726038946196, and validation data loss is 0.359795777618956
+15:21:20.763 [main] INFO  assignment3.NeuralNetwork - Q10-3: After 200 optimization iterations, training data loss is 0.042678691720843716, and validation data loss is 0.3196680516568539
+15:21:22.747 [main] INFO  assignment3.NeuralNetwork - Q10-3: After 300 optimization iterations, training data loss is 0.01867979606413577, and validation data loss is 0.32957940406540737
+15:21:24.710 [main] INFO  assignment3.NeuralNetwork - Q10-3: After 400 optimization iterations, training data loss is 0.011196139929943644, and validation data loss is 0.33840172792316686
+15:21:26.654 [main] INFO  assignment3.NeuralNetwork - Q10-3: After 500 optimization iterations, training data loss is 0.0078010992466746, and validation data loss is 0.3456211461238252
+15:21:28.602 [main] INFO  assignment3.NeuralNetwork - Q10-3: After 600 optimization iterations, training data loss is 0.0059109153344103155, and validation data loss is 0.35165807706428215
+15:21:30.521 [main] INFO  assignment3.NeuralNetwork - Q10-3: After 700 optimization iterations, training data loss is 0.004721745882112799, and validation data loss is 0.35681222254445977
+15:21:32.472 [main] INFO  assignment3.NeuralNetwork - Q10-3: After 800 optimization iterations, training data loss is 0.0039108649400845085, and validation data loss is 0.3612960732119757
+15:21:34.461 [main] INFO  assignment3.NeuralNetwork - Q10-3: After 900 optimization iterations, training data loss is 0.003325547670327489, and validation data loss is 0.36525830528890235
+15:21:36.417 [main] INFO  assignment3.NeuralNetwork - Q10-3: After 1000 optimization iterations, training data loss is 0.002884785161132868, and validation data loss is 0.36880488229108443
+15:21:36.505 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.08359389946754979, diff: 6.235640564284609E-16, fdHere: 1.1132355987803405E-6, analyticHere: 1.1132355994039045E-6
+15:21:36.505 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.08359389946754979, has finite difference gradient 1.1132355987803405E-6 but analytic gradient 1.1132355994039045E-6. That looks like an error.
+15:21:36.505 [main] INFO  assignment3.NeuralNetwork - Q10-3: Early stopping: validation loss was lowest after 172 iterations. We chose the model that we had then.\n'
+15:21:37.169 [main] INFO  assignment3.NeuralNetwork - Q10-3: Saved src/main/resources/assignment3/plots/image-loss-Q10-3-0.0-83-1000-0.35-0.9-true-100.png
+15:21:37.178 [main] INFO  assignment3.NeuralNetwork - Q10-3: The loss on the training data is 0.0592851972995542
+15:21:37.186 [main] INFO  assignment3.NeuralNetwork - Q10-3: The classification error rate on the training data is 0.006999999999999994
+15:21:37.196 [main] INFO  assignment3.NeuralNetwork - Q10-3: The loss on the validation data is 0.3112439387561053
+15:21:37.204 [main] INFO  assignment3.NeuralNetwork - Q10-3: The classification error rate on the validation data is 0.08299999999999987
+15:21:37.278 [main] INFO  assignment3.NeuralNetwork - Q10-3: The loss on the test data is 0.3376239418417934
+15:21:37.347 [main] INFO  assignment3.NeuralNetwork - Q10-3: The classification error rate on the test data is 0.09277777777777772
+15:21:37.398 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 8.44292164630387E-14, fdHere: 2.5360433149324013E-6, analyticHere: 2.536043230503185E-6
+15:21:37.398 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 2.5360433149324013E-6 but analytic gradient 2.536043230503185E-6. That looks like an error.
+15:21:38.505 [main] INFO  assignment3.NeuralNetwork - Q10-4: After 100 optimization iterations, training data loss is 0.19339090131762357, and validation data loss is 0.3412777407601837
+15:21:39.606 [main] INFO  assignment3.NeuralNetwork - Q10-4: After 200 optimization iterations, training data loss is 0.04797225821935331, and validation data loss is 0.26630922305954896
+15:21:40.707 [main] INFO  assignment3.NeuralNetwork - Q10-4: After 300 optimization iterations, training data loss is 0.021694695219383314, and validation data loss is 0.2666955011445455
+15:21:41.805 [main] INFO  assignment3.NeuralNetwork - Q10-4: After 400 optimization iterations, training data loss is 0.013292984463675894, and validation data loss is 0.2690091115149315
+15:21:42.919 [main] INFO  assignment3.NeuralNetwork - Q10-4: After 500 optimization iterations, training data loss is 0.009403385376791279, and validation data loss is 0.27209006026834726
+15:21:44.034 [main] INFO  assignment3.NeuralNetwork - Q10-4: After 600 optimization iterations, training data loss is 0.007202426652881603, and validation data loss is 0.2751253781672747
+15:21:45.231 [main] INFO  assignment3.NeuralNetwork - Q10-4: After 700 optimization iterations, training data loss is 0.005800463470722574, and validation data loss is 0.27794835825799347
+15:21:46.657 [main] INFO  assignment3.NeuralNetwork - Q10-4: After 800 optimization iterations, training data loss is 0.00483515991556512, and validation data loss is 0.2805370755583583
+15:21:47.811 [main] INFO  assignment3.NeuralNetwork - Q10-4: After 900 optimization iterations, training data loss is 0.004132928756406256, and validation data loss is 0.2829074753818901
+15:21:48.932 [main] INFO  assignment3.NeuralNetwork - Q10-4: After 1000 optimization iterations, training data loss is 0.003600734202895343, and validation data loss is 0.2850841007484406
+15:21:48.981 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.10244697394772606, diff: 2.839774835063384E-16, fdHere: -4.615024838383258E-7, analyticHere: -4.6150248355434834E-7
+15:21:48.981 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.10244697394772606, has finite difference gradient -4.615024838383258E-7 but analytic gradient -4.6150248355434834E-7. That looks like an error.
+15:21:48.981 [main] INFO  assignment3.NeuralNetwork - Q10-4: Early stopping: validation loss was lowest after 222 iterations. We chose the model that we had then.\n'
+15:21:49.602 [main] INFO  assignment3.NeuralNetwork - Q10-4: Saved src/main/resources/assignment3/plots/image-loss-Q10-4-0.0-37-1000-0.35-0.9-true-100.png
+15:21:49.607 [main] INFO  assignment3.NeuralNetwork - Q10-4: The loss on the training data is 0.03877019180297885
+15:21:49.611 [main] INFO  assignment3.NeuralNetwork - Q10-4: The classification error rate on the training data is 0.002000000000000002
+15:21:49.616 [main] INFO  assignment3.NeuralNetwork - Q10-4: The loss on the validation data is 0.26516471740264325
+15:21:49.620 [main] INFO  assignment3.NeuralNetwork - Q10-4: The classification error rate on the validation data is 0.08100000000000006
+15:21:49.665 [main] INFO  assignment3.NeuralNetwork - Q10-4: The loss on the test data is 0.28250963754131136
+15:21:49.699 [main] INFO  assignment3.NeuralNetwork - Q10-4: The classification error rate on the test data is 0.08433333333333308
+15:21:49.811 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 5.854962019635193E-14, fdHere: 7.315388178032178E-6, analyticHere: 7.315388119482558E-6
+15:21:49.811 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 7.315388178032178E-6 but analytic gradient 7.315388119482558E-6. That looks like an error.
+15:21:52.321 [main] INFO  assignment3.NeuralNetwork - Q10-5: After 100 optimization iterations, training data loss is 0.24051565601464261, and validation data loss is 0.4108123300534401
+15:21:54.832 [main] INFO  assignment3.NeuralNetwork - Q10-5: After 200 optimization iterations, training data loss is 0.04513920333396207, and validation data loss is 0.32146874003252796
+15:21:57.386 [main] INFO  assignment3.NeuralNetwork - Q10-5: After 300 optimization iterations, training data loss is 0.01844109608963322, and validation data loss is 0.34104497774493603
+15:21:59.900 [main] INFO  assignment3.NeuralNetwork - Q10-5: After 400 optimization iterations, training data loss is 0.010896111172201794, and validation data loss is 0.35073265666401443
+15:22:02.471 [main] INFO  assignment3.NeuralNetwork - Q10-5: After 500 optimization iterations, training data loss is 0.00755793728969628, and validation data loss is 0.3582142241376942
+15:22:04.954 [main] INFO  assignment3.NeuralNetwork - Q10-5: After 600 optimization iterations, training data loss is 0.005715084675553418, and validation data loss is 0.36440562931086723
+15:22:07.371 [main] INFO  assignment3.NeuralNetwork - Q10-5: After 700 optimization iterations, training data loss is 0.004560071116751299, and validation data loss is 0.36968418388585017
+15:22:09.859 [main] INFO  assignment3.NeuralNetwork - Q10-5: After 800 optimization iterations, training data loss is 0.003774044417985426, and validation data loss is 0.37428084840670167
+15:22:12.391 [main] INFO  assignment3.NeuralNetwork - Q10-5: After 900 optimization iterations, training data loss is 0.0032073302840975025, and validation data loss is 0.3783493450881713
+15:22:14.838 [main] INFO  assignment3.NeuralNetwork - Q10-5: After 1000 optimization iterations, training data loss is 0.002780897754952446, and validation data loss is 0.3819971201828338
+15:22:14.942 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.10598505978629555, diff: 2.95767335099171E-16, fdHere: 3.9264494358931E-7, analyticHere: 3.9264494329354264E-7
+15:22:14.942 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.10598505978629555, has finite difference gradient 3.9264494358931E-7 but analytic gradient 3.9264494329354264E-7. That looks like an error.
+15:22:14.942 [main] INFO  assignment3.NeuralNetwork - Q10-5: Early stopping: validation loss was lowest after 174 iterations. We chose the model that we had then.\n'
+15:22:15.530 [main] INFO  assignment3.NeuralNetwork - Q10-5: Saved src/main/resources/assignment3/plots/image-loss-Q10-5-0.0-113-1000-0.35-0.9-true-100.png
+15:22:15.542 [main] INFO  assignment3.NeuralNetwork - Q10-5: The loss on the training data is 0.06467797259219928
+15:22:15.551 [main] INFO  assignment3.NeuralNetwork - Q10-5: The classification error rate on the training data is 0.014000000000000026
+15:22:15.562 [main] INFO  assignment3.NeuralNetwork - Q10-5: The loss on the validation data is 0.3137490939224363
+15:22:15.571 [main] INFO  assignment3.NeuralNetwork - Q10-5: The classification error rate on the validation data is 0.09300000000000001
+15:22:15.670 [main] INFO  assignment3.NeuralNetwork - Q10-5: The loss on the test data is 0.3470979249610259
+15:22:15.792 [main] INFO  assignment3.NeuralNetwork - Q10-5: The classification error rate on the test data is 0.09466666666666672
+15:22:15.792 [main] INFO  assignment3.Assignment3$ - 117364 ms elapsed
+15:22:15.793 [main] INFO  assignment3.Assignment3$ - ________________________________________________________________________________
+15:22:15.793 [main] INFO  assignment3.Assignment3$ - Q11. Best of all
+15:22:15.840 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.013102121602999E-14, fdHere: 1.025360433006342E-4, analyticHere: 1.0253604323050318E-4
+15:22:15.840 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.025360433006342E-4 but analytic gradient 1.0253604323050318E-4. That looks like an error.
+15:22:16.939 [main] INFO  assignment3.NeuralNetwork - Q11a: After 100 optimization iterations, training data loss is 0.5738560392120222, and validation data loss is 0.662277799052664
+15:22:18.028 [main] INFO  assignment3.NeuralNetwork - Q11a: After 200 optimization iterations, training data loss is 0.3249371758763753, and validation data loss is 0.4658623847315715
+15:22:19.119 [main] INFO  assignment3.NeuralNetwork - Q11a: After 300 optimization iterations, training data loss is 0.2881840119705849, and validation data loss is 0.4533907851760459
+15:22:20.220 [main] INFO  assignment3.NeuralNetwork - Q11a: After 400 optimization iterations, training data loss is 0.2742070718767048, and validation data loss is 0.4499641815670099
+15:22:21.331 [main] INFO  assignment3.NeuralNetwork - Q11a: After 500 optimization iterations, training data loss is 0.26702859207039403, and validation data loss is 0.44700066497182944
+15:22:22.445 [main] INFO  assignment3.NeuralNetwork - Q11a: After 600 optimization iterations, training data loss is 0.26270767091008684, and validation data loss is 0.44452146022557615
+15:22:23.543 [main] INFO  assignment3.NeuralNetwork - Q11a: After 700 optimization iterations, training data loss is 0.25982339347574296, and validation data loss is 0.44255057852833446
+15:22:24.642 [main] INFO  assignment3.NeuralNetwork - Q11a: After 800 optimization iterations, training data loss is 0.2577765719317185, and validation data loss is 0.44102584500882175
+15:22:25.740 [main] INFO  assignment3.NeuralNetwork - Q11a: After 900 optimization iterations, training data loss is 0.2562557925850708, and validation data loss is 0.4398624734810598
+15:22:26.841 [main] INFO  assignment3.NeuralNetwork - Q11a: After 1000 optimization iterations, training data loss is 0.2550798971653093, and validation data loss is 0.4389767026424295
+15:22:26.888 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.02285854966224891, diff: 5.987279492721334E-15, fdHere: 1.1579966162789807E-5, analyticHere: 1.1579966168777086E-5
+15:22:26.889 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.02285854966224891, has finite difference gradient 1.1579966162789807E-5 but analytic gradient 1.1579966168777086E-5. That looks like an error.
+15:22:26.889 [main] INFO  assignment3.NeuralNetwork - Q11a: Early stopping: validation loss was lowest after 992 iterations. We chose the model that we had then.\n'
+15:22:27.474 [main] INFO  assignment3.NeuralNetwork - Q11a: Saved src/main/resources/assignment3/plots/image-loss-Q11a-0.001-37-1000-0.2-0.9-true-100.png
+15:22:27.479 [main] INFO  assignment3.NeuralNetwork - Q11a: The loss on the training data is 0.255150410732435
+15:22:27.485 [main] INFO  assignment3.NeuralNetwork - Q11a: The classification loss (i.e. without weight decay) on the training data is 0.07250107697197584
+15:22:27.489 [main] INFO  assignment3.NeuralNetwork - Q11a: The classification error rate on the training data is 0.0010000000000000009
+15:22:27.494 [main] INFO  assignment3.NeuralNetwork - Q11a: The loss on the validation data is 0.43856928691891206
+15:22:27.501 [main] INFO  assignment3.NeuralNetwork - Q11a: The classification loss (i.e. without weight decay) on the validation data is 0.25591995315845295
+15:22:27.505 [main] INFO  assignment3.NeuralNetwork - Q11a: The classification error rate on the validation data is 0.06799999999999996
+15:22:27.548 [main] INFO  assignment3.NeuralNetwork - Q11a: The loss on the test data is 0.44390409612591186
+15:22:27.591 [main] INFO  assignment3.NeuralNetwork - Q11a: The classification loss (i.e. without weight decay) on the test data is 0.2612547623654527
+15:22:27.625 [main] INFO  assignment3.NeuralNetwork - Q11a: The classification error rate on the test data is 0.07322222222222242
+15:22:27.675 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.1, diff: 7.013102121602999E-14, fdHere: 1.025360433006342E-4, analyticHere: 1.0253604323050318E-4
+15:22:27.675 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.1, has finite difference gradient 1.025360433006342E-4 but analytic gradient 1.0253604323050318E-4. That looks like an error.
+15:22:28.788 [main] INFO  assignment3.NeuralNetwork - Q11b: After 100 optimization iterations, training data loss is 0.38372261962673004, and validation data loss is 0.5112746071295461
+15:22:29.918 [main] INFO  assignment3.NeuralNetwork - Q11b: After 200 optimization iterations, training data loss is 0.28548834109979804, and validation data loss is 0.4555684874839054
+15:22:31.040 [main] INFO  assignment3.NeuralNetwork - Q11b: After 300 optimization iterations, training data loss is 0.26813632190237446, and validation data loss is 0.44685305937196995
+15:22:32.140 [main] INFO  assignment3.NeuralNetwork - Q11b: After 400 optimization iterations, training data loss is 0.2611185107254422, and validation data loss is 0.441796794265136
+15:22:33.258 [main] INFO  assignment3.NeuralNetwork - Q11b: After 500 optimization iterations, training data loss is 0.2573601093915069, and validation data loss is 0.43885738283507847
+15:22:34.377 [main] INFO  assignment3.NeuralNetwork - Q11b: After 600 optimization iterations, training data loss is 0.2550362507396347, and validation data loss is 0.43707495441393673
+15:22:35.480 [main] INFO  assignment3.NeuralNetwork - Q11b: After 700 optimization iterations, training data loss is 0.2534512110930704, and validation data loss is 0.43592917593916714
+15:22:36.577 [main] INFO  assignment3.NeuralNetwork - Q11b: After 800 optimization iterations, training data loss is 0.25228773359807644, and validation data loss is 0.4351366855826512
+15:22:37.681 [main] INFO  assignment3.NeuralNetwork - Q11b: After 900 optimization iterations, training data loss is 0.25139062038408116, and validation data loss is 0.4345459057920721
+15:22:38.781 [main] INFO  assignment3.NeuralNetwork - Q11b: After 1000 optimization iterations, training data loss is 0.25068353980131075, and validation data loss is 0.4340924665221223
+15:22:38.829 [main] TRACE assignment3.NeuralNetwork - 	testIndex: 0, baseTheta: 0.010426028981682127, diff: 2.7671549947261287E-16, fdHere: 3.604250469390821E-6, analyticHere: 3.6042504691141057E-6
+15:22:38.829 [main] ERROR assignment3.NeuralNetwork - Theta element #0, with value 0.010426028981682127, has finite difference gradient 3.604250469390821E-6 but analytic gradient 3.6042504691141057E-6. That looks like an error.
+15:22:38.829 [main] INFO  assignment3.NeuralNetwork - Q11b: Early stopping: validation loss was lowest after 992 iterations. We chose the model that we had then.\n'
+15:22:39.444 [main] INFO  assignment3.NeuralNetwork - Q11b: Saved src/main/resources/assignment3/plots/image-loss-Q11b-0.001-37-1000-0.35-0.9-true-100.png
+15:22:39.450 [main] INFO  assignment3.NeuralNetwork - Q11b: The loss on the training data is 0.2507184061468283
+15:22:39.455 [main] INFO  assignment3.NeuralNetwork - Q11b: The classification loss (i.e. without weight decay) on the training data is 0.06840875853962289
+15:22:39.458 [main] INFO  assignment3.NeuralNetwork - Q11b: The classification error rate on the training data is 0.0010000000000000009
+15:22:39.463 [main] INFO  assignment3.NeuralNetwork - Q11b: The loss on the validation data is 0.4329982529873469
+15:22:39.468 [main] INFO  assignment3.NeuralNetwork - Q11b: The classification loss (i.e. without weight decay) on the validation data is 0.2506886053801415
+15:22:39.472 [main] INFO  assignment3.NeuralNetwork - Q11b: The classification error rate on the validation data is 0.06699999999999999
+15:22:39.516 [main] INFO  assignment3.NeuralNetwork - Q11b: The loss on the test data is 0.43945758254032025
+15:22:39.561 [main] INFO  assignment3.NeuralNetwork - Q11b: The classification loss (i.e. without weight decay) on the test data is 0.25714793493311483
+15:22:39.591 [main] INFO  assignment3.NeuralNetwork - Q11b: The classification error rate on the test data is 0.07177777777777801
+15:22:39.591 [main] INFO  assignment3.Assignment3$ - 23798 ms elapsed
+15:22:39.591 [main] INFO  assignment3.Assignment3$ - ________________________________________________________________________________

@@ -1,0 +1,16 @@
+09:57:46.924 [main] INFO  assignment4.Assignment4$ - Reading file /assignment4/data_set.mat
+09:57:48.137 [main] INFO  assignment4.Assignment4$ - Reading file /assignment4/a4_randomness_source.mat
+09:57:51.066 [main] INFO  a.RestrictedBoltzmannMachine - Q2. Saved image src/main/resources/assignment4/image/hidden-units-Q2.png
+09:57:51.199 [main] INFO  a.RestrictedBoltzmannMachine - Q2. For the training data, the classification cross-entropy loss is 2.357111175055927, and the classification error rate (i.e. the misclassification rate) is 0.8779999999999996
+09:57:51.228 [main] INFO  a.RestrictedBoltzmannMachine - Q2. For the validation data, the classification cross-entropy loss is 2.3607361484968243, and the classification error rate (i.e. the misclassification rate) is 0.877
+09:57:51.583 [main] INFO  a.RestrictedBoltzmannMachine - Q2. For the test data, the classification cross-entropy loss is 2.3585828192193192, and the classification error rate (i.e. the misclassification rate) is 0.8798888888888893
+09:57:51.583 [main] INFO  a.RestrictedBoltzmannMachine - Q3. data1Case:  Describing a matrix of size 100 by 1. The mean of the elements is 0.44756160451647053. The sum of the elements is 44.75616045164708
+09:57:51.586 [main] INFO  a.RestrictedBoltzmannMachine - Q3. data10Cases:  Describing a matrix of size 100 by 10. The mean of the elements is 0.45992701200304703. The sum of the elements is 459.92701200304805
+09:57:51.587 [main] INFO  a.RestrictedBoltzmannMachine - Q3. data37Cases:  Describing a matrix of size 100 by 37. The mean of the elements is 0.4662074623380497. The sum of the elements is 1724.9676106507832
+09:57:51.587 [main] INFO  a.RestrictedBoltzmannMachine - Q4. testHiddenState1Case:  Describing a matrix of size 256 by 1. The mean of the elements is 0.4749956955642121. The sum of the elements is 121.59889806443842
+09:57:51.588 [main] INFO  a.RestrictedBoltzmannMachine - Q4. testHiddenState10Cases:  Describing a matrix of size 256 by 10. The mean of the elements is 0.469464268447888. The sum of the elements is 1201.8285272265946
+09:57:51.589 [main] INFO  a.RestrictedBoltzmannMachine - Q4. testHiddenState37Cases:  Describing a matrix of size 256 by 37. The mean of the elements is 0.4635947617453512. The sum of the elements is 4391.169583251954
+09:57:51.590 [main] INFO  a.RestrictedBoltzmannMachine - Q5. configurationGoodnesss(testRbmWeights, data37Cases, testHiddenState37Cases) = -18.391376010218547
+09:57:51.591 [main] INFO  a.RestrictedBoltzmannMachine - Q6. data1Case & testHiddenState1Case:  Describing a matrix of size 100 by 256. The mean of the elements is 0.15992187500000035. The sum of the elements is 4094.0
+09:57:51.592 [main] INFO  a.RestrictedBoltzmannMachine - Q6. data10Cases & testHiddenState10Cases:  Describing a matrix of size 100 by 256. The mean of the elements is 0.11676953125000003. The sum of the elements is 2989.2999999994863
+09:57:51.593 [main] INFO  a.RestrictedBoltzmannMachine - Q6. data37Cases & testHiddenState37Cases:  Describing a matrix of size 100 by 256. The mean of the elements is 0.12368032094594576. The sum of the elements is 3166.2162162161812

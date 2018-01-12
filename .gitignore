@@ -1,8 +1,6 @@
-# Created by .ignore support plugin (hsz.mobi)
 /.idea/**
 /.idea
 *.iws
-/out/
 .idea_modules/
 atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
@@ -23,4 +21,4 @@ project/target/
 
 /image-dataset*.png
 octave-workspace
-!output.log
+

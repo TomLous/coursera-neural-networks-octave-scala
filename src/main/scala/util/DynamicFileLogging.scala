@@ -55,7 +55,7 @@ case class DynamicFileLogging(fileName: String, pattern:String) {
 //  fileAppender.setContext(loggerContext)
 //  fileAppender.setName("timestamp")
 //  // set the file name
-//  fileAppender.setFile("log/" + System.currentTimeMillis + ".log")
+//  fileAppender.setFile("logs/" + System.currentTimeMillis + ".logs")
 //
 //  val encoder:PatternLayoutEncoder = new PatternLayoutEncoder
 //  encoder.setContext(loggerContext)
