@@ -49,6 +49,10 @@ object Assignment4 extends App with LazyLogging {
 
   restrictedBoltzmannMachine.Q3()
 
+  restrictedBoltzmannMachine.Q4()
+
+  restrictedBoltzmannMachine.Q5()
+
 
 
 

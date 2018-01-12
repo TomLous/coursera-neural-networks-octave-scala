@@ -31,26 +31,57 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
   val data37Cases = sampleBernoulli(temp3.inputs) //     data_37_cases = sample_bernoulli(temp.inputs);
 
 
-  val test_hidden_state_1_case = sampleBernoulli(randomDataSource.rand(MatrixSize(100,1),0.0)) //    test_hidden_state_1_case = sample_bernoulli(a4_rand([100, 1], 0));
-  val test_hidden_state_10_cases = sampleBernoulli(randomDataSource.rand(MatrixSize(100,10),1.0))//    test_hidden_state_10_cases = sample_bernoulli(a4_rand([100, 10], 1));
-  val test_hidden_state_37_cases = sampleBernoulli(randomDataSource.rand(MatrixSize(100,37),2.0))//    test_hidden_state_37_cases = sample_bernoulli(a4_rand([100, 37], 2));
+  val testHiddenState1Case = sampleBernoulli(randomDataSource.rand(MatrixSize(100,1),0.0)) //    test_hidden_state_1_case = sample_bernoulli(a4_rand([100, 1], 0));
+  val testHiddenState10Cases = sampleBernoulli(randomDataSource.rand(MatrixSize(100,10),1.0))//    test_hidden_state_10_cases = sample_bernoulli(a4_rand([100, 10], 1));
+  val testHiddenState37Cases = sampleBernoulli(randomDataSource.rand(MatrixSize(100,37),2.0))//    test_hidden_state_37_cases = sample_bernoulli(a4_rand([100, 37], 2));
 
 
 
   def Q3() = {
-    val (_,meanM, sumM) = describeMatrix("Q3. data1Case: ", visibleStateToHiddenProbabilities(testRbmWeights,data1Case)) //describe_matrix(visible_state_to_hidden_probabilities(test_rbm_w, data_1_case))
+    val (dimM,meanM, sumM) = describeMatrix("Q3. data1Case: ", visibleStateToHiddenProbabilities(testRbmWeights,data1Case)) //describe_matrix(visible_state_to_hidden_probabilities(test_rbm_w, data_1_case))
 
     assertDouble(meanM, 0.447562)
     assertDouble(sumM, 44.756160)
+    assertDimensions(dimM, MatrixSize(100, 1))
 
-    val (_,meanM2, sumM2) = describeMatrix("Q3. data10Cases: ", visibleStateToHiddenProbabilities(testRbmWeights,data10Cases)) //describe_matrix(visible_state_to_hidden_probabilities(test_rbm_w, data_10_cases))
+    val (dimM2,meanM2, sumM2) = describeMatrix("Q3. data10Cases: ", visibleStateToHiddenProbabilities(testRbmWeights,data10Cases)) //describe_matrix(visible_state_to_hidden_probabilities(test_rbm_w, data_10_cases))
 
     assertDouble(meanM2, 0.459927)
     assertDouble(sumM2, 459.927012)
+    assertDimensions(dimM2, MatrixSize(100, 10))
 
     describeMatrix("Q3. data37Cases: ", visibleStateToHiddenProbabilities(testRbmWeights,data37Cases)) // describe_matrix(visible_state_to_hidden_probabilities(test_rbm_w, data_37_cases))
   }
 
+
+  def Q4() = {
+    val (dimM,meanM, sumM) = describeMatrix("Q4 testHiddenState1Case: ", hiddenStateToVisibleProbabilities(testRbmWeights,testHiddenState1Case)) // describe_matrix(hidden_state_to_visible_probabilities(test_rbm_w, test_hidden_state_1_case))
+
+    assertDouble(meanM, 0.474996)
+    assertDouble(sumM, 121.598898)
+    assertDimensions(dimM, MatrixSize(256, 1))
+
+    val (dimM2,meanM2, sumM2) = describeMatrix("Q4. testHiddenState10Cases: ", hiddenStateToVisibleProbabilities(testRbmWeights,testHiddenState10Cases)) //describe_matrix(hidden_state_to_visible_probabilities(test_rbm_w, test_hidden_state_10_cases))
+
+    assertDouble(meanM2, 0.469464)
+    assertDouble(sumM2, 1201.828527)
+    assertDimensions(dimM2, MatrixSize(256, 10))
+
+    describeMatrix("Q4. testHiddenState37Cases: ", hiddenStateToVisibleProbabilities(testRbmWeights,testHiddenState37Cases)) // describe_matrix(hidden_state_to_visible_probabilities(test_rbm_w, test_hidden_state_37_cases))
+  }
+
+  def Q5() = {
+
+    val mean1 = configurationGoodnesss(testRbmWeights, data1Case, testHiddenState1Case) // configuration_goodness(test_rbm_w, data_1_case, test_hidden_state_1_case)
+    assertDouble(mean1, 13.5399, 0.01 )
+
+    val mean2 = configurationGoodnesss(testRbmWeights, data10Cases, testHiddenState10Cases) // configuration_goodness(test_rbm_w, data_10_cases, test_hidden_state_10_cases)
+    assertDouble(mean2, -32.9614, 0.01 )
+
+
+    val mean3 = configurationGoodnesss(testRbmWeights, data37Cases, testHiddenState37Cases) // configuration_goodness(test_rbm_w, data_37_cases, test_hidden_state_37_cases)
+    logger.info(s"Q5. configurationGoodnesss(testRbmWeights, data37Cases, testHiddenState37Cases) = $mean3")
+  }
 
 
   /**
@@ -240,13 +271,7 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
     (MatrixSize(matrix), meanM, sumM)
   }
 
-//  function hidden_probability = visible_state_to_hidden_probabilities(rbm_w, visible_state)
-//  % <rbm_w> is a matrix of size <number of hidden units> by <number of visible units>
-//    % <visible_state> is a binary matrix of size <number of visible units> by <number of configurations that we're handling in parallel>.
-//% The returned value is a matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>.
-//  % This takes in the (binary) states of the visible units, and returns the activation probabilities of the hidden units conditional on those states.
-//  error('not yet implemented');
-//  end
+
 
   /**
     * visible_state_to_hidden_probabilities(rbm_w, visible_state)
@@ -255,15 +280,44 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
     * @return The returned value is a matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>. This takes in the (binary) states of the visible units, and returns the activation probabilities of the hidden units conditional on those states.
     */
   def visibleStateToHiddenProbabilities(rbmWeights:DenseMatrix[Double], visibleState:DenseMatrix[Double]):DenseMatrix[Double] = {
-    // <solution>
+    // <solution Q3>
     RestrictedBoltzmannMachine.logistic(rbmWeights * visibleState)
-    // </solution>
+    // </solution Q3>
+  }
+
+  /**
+    * visible_probability = hidden_state_to_visible_probabilities(rbm_w, hidden_state)
+    * @param rbmWeights is a matrix of size <number of hidden units> by <number of visible units>
+    * @param hiddenState is a binary matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>.
+    * @return The returned value is a matrix of size <number of visible units> by <number of configurations that we're handling in parallel>. This takes in the (binary) states of the hidden units, and returns the activation probabilities of the visible units, conditional on those states.
+    */
+  def hiddenStateToVisibleProbabilities(rbmWeights:DenseMatrix[Double], hiddenState:DenseMatrix[Double]):DenseMatrix[Double] = {
+    // <solution Q4>
+    RestrictedBoltzmannMachine.logistic(rbmWeights.t * hiddenState)
+    // </solution Q4>
   }
 
 
 
 
+  /**
+    * G = configuration_goodness(rbm_w, visible_state, hidden_state)
+    * @param rbmWeights is a matrix of size <number of hidden units> by <number of visible units>
+    * @param visibleState is a binary matrix of size <number of visible units> by <number of configurations that we're handling in parallel>.
+    * @param hiddenState is a binary matrix of size <number of hidden units> by <number of configurations that we're handling in parallel>.
+    * @return  the mean over cases of the goodness (negative energy) of the described configurations.
+    */
+  def configurationGoodnesss(rbmWeights:DenseMatrix[Double], visibleState:DenseMatrix[Double], hiddenState:DenseMatrix[Double]):Double = {
+    // <solution Q5>
+//    val vsthp = visibleStateToHiddenProbabilities(rbmWeights, visibleState)
+//    val hstvp = hiddenStateToVisibleProbabilities(rbmWeights, hiddenState)
+    val totalEnergy =  sum(hiddenState * visibleState.t *:* rbmWeights)
+
+    totalEnergy / visibleState.cols
+    // </solution Q5>
   }
+
+}
 
 object RestrictedBoltzmannMachine extends LazyLogging{
 
