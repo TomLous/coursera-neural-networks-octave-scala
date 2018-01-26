@@ -19,7 +19,7 @@ import scala.util.{Failure, Success, Try}
 case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: DataBundle, testData: DataBundle, randomDataSource:RandomDataSource)  extends LazyLogging {
 
   val testRbmWeights = randomDataSource.rand(MatrixSize(100, 256), 0.0) * 2.0 - 1.0 //    test_rbm_w = a4_rand([100, 256], 0) * 2 - 1;
-  val smallTestRbmWeights = randomDataSource.rand(MatrixSize(100, 256), 0.0) * 2.0 - 1.0 //small_test_rbm_w = a4_rand([10, 256], 0) * 2 - 1;
+  val smallTestRbmWeights = randomDataSource.rand(MatrixSize(10, 256), 0.0) * 2.0 - 1.0 //small_test_rbm_w = a4_rand([10, 256], 0) * 2 - 1;
 
   val temp = trainingData.batch(0, 1) //    temp = extract_mini_batch(data_sets.training, 1, 1);
   val data1Case = sampleBernoulli(temp.inputs) //    data_1_case = sample_bernoulli(temp.inputs);
@@ -147,6 +147,33 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
     )
   }
 
+  def Q10() = {
+    main("Q10.",300, .02, .09, 1000)
+  }
+
+  def Q11() = {
+
+
+//    smallTestRbmWeights.rows)
+
+    val digits = smallTestRbmWeights.rows
+
+    val binaryCombinationMatrix = DenseMatrix((0 until math.pow(2, digits).toInt).map(i => {
+     s"%0${digits}d".format(i.toBinaryString.toInt).toArray.map(_.toString.toDouble)
+    }):_*)
+
+
+    val x1 = smallTestRbmWeights.t * binaryCombinationMatrix.t
+    val x2 = exp(x1) + 1.0
+    val x3  = product(x2, Axis._0)
+    val x4  = sum(x3)
+    val x5  = log(x4)
+//    println(x5)
+    logger.info(s"Q11. log = $x5")
+
+
+  }
+
 
   /**
     * function a4_main(n_hid, lr_rbm, lr_classification, n_iterations)
@@ -233,14 +260,9 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
       case ((startOfNextMiniBatch, currentMomentumSpeed, currentModel), iterationNumber) =>
         val miniBatch = data.batch(startOfNextMiniBatch, miniBatchSize) // mini_batch = extract_mini_batch(training_data, start_of_next_mini_batch, mini_batch_size);
 
-//        println(s"miniBatch : ${sum(miniBatch.inputs)}")
-//        println(s"currentModel : ${sum(currentModel)}")
-
         val nextStartOfNextMiniBatch = (startOfNextMiniBatch + miniBatchSize) % data.inputs.cols  //        start_of_next_mini_batch = mod(start_of_next_mini_batch + mini_batch_size, size(training_data.inputs, 2));
 
         val gradient = gradientFunction.run(currentModel, miniBatch, this) // gradient = gradient_function(model, mini_batch);
-
-//        println(s"gradient : ${sum(currentModel)}")
 
 //        logger.info(s"$iterationNumber: M " + sum(currentModel))
 //        logger.info(s"$iterationNumber: G " + sum(gradient))
@@ -325,8 +347,6 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
     }
 
     val seed:Double = sum(probabilities) //seed = sum(probabilities(:));
-
-//    println(s"sample_bernoulli() was called with a seed. $seed")
 
     val rand = randomDataSource.rand(MatrixSize(probabilities), seed)
 
@@ -435,16 +455,7 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
     */
   def configurationGoodnesssGradient(visibleState:DenseMatrix[Double], hiddenState:DenseMatrix[Double]):DenseMatrix[Double] = {
     // <solution Q6>
-//    println(s"  cfgg 0a: ${sum(hiddenState)}")
-//    println(s"  cfgg 0b: ${sum(visibleState)}")
-
-    val step1 = hiddenState * visibleState.t
-//    println(s"  cfgg 1: ${sum(step1)}")
-     val step2  = step1/ visibleState.cols.toDouble
-//    println(s"  cfgg 2: ${visibleState.cols.toDouble}")
-//    println(s"  cfgg 3: ${sum(step2)}")
-
-    step2
+    hiddenState * visibleState.t / visibleState.cols.toDouble
     // </solution Q6>
   }
 

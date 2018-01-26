@@ -45,21 +45,25 @@ object Assignment4 extends App with LazyLogging {
 
   val restrictedBoltzmannMachine = RestrictedBoltzmannMachine(trainingData, validationData, testData, randomDataSource)
 
-//  restrictedBoltzmannMachine.Q2()
-//
-//  restrictedBoltzmannMachine.Q3()
-//
-//  restrictedBoltzmannMachine.Q4()
-//
-//  restrictedBoltzmannMachine.Q5()
-//
-//  restrictedBoltzmannMachine.Q6()
-//
-//  restrictedBoltzmannMachine.Q7()
-//
-//  restrictedBoltzmannMachine.Q8()
+  restrictedBoltzmannMachine.Q2()
+
+  restrictedBoltzmannMachine.Q3()
+
+  restrictedBoltzmannMachine.Q4()
+
+  restrictedBoltzmannMachine.Q5()
+
+  restrictedBoltzmannMachine.Q6()
+
+  restrictedBoltzmannMachine.Q7()
+
+  restrictedBoltzmannMachine.Q8()
 
   restrictedBoltzmannMachine.Q9()
+
+  restrictedBoltzmannMachine.Q10()
+
+    restrictedBoltzmannMachine.Q11()
 
 
 

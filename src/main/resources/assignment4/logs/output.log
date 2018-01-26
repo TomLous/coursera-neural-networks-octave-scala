@@ -1,10 +1,2 @@
-14:41:43.044 [main] INFO  assignment4.Assignment4$ - Reading file /assignment4/data_set.mat
-14:41:44.223 [main] INFO  assignment4.Assignment4$ - Reading file /assignment4/a4_randomness_source.mat
-14:41:59.488 [main] INFO  a.RestrictedBoltzmannMachine - Q9b-0.09. Saved image src/main/resources/assignment4/image/hidden-units-Q9b-0-09.png
-14:41:59.953 [main] INFO  a.RestrictedBoltzmannMachine - Q9b-0.09. For the training data, the classification cross-entropy loss is 0.028780388703911797, and the classification error rate (i.e. the misclassification rate) is 0.0
-14:41:59.980 [main] INFO  a.RestrictedBoltzmannMachine - Q9b-0.09. For the validation data, the classification cross-entropy loss is 0.19862386947098187, and the classification error rate (i.e. the misclassification rate) is 0.058
-14:42:00.226 [main] INFO  a.RestrictedBoltzmannMachine - Q9b-0.09. For the test data, the classification cross-entropy loss is 0.2254495304640506, and the classification error rate (i.e. the misclassification rate) is 0.06588888888888855
-14:42:12.207 [main] INFO  a.RestrictedBoltzmannMachine - Q9b-0.1. Saved image src/main/resources/assignment4/image/hidden-units-Q9b-0-1.png
-14:42:12.592 [main] INFO  a.RestrictedBoltzmannMachine - Q9b-0.1. For the training data, the classification cross-entropy loss is 0.025920597922303158, and the classification error rate (i.e. the misclassification rate) is 0.0
-14:42:12.616 [main] INFO  a.RestrictedBoltzmannMachine - Q9b-0.1. For the validation data, the classification cross-entropy loss is 0.1986444008440327, and the classification error rate (i.e. the misclassification rate) is 0.05899999999999994
-14:42:12.878 [main] INFO  a.RestrictedBoltzmannMachine - Q9b-0.1. For the test data, the classification cross-entropy loss is 0.22595003374408906, and the classification error rate (i.e. the misclassification rate) is 0.06588888888888911
+15:31:48.549 [main] INFO  assignment4.Assignment4$ - Reading file /assignment4/data_set.mat
+15:31:50.280 [main] INFO  assignment4.Assignment4$ - Reading file /assignment4/a4_randomness_source.mat

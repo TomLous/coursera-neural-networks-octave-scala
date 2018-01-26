@@ -49,24 +49,13 @@ object CD1 extends GradientFunction {
 
   def runQ9(rbmWeights: DenseMatrix[Double], visibleData: DataBundle, rbm:RestrictedBoltzmannMachine, reportCallsToSampleBernoulli: Boolean = false ): DenseMatrix[Double] =  {
     val visibleProbabilitiesSampled1 = rbm.sampleBernoulli(visibleData.inputs, reportCallsToSampleBernoulli)
-//    println(s"cd1 step 1: ${sum(visibleProbabilitiesSampled1)}")
-//    println(s"cd1 step 1a1: ${sum(rbmWeights)}")
     val step1a = rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleProbabilitiesSampled1)
 
-//    println(s"cd1 step 1a2: ${sum(step1a)}")
-
     val hiddenProbabilitiesSampled1 = rbm.sampleBernoulli(step1a, reportCallsToSampleBernoulli)
-//    println(s"cd1 step 2: ${sum(hiddenProbabilitiesSampled1)}")
     val visibleProbabilitiesSampled2 = rbm.sampleBernoulli(rbm.hiddenStateToVisibleProbabilities(rbmWeights, hiddenProbabilitiesSampled1), reportCallsToSampleBernoulli)
-//    println(s"cd1 step 3: ${sum(visibleProbabilitiesSampled2)}")
     val hiddenProbabilities2 = rbm.visibleStateToHiddenProbabilities(rbmWeights, visibleProbabilitiesSampled2)
-//    println(s"cd1 step 4: ${sum(hiddenProbabilities2)}")
-//    val configurationGoodnesssGradient1 = rbm.configurationGoodnesssGradient(visibleData.inputs, hiddenProbabilitiesSampled1)
     val configurationGoodnesssGradient1 = rbm.configurationGoodnesssGradient(visibleProbabilitiesSampled1, hiddenProbabilitiesSampled1)
-//    println(s"cd1 step 5: ${sum(configurationGoodnesssGradient1)}")
-//    println(s"cd1 step 5a: ${sum(visibleData.inputs)}")
     val configurationGoodnesssGradient2 = rbm.configurationGoodnesssGradient(visibleProbabilitiesSampled2, hiddenProbabilities2)
-//    println(s"cd1 step 6: ${sum(configurationGoodnesssGradient2)}")
     configurationGoodnesssGradient1 - configurationGoodnesssGradient2
 
   }
