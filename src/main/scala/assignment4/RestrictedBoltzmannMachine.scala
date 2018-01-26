@@ -138,8 +138,13 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
   }
 
   def Q9() = {
-    main("Q9.",300, .02, .005, 1000)
+    main("Q9a.",300, .02, .005, 1000)
 
+    val testLearningRates = List(0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.07, 0.08, 0.09, 0.1, 0.15, 0.2, 0.25, 0.5, 1.0, 5.0, 10.0, 50.0, 100.0)
+
+    testLearningRates.foreach(learningRate =>
+      main(s"Q9b-$learningRate.",300, .02, learningRate, 1000)
+    )
   }
 
 
