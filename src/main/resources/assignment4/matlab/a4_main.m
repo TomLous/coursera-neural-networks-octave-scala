@@ -15,6 +15,7 @@ function a4_main(n_hid, lr_rbm, lr_classification, n_iterations)
                      n_iterations);
     % rbm_w is now a weight matrix of <n_hid> by <number of visible units, i.e. 256>
     show_rbm(rbm_w);
+    % rbm_w(1:10,1:10)
     input_to_hid = rbm_w;
     % calculate the hidden layer representation of the labeled data
     hidden_representation = logistic(input_to_hid * data_sets.training.inputs);

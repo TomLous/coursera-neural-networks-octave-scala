@@ -219,6 +219,8 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
     */
   def optimize(modelShape:MatrixSize, gradientFunction: GradientFunction, data:DataBundle, learningRate:Double, numberOfIterations:Int):DenseMatrix[Double] = {
     val model = (randomDataSource.rand(modelShape, modelShape.prod) * 2.0 - 1.0) * 0.1 //        model = (a4_rand(model_shape, prod(model_shape)) * 2 - 1) * 0.1;
+
+
     val momentumSpeed = DenseMatrix.zeros[Double](modelShape.rows, modelShape.cols) //        momentum_speed = zeros(model_shape);
     val miniBatchSize = 100; //mini_batch_size = 100;
 
@@ -226,13 +228,23 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
       case ((startOfNextMiniBatch, currentMomentumSpeed, currentModel), iterationNumber) =>
         val miniBatch = data.batch(startOfNextMiniBatch, miniBatchSize) // mini_batch = extract_mini_batch(training_data, start_of_next_mini_batch, mini_batch_size);
 
+//        println(s"miniBatch : ${sum(miniBatch.inputs)}")
+//        println(s"currentModel : ${sum(currentModel)}")
+
         val nextStartOfNextMiniBatch = (startOfNextMiniBatch + miniBatchSize) % data.inputs.cols  //        start_of_next_mini_batch = mod(start_of_next_mini_batch + mini_batch_size, size(training_data.inputs, 2));
 
         val gradient = gradientFunction.run(currentModel, miniBatch, this) // gradient = gradient_function(model, mini_batch);
 
+//        println(s"gradient : ${sum(currentModel)}")
+
+//        logger.info(s"$iterationNumber: M " + sum(currentModel))
+//        logger.info(s"$iterationNumber: G " + sum(gradient))
+
         val newMomentumSpeed = 0.9 * currentMomentumSpeed  + gradient //  momentum_speed = 0.9 * momentum_speed + gradient;
 
         val newModel = currentModel + newMomentumSpeed * learningRate // model = model + momentum_speed * learning_rate;
+
+
 
         (nextStartOfNextMiniBatch, newMomentumSpeed, newModel)
     }
@@ -308,6 +320,8 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
     }
 
     val seed:Double = sum(probabilities) //seed = sum(probabilities(:));
+
+//    println(s"sample_bernoulli() was called with a seed. $seed")
 
     val rand = randomDataSource.rand(MatrixSize(probabilities), seed)
 
@@ -416,7 +430,16 @@ case class RestrictedBoltzmannMachine(trainingData: DataBundle, validationData: 
     */
   def configurationGoodnesssGradient(visibleState:DenseMatrix[Double], hiddenState:DenseMatrix[Double]):DenseMatrix[Double] = {
     // <solution Q6>
-    hiddenState * visibleState.t / visibleState.cols.toDouble
+//    println(s"  cfgg 0a: ${sum(hiddenState)}")
+//    println(s"  cfgg 0b: ${sum(visibleState)}")
+
+    val step1 = hiddenState * visibleState.t
+//    println(s"  cfgg 1: ${sum(step1)}")
+     val step2  = step1/ visibleState.cols.toDouble
+//    println(s"  cfgg 2: ${visibleState.cols.toDouble}")
+//    println(s"  cfgg 3: ${sum(step2)}")
+
+    step2
     // </solution Q6>
   }
 

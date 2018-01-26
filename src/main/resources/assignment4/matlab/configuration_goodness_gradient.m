@@ -4,6 +4,16 @@ function d_G_by_rbm_w = configuration_goodness_gradient(visible_state, hidden_st
 % You don't need the model parameters for this computation.
 % This returns the gradient of the mean configuration goodness (negative energy, as computed by function <configuration_goodness>) with respect to the model parameters. Thus, the returned value is of the same shape as the model parameters, which by the way are not provided to this function. Notice that we're talking about the mean over data cases (as opposed to the sum over data cases).
     %error('not yet implemented');
+% fprintf('  cfgg 0a: %f\n', sum(hidden_state(:)));
+% fprintf('  cfgg 0b: %f\n', sum(visible_state(:)));
+    
+    s1 = hidden_state*visible_state';
+    s2 = size(visible_state, 2);
+    s3 = s1/s2;
 
-     d_G_by_rbm_w = hidden_state*visible_state'/size(visible_state, 2);
+% fprintf('  cfgg 1: %f\n', sum(s1(:)));
+% fprintf('  cfgg 2: %f\n', s2);
+% fprintf('  cfgg 3: %f\n', sum(s3(:)));
+
+     d_G_by_rbm_w = s3;
 end

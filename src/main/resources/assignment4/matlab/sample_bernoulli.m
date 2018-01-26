@@ -4,6 +4,8 @@ function binary = sample_bernoulli(probabilities)
         fprintf('sample_bernoulli() was called with a matrix of size %d by %d. ', size(probabilities, 1), size(probabilities, 2));
     end
     seed = sum(probabilities(:));
+
+    % fprintf('\nsample_bernoulli() was called with a seed. %f\n', seed);
     binary = +(probabilities > a4_rand(size(probabilities), seed)); % the "+" is to avoid the "logical" data type, which just confuses things.
 end
 
