@@ -28,6 +28,8 @@ object SBNConfig{
   */
 object Quiz13 extends App with LazyLogging {
 
+  System.setProperty("log.assignment", "quiz13")
+
 
   val Ph1_1 = 0.5 // on or off P(h1=1)
   val Ph2_1 = 0.5 // on or off P(h2=1)
