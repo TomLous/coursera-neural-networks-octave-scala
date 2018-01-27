@@ -11,4 +11,5 @@ I've tried to stay as close to the matlab code, but I also wanted a more functio
 - Assignment 2: ok-ish
 - Quiz 7: ok
 - Assignment 3: ok
-- Assignment 4: wip
+- Assignment 4: ok
+- Quiz 13: ok
